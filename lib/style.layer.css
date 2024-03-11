@@ -1,0 +1,203 @@
+@import "https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/fonts.css" layer(sweco);
+
+@layer sweco {
+    .mantine-Anchor-root {
+        color: currentColor;
+        text-decoration: none;
+        box-shadow: inset 0 -0.125rem 0 0 var(--stroke-color, var(--mantine-color-anchor));
+        transition: border-color .2s ease-in-out, box-shadow .2s ease-in-out;
+    }
+
+    .mantine-Anchor-root:hover {
+        box-shadow: inset 0 -1rem 0 0 var(--stroke-color, var(--mantine-color-anchor));
+    }
+
+    pre, code {
+        border-radius: 0;
+        border: 1px solid var(--mantine-color-gray-6);
+    }
+
+    .mantine-NavLink-root {
+        border-top: 1px solid var(--mantine-color-default-border);
+        --nl-bg: var(--mantine-color-gray-2);
+        --nl-color: var(--mantine-color-white);
+        --nl-hover: var(--mantine-color-default-hover);
+    }
+
+    .mantine-NavLink-root[data-active=true] {
+        --nl-hover: var(--mantine-color-gray-0);
+    }
+
+    .mantine-NavLink-root:last-of-type {
+        border-bottom: 1px solid var(--mantine-color-default-border);
+    }
+
+    .mantine-NavLink-root:hover {
+        background-color: var(--nl-hover);
+    }
+
+    .mantine-NavLink-label, .mantine-Tabs-tab, .mantine-Breadcrumbs-root, .mantine-Pagination-control, .mantine-Accordion-control, .mantine-InputWrapper-label,
+    .mantine-Radio-label, .mantine-Checkbox-label, .mantine-Switch-label, .mantine-SegmentedControl-label {
+        font-size: 16px;
+        font-weight: 400;
+        font-family: Sweco Sans Medium, sans-serif;
+    }
+
+    .mantine-Tabs-root {
+        --tab-hover-color: var(--mantine-color-default-hover);
+    }
+
+    button.mantine-Tabs-tab:hover:not(:disabled, [data-active=true]) {
+        background-color: var(--tab-hover-color);
+    }
+
+    button.mantine-Tabs-tab:hover[data-active=true][data-variant=pills] {
+        background-color: var(--mantine-color-gray-0);
+    }
+
+    .mantine-Breadcrumbs-breadcrumb {
+        color: var(--mantine-color-gray-1);
+        padding-bottom: 4px;
+    }
+
+    .mantine-Breadcrumbs-breadcrumb:hover {
+        text-decoration: none;
+        box-shadow: inset 0 -0.125rem 0 0 var(--mantine-color-green-1);
+    }
+
+    .mantine-Breadcrumbs-breadcrumb:last-of-type {
+        color: var(--mantine-color-gray-0);
+    }
+
+    .mantine-Pagination-control {
+        border: none;
+    }
+
+    .mantine-Pagination-control:hover {
+        background-color: var(--mantine-color-default-hover);
+    }
+
+    .mantine-Accordion-control:where(:not(:disabled, [data-disabled])):hover {
+        background-color: var(--mantine-color-default-hover);
+    }
+
+    .mantine-Stepper-stepIcon[data-progress=true] {
+        background-color: transparent;
+        border: none;
+        box-shadow: inset 0 0 0 0.125rem var(--mantine-color-gray-7);
+        color: var(--mantine-color-gray-1);
+    }
+
+    .mantine-Stepper-verticalSeparator {
+        border-color: var(--mantine-color-gray-7);
+    }
+
+    .mantine-Input-wrapper {
+        --input-bd: var(--mantine-color-default-border);
+    }
+
+    .mantine-Input-input {
+        color: #000;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        height: calc(1.5em + 0.88rem + 2px);
+        font-family: Sweco Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
+    }
+
+    .mantine-Input-input:is(:disabled, [data-disabled]) {
+        background-color: inherit;
+    }
+
+    .mantine-InputWrapper-root[data-error=true] .mantine-InputWrapper-label {
+        color: var(--mantine-color-error);
+    }
+
+    .mantine-Slider-track, .mantine-Slider-bar {
+        height: var(--slider-size-xs);
+    }
+
+    .mantine-Slider-bar {
+        --slider-color: var(--mantine-secondary-color-1);
+    }
+
+    .mantine-Slider-thumb {
+        background-color: var(--slider-color);
+    }
+
+    .mantine-Slider-label {
+        background-color: var(--slider-color);
+        color: var(--mantine-color-white);
+    }
+
+    .mantine-Chip-label, .mantine-Pill-label, .mantine-Pill-remove {
+        color: var(--mantine-color-white);
+    }
+    .mantine-Chip-label {
+        background-color: var(--chip-bg);
+    }
+    .mantine-Chip-label:hover {
+        background-color: var(--chip-hover);
+    }
+    .mantine-Pill-root {
+        background-color: var(--mantine-primary-color-2);
+    }
+    .mantine-Pill-root:hover {
+        background-color: var(--mantine-primary-color-1);
+    }
+
+    .mantine-SegmentedControl-root {
+        background-color: var(--mantine-color-white);
+        border: 1px solid var(--mantine-color-default-border);
+        --sc-color: var(--mantine-primary-color-2);
+    }
+
+    .mantine-SegmentedControl-label {
+        color: var(--mantine-color-text);
+    }
+
+    .mantine-SegmentedControl-label[data-active=true] {
+        color: var(--mantine-color-white);
+    }
+
+    .mantine-Select-option:hover, .mantine-MultiSelect-option:hover {
+        background-color: var(--mantine-color-default-hover);
+    }
+
+    .mantine-Menu-item {
+        --menu-item-hover: var(--mantine-color-default-hover);
+    }
+
+    .mantine-Menu-arrow {
+        top: calc(-0.225rem * var(--mantine-scale));
+    }
+
+    .mantine-Modal-body > .mantine-ButtonGroup-group:last-child,
+    .mantine-Modal-body > .mantine-Button-root:last-child,
+    .mantine-Modal-body > form:last-child > .mantine-ButtonGroup-group:last-child,
+    .mantine-Modal-body > form:last-child > .mantine-Button-root:last-child {
+        margin-top: var(--mb-padding, var(--mantine-spacing-md));
+        margin-bottom: calc(-1 * var(--mb-padding, var(--mantine-spacing-md)));
+        margin-left: calc(-1 * var(--mb-padding, var(--mantine-spacing-md)));
+        width: calc(100% + 2 * var(--mb-padding, var(--mantine-spacing-md)));
+    }
+    .mantine-Modal-body > .mantine-ButtonGroup-group:last-child > .mantine-Button-root,
+    .mantine-Modal-body > .mantine-Button-root:last-child,
+    .mantine-Modal-body > form:last-child > :is(.mantine-ButtonGroup-group, .mantine-Button-root):last-child > .mantine-Button-root,
+    .mantine-Modal-body > form:last-child > .mantine-Button-root:last-child {
+        flex-grow: 1;
+    }
+    .mantine-Modal-body > .mantine-ButtonGroup-group:last-child > .mantine-Button-root:first-child,
+    .mantine-Modal-body > form:last-child > :is(.mantine-ButtonGroup-group, .mantine-Button-root):last-child > .mantine-Button-root:first-child {
+        border-left: none;
+    }
+    .mantine-Modal-body > .mantine-ButtonGroup-group:last-child > .mantine-Button-root:last-child,
+    .mantine-Modal-body > form:last-child > :is(.mantine-ButtonGroup-group, .mantine-Button-root):last-child > .mantine-Button-root:last-child {
+        border-right: none;
+    }
+    .mantine-Modal-body > .mantine-Button-root:last-child,
+    .mantine-Modal-body > form:last-child > .mantine-Button-root:last-child {
+        border-left: none;
+        border-right: none;
+    }
+}

@@ -1,0 +1,61 @@
+@layer sweco {
+  .header {
+    background-color: var(--mantine-primary-color-filled);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: var(--mantine-spacing-md);
+    padding-right: var(--mantine-spacing-md);
+    --text-color: var(--mantine-color-white);
+    color: var(--text-color);
+    --stroke-color: var(--mantine-color-white);
+  }
+
+  .header :global(.mantine-Anchor-root) {
+    font-weight: 400;
+    color: var(--mantine-color-white) !important;
+    font-family: Sweco Sans Medium, sans-serif;
+    --stroke-color: var(--mantine-color-white);
+    box-shadow: none;
+    position: relative;
+  }
+  /* need to set this also with :hover state because of specificity rules */
+  .header :global(.mantine-Anchor-root:hover) {
+    box-shadow: none;
+  }
+
+  .header :global(.mantine-Anchor-root):before {
+    background-color: var(--mantine-color-white);
+    bottom: 0;
+    content: "";
+    height: 1px;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    transform: translateY(-5px);
+    transition: height .2s, opacity .2s, transform .2s;
+    width: 100%;
+  }
+  .header :global(.mantine-Anchor-root):hover:before, .header :global(.mantine-Anchor-root.active):before {
+    height: 2px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .header :global(.mantine-Input-wrapper) {
+    --input-bd: none;
+    --_input-bd: none;
+    --_input-bd-focus: none;
+  }
+  .header :global(.mantine-Input-wrapper) input:focus {
+    box-shadow: inset 0 0 0 0.125rem var(--mantine-secondary-color-filled);
+  }
+
+  .header :global(.mantine-ActionIcon-root) {
+    border: none;
+    --ai-size: 40px !important;
+  }
+  .header :global(.mantine-ActionIcon-root[data-variant=filled]) {
+    --_ai-color: var(--mantine-primary-color-filled);
+  }
+}
