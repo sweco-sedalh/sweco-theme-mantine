@@ -200,4 +200,34 @@
         border-left: none;
         border-right: none;
     }
+
+    .mantine-Notification-root {
+        padding: 0;
+        position: relative;
+    }
+    .mantine-Notification-root::before {
+        content: none;
+    }
+    .mantine-Notification-root .mantine-Notification-body {
+        margin-right: 0;
+    }
+    .mantine-Notification-root .mantine-Notification-title {
+        background-color: var(--notification-color);
+        padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+        font-weight: 400;
+        font-family: Sweco Sans Medium, sans-serif;
+    }
+    .mantine-Notification-root .mantine-Notification-description {
+        color: var(--mantine-color-black);
+        padding: 0.5rem;
+    }
+    .mantine-Notification-root > .mantine-Notification-closeButton {
+        color: var(--mantine-color-white);
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .mantine-Notification-root > .mantine-Notification-closeButton:hover {
+        background-color: transparent;
+    }
 }

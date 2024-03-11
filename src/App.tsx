@@ -25,6 +25,7 @@ import {
   Modal,
   MultiSelect,
   NavLink,
+  Notification,
   NumberInput,
   Pagination,
   Paper,
@@ -624,7 +625,15 @@ const App: FC = () => {
                 </Stack>
               </Paper>
               <Paper bg="gray.8" p="sm">
-                <Title order={2}>Toast message</Title>
+                <Stack>
+                  <Title order={2}>Toast message</Title>
+                  <Notification title="Message">
+                    See? Just like this.
+                  </Notification>
+                  <Notification title="This went well" color="success">
+                    Yay, successful execution!
+                  </Notification>
+                </Stack>
               </Paper>
             </Grid.Col>
             <Grid.Col span={4}>
