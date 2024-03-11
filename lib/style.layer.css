@@ -1,4 +1,4 @@
-@import "https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/fonts.css" layer(sweco);
+@import "./fonts.css";
 
 @layer sweco {
     .mantine-Anchor-root {

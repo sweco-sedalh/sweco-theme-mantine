@@ -1,0 +1,39 @@
+/* from https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/fonts.css */
+
+/* Sweco Sans v.1.6.0 */
+
+/* Sweco Sans Regular */
+@font-face {
+  font-family: 'Sweco Sans';
+  src: url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Regular.eot');
+  src: url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Regular.eot?#iefix') format('embedded-opentype'),
+       url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Regular.woff2') format('woff2'),
+       url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Regular.woff') format('woff'),
+       url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Sweco Sans Medium */
+@font-face {
+  font-family: 'Sweco Sans Medium';
+  src: url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Medium.eot');
+  src: url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Medium.eot?#iefix') format('embedded-opentype'),
+       url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Medium.woff2') format('woff2'),
+       url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Medium.woff') format('woff'),
+       url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Sweco Sans Bold */
+@font-face {
+  font-family: 'Sweco Sans Bold';
+  src: url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Bold.eot');
+  src: url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Bold.eot?#iefix') format('embedded-opentype'),
+       url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Bold.woff2') format('woff2'),
+       url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Bold.woff') format('woff'),
+       url('https://cdn.swecogroup.com/sweco-digital-platforms/5.1.2/fonts/SwecoSans-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
