@@ -25,7 +25,8 @@
     "dev": "vite",
     "build": "tsc -p ./tsconfig.build.json && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
