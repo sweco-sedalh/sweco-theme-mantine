@@ -62,7 +62,7 @@
 
     .mantine-Breadcrumbs-breadcrumb:hover {
         text-decoration: none;
-        box-shadow: inset 0 -0.125rem 0 0 var(--mantine-color-green-1);
+        box-shadow: inset 0 -0.125rem 0 0 var(--mantine-color-green-3);
     }
 
     .mantine-Breadcrumbs-breadcrumb:last-of-type {
@@ -78,7 +78,10 @@
     }
 
     .mantine-Accordion-control:where(:not(:disabled, [data-disabled])):hover {
-        background-color: var(--mantine-color-default-hover);
+        background-color: var(--mantine-color-gray-6);
+    }
+    .mantine-Accordion-control:where(:not(:disabled, [data-disabled]))[data-active]:hover {
+        background-color: var(--mantine-color-gray-5);
     }
 
     .mantine-Stepper-stepIcon[data-progress=true] {
@@ -118,7 +121,7 @@
     }
 
     .mantine-Slider-bar {
-        --slider-color: var(--mantine-secondary-color-1);
+        --slider-color: var(--mantine-secondary-color-3);
     }
 
     .mantine-Slider-thumb {
@@ -201,6 +204,17 @@
         border-right: none;
     }
 
+    .mantine-Drawer-header {
+        background-color: var(--mantine-color-gray-filled);
+        margin-bottom: var(--mantine-spacing-md);
+    }
+    .mantine-Drawer-title {
+        color: white;
+        font-weight: 400;
+        font-family: Sweco Sans Medium, sans-serif;
+        font-size: 1.25rem;
+    }
+
     .mantine-Notification-root {
         padding: 0;
         position: relative;
@@ -229,5 +243,18 @@
     }
     .mantine-Notification-root > .mantine-Notification-closeButton:hover {
         background-color: transparent;
+    }
+
+    .mantine-Accordion-item {
+        --_item-filled-color: var(--mantine-color-gray-6);
+    }
+
+    .mantine-Timeline-itemBullet {
+        --_bullet-bg-color: var(--mantine-color-gray-8);
+        --_bullet-color: var(--mantine-primary-color-3);
+    }
+    .mantine-Timeline-itemBullet[data-active] {
+        --_bullet-bg-color: var(--_tli-color, var(--tl-color));
+        --_bullet-color: var(--mantine-color-white);
     }
 }
