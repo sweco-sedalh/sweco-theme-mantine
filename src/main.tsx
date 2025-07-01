@@ -15,5 +15,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
       <App />
     </MantineProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
