@@ -15,6 +15,13 @@
     pre, code {
         border-radius: 0;
         border: 1px solid var(--mantine-color-gray-6);
+        --code-bg: var(--mantine-color-gray-8);
+        color: var(--mantine-color-ochre-0);
+    }
+    [data-mantine-color-scheme=dark] pre, [data-mantine-color-scheme=dark] code {
+        border-color: var(--mantine-color-gray-1);
+        --code-bg: var(--mantine-color-gray-2);
+        color: var(--mantine-color-ochre-3);
     }
 
     .mantine-NavLink-root {
@@ -56,7 +63,7 @@
     }
 
     .mantine-Breadcrumbs-breadcrumb {
-        color: var(--mantine-color-gray-1);
+        color: var(--mantine-color-text);
         padding-bottom: 4px;
     }
 
@@ -65,8 +72,11 @@
         box-shadow: inset 0 -0.125rem 0 0 var(--mantine-color-green-3);
     }
 
-    .mantine-Breadcrumbs-breadcrumb:last-of-type {
+    [data-mantine-color-scheme=light] .mantine-Breadcrumbs-breadcrumb:last-of-type {
         color: var(--mantine-color-gray-0);
+    }
+    [data-mantine-color-scheme=dark] .mantine-Breadcrumbs-breadcrumb:last-of-type {
+        color: var(--mantine-color-gray-8);
     }
 
     .mantine-Pagination-control {
@@ -77,11 +87,17 @@
         background-color: var(--mantine-color-default-hover);
     }
 
-    .mantine-Accordion-control:where(:not(:disabled, [data-disabled])):hover {
+    [data-mantine-color-scheme=light] .mantine-Accordion-control:where(:not(:disabled, [data-disabled])):hover {
         background-color: var(--mantine-color-gray-6);
     }
-    .mantine-Accordion-control:where(:not(:disabled, [data-disabled]))[data-active]:hover {
-        background-color: var(--mantine-color-gray-5);
+    [data-mantine-color-scheme=light] .mantine-Accordion-item {
+        --_item-filled-color: var(--mantine-color-gray-6);
+    }
+    [data-mantine-color-scheme=dark] .mantine-Accordion-control:where(:not(:disabled, [data-disabled])):hover {
+        background-color: var(--mantine-color-gray-2);
+    }
+    [data-mantine-color-scheme=dark] .mantine-Accordion-item {
+        --_item-filled-color: var(--mantine-color-gray-2);
     }
 
     .mantine-Stepper-stepIcon[data-progress=true] {
@@ -100,7 +116,7 @@
     }
 
     .mantine-Input-input {
-        color: #000;
+        color: var(--mantine-color-text);
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.5;
@@ -150,7 +166,7 @@
     }
 
     .mantine-SegmentedControl-root {
-        background-color: var(--mantine-color-white);
+        background-color: var(--mantine-primary-color-light);
         border: 1px solid var(--mantine-color-default-border);
         --sc-color: var(--mantine-primary-color-2);
     }
@@ -160,7 +176,7 @@
     }
 
     .mantine-SegmentedControl-label[data-active=true] {
-        color: var(--mantine-color-white);
+        color: color-mix(in srgb, var(--mantine-primary-color-8) 70%, white);
     }
 
     .mantine-Select-option:hover, .mantine-MultiSelect-option:hover {
@@ -232,7 +248,7 @@
         font-family: Sweco Sans Medium, sans-serif;
     }
     .mantine-Notification-root .mantine-Notification-description {
-        color: var(--mantine-color-black);
+        color: var(--mantine-color-text);
         padding: 0.5rem;
     }
     .mantine-Notification-root > .mantine-Notification-closeButton {
@@ -245,10 +261,6 @@
         background-color: transparent;
     }
 
-    .mantine-Accordion-item {
-        --_item-filled-color: var(--mantine-color-gray-6);
-    }
-
     .mantine-Timeline-itemBullet {
         --_bullet-bg-color: var(--mantine-color-gray-8);
         --_bullet-color: var(--mantine-primary-color-3);
@@ -256,5 +268,22 @@
     .mantine-Timeline-itemBullet[data-active] {
         --_bullet-bg-color: var(--_tli-color, var(--tl-color));
         --_bullet-color: var(--mantine-color-white);
+    }
+    [data-mantine-color-scheme=dark] .mantine-Timeline-root {
+        --tl-color: var(--mantine-color-white);
+    }
+    [data-mantine-color-scheme=dark] .mantine-Timeline-itemBullet[data-active] {
+        --_bullet-border-color: var(--mantine-color-white);
+        --_bullet-color: var(--mantine-primary-color-0);
+    }
+
+    .mantine-Blockquote-root {
+        --bq-bg-dark: var(--mantine-primary-color-filled) !important;
+        --bq-bg-light: var(--mantine-primary-color-filled) !important;
+        --bq-bd: var(--mantine-color-default-border) !important;
+    }
+
+    .mantine-Loader-root {
+        --loader-color: var(--mantine-color-text);
     }
 }

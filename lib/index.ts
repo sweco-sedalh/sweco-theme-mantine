@@ -1,8 +1,8 @@
 import {
-  Code,
   createTheme,
   CSSVariablesResolver,
   defaultCssVariablesResolver,
+  defaultVariantColorsResolver,
   Drawer,
   MantineColorsTuple,
   Mark,
@@ -82,38 +82,38 @@ export const theme = createTheme({
     ],
     green: [
       "#7a9b62",
-      "#86AE5D",
-      "#91C059",
+      "#86ae5d",
+      "#91c059",
       "#9dd354",
-      "#AAD96B",
-      "#B7DF81",
+      "#aad96b",
+      "#b7df81",
       "#c4e598",
-      "#CFEAAC",
-      "#DBEFC0",
+      "#cfeaac",
+      "#dbefc0",
       "#e6f4d4",
     ],
     blue: [
       "#8595af",
-      "#99AAC9",
-      "#ACBFE3",
+      "#99aac9",
+      "#acbfe3",
       "#c0d4fd",
-      "#C8DAFD",
-      "#D1DFFE",
+      "#c8dafd",
+      "#d1dffe",
       "#d9e5fe",
-      "#E0EAFE",
-      "#E8EFFE",
+      "#e0eafe",
+      "#e8effe",
       "#eff4fe",
     ],
     ochre: [
       "#a48730",
-      "#B79C3E",
-      "#CBB04D",
+      "#b79c3e",
+      "#cbb04d",
       "#dec55b",
-      "#E2CD71",
-      "#E7D487",
+      "#e2cd71",
+      "#e7d487",
       "#ebdc9d",
-      "#EFE3B0",
-      "#F3E9C3",
+      "#efe3b0",
+      "#f3e9c3",
       "#f7f0d6",
     ],
     alert: [
@@ -154,12 +154,6 @@ export const theme = createTheme({
     ],
   },
   components: {
-    Code: Code.extend({
-      defaultProps: {
-        color: "gray.8",
-        c: "ochre.0",
-      },
-    }),
     Mark: Mark.extend({
       defaultProps: {
         color: "ochre",
@@ -203,6 +197,17 @@ export const theme = createTheme({
   },
   other: {
     secondaryColor: "green",
+  },
+  variantColorResolver: (input) => {
+    if (input.variant === "outline" && input.color === "gray") {
+      return {
+        border: "1px solid var(--mantine-color-text)",
+        color: "var(--mantine-color-text)",
+        background: "transparent",
+        hover: "var(--mantine-primary-color-light-hover)",
+      };
+    }
+    return defaultVariantColorsResolver(input);
   },
 });
 
@@ -253,6 +258,9 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       "--mantine-color-dimmed": "var(--mantine-color-gray-3)",
       "--mantine-color-gray-filled": "var(--mantine-color-gray-2)",
       "--mantine-color-gray-filled-hover": "var(--mantine-color-gray-1)",
+      "--mantine-color-gray-light": "var(--mantine-color-gray-10)",
+      "--mantine-color-gray-light-hover": "var(--mantine-color-gray-9)",
+      "--mantine-color-gray-light-color": "var(--mantine-color-gray-10)",
       "--mantine-color-green-filled-hover": "var(--mantine-color-green-2)",
       "--mantine-color-green-filled": "var(--mantine-color-green-3)",
       "--mantine-color-blue-filled-hover": "var(--mantine-color-blue-2)",
@@ -266,6 +274,11 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     },
     dark: {
       ...clearColors(default_.dark),
+      "--mantine-color-anchor": `var(--mantine-color-${theme.other.secondaryColor}-3)`,
+      "--mantine-color-error":
+        "color-mix(in srgb, var(--mantine-color-alert-8) 70%, red)",
+      "--mantine-color-alert-light-color":
+        "color-mix(in srgb, var(--mantine-color-alert-8) 70%, red)",
     },
   };
 };
