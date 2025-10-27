@@ -5,16 +5,16 @@ import { Group, Stepper } from "@mantine/core";
 export const SectionWizardSteps: FC = () => (
   <Section title="Wizard steps">
     <Group mt="sm">
-      <Stepper active={3} orientation="vertical">
+      <Stepper active={2} orientation="vertical">
         <Stepper.Step label="Step 1" />
         <Stepper.Step label="Step 2" />
         <Stepper.Step label="Step 3" />
         <Stepper.Step label="Step 4" />
       </Stepper>
-      <Stepper active={3}>
+      <Stepper active={2}>
         <Stepper.Step label="Step 1" />
         <Stepper.Step label="Step 2" />
-        <Stepper.Step label="Step 3" />
+        <Stepper.Step label="Step 3" loading />
         <Stepper.Step label="Step 4" />
       </Stepper>
     </Group>

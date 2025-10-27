@@ -9,7 +9,6 @@ import {
   Grid,
   HoverCard,
   Indicator,
-  MantineColor,
   Menu,
   Modal,
   Notification,
@@ -22,7 +21,6 @@ import {
   Timeline,
   Title,
   Tooltip,
-  useMantineColorScheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -54,45 +52,33 @@ const StandardModal: FC = () => {
           <strong>Some content</strong>
         </Center>
         <Button.Group>
-          <Button
-            variant="default"
-            color="gray.0"
-            c="var(--mantine-color-text)"
-          >
+          <Button variant="default" color="gray.0">
             Cancel
           </Button>
-          <Button variant="filled" color="green" c="gray.0">
+          <Button variant="filled" color="green">
             Do something
           </Button>
         </Button.Group>
       </Modal>
-      <Button
-        fullWidth
-        variant="outline"
-        bg="var(--mantine-primary-color-light)"
-        onClick={open}
-      >
+      <Button fullWidth variant="filled" color="green" onClick={open}>
         Show modal
       </Button>
     </>
   );
 };
 export const SectionComponents: FC = () => {
-  const { colorScheme } = useMantineColorScheme();
-  const bg: MantineColor = colorScheme === "dark" ? "gray.1" : "gray.8";
-
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <Section title="Components">
       <Grid>
         <Grid.Col span={4}>
-          <Paper bg={bg} p="sm" mb="md">
+          <Paper p="sm" mb="md">
             <Stack>
               <Title order={2}>Modals</Title>
               <StandardModal />
             </Stack>
           </Paper>
-          <Paper bg={bg} p="sm" mb="md">
+          <Paper p="sm" mb="md">
             <Stack>
               <Title order={2}>Toast message</Title>
               <Notification title="Message">See? Just like this.</Notification>
@@ -101,7 +87,7 @@ export const SectionComponents: FC = () => {
               </Notification>
             </Stack>
           </Paper>
-          <Paper bg={bg} p="sm">
+          <Paper p="sm">
             <Stack>
               <Title order={2}>Timeline</Title>
               <Timeline active={1} bulletSize={24} lineWidth={2}>
@@ -191,7 +177,7 @@ export const SectionComponents: FC = () => {
           </Paper>
         </Grid.Col>
         <Grid.Col span={4}>
-          <Paper bg={bg} p="sm" mb="md">
+          <Paper p="sm" mb="md">
             <Stack>
               <Title order={2}>Popovers</Title>
               <Popover width={200} position="bottom" withArrow shadow="md">
@@ -207,7 +193,7 @@ export const SectionComponents: FC = () => {
               </Popover>
             </Stack>
           </Paper>
-          <Paper bg={bg} p="sm" mb="md">
+          <Paper p="sm" mb="md">
             <Stack>
               <Title order={2}>Drawer</Title>
               <Drawer opened={opened} onClose={close} title="Authentication">
@@ -216,7 +202,7 @@ export const SectionComponents: FC = () => {
               <Button onClick={open}>Open drawer</Button>
             </Stack>
           </Paper>
-          <Paper bg={bg} p="sm" mb="md">
+          <Paper p="sm" mb="md">
             <Stack>
               <Title order={2}>Hover card</Title>
               <HoverCard width={280} shadow="md">
@@ -233,7 +219,7 @@ export const SectionComponents: FC = () => {
               </HoverCard>
             </Stack>
           </Paper>
-          <Paper bg={bg} p="sm" mb="md">
+          <Paper p="sm" mb="md">
             <Stack>
               <Title order={2}>Menu</Title>
               <Menu shadow="md" width={200}>
@@ -317,7 +303,7 @@ export const SectionComponents: FC = () => {
               </Menu>
             </Stack>
           </Paper>
-          <Paper bg={bg} p="sm" mb="md">
+          <Paper p="sm" mb="md">
             <Stack>
               <Title order={2}>Tooltips</Title>
               <Tooltip label="Tooltip">
@@ -325,7 +311,7 @@ export const SectionComponents: FC = () => {
               </Tooltip>
             </Stack>
           </Paper>
-          <Paper bg={bg} p="sm">
+          <Paper p="sm">
             <Stack>
               <Title order={2}>Skeleton</Title>
               <div>
@@ -338,12 +324,12 @@ export const SectionComponents: FC = () => {
           </Paper>
         </Grid.Col>
         <Grid.Col span={4}>
-          <Paper bg={bg} p="sm" mb="md">
+          <Paper p="sm" mb="md">
             <Stack>
               <Title order={2}>Date & time</Title>
             </Stack>
           </Paper>
-          <Paper bg={bg} p="sm" mb="md">
+          <Paper p="sm" mb="md">
             <Stack>
               <Title order={2}>Accordion</Title>
               <Accordion defaultValue="Apples">
@@ -388,7 +374,7 @@ export const SectionComponents: FC = () => {
               </Accordion>
             </Stack>
           </Paper>
-          <Paper bg={bg} p="sm">
+          <Paper p="sm">
             <Stack>
               <Title order={2}>Avatar & Indicator</Title>
               <div style={{ width: "fit-content" }}>

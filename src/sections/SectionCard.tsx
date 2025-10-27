@@ -26,7 +26,7 @@ export const SectionCard: FC = () => (
             Norway
           </Text>
 
-          <Button color="blue" fullWidth mt="md">
+          <Button color="green" variant="outline" fullWidth mt="md">
             Book classic tour now
           </Button>
         </Card>

@@ -1,21 +1,26 @@
 @layer sweco {
   .header {
-    background-color: var(--mantine-primary-color-filled);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-left: var(--mantine-spacing-md);
     padding-right: var(--mantine-spacing-md);
+    background-color: var(--mantine-primary-color-7);
     --text-color: var(--mantine-color-white);
     color: var(--text-color);
     --stroke-color: var(--mantine-color-white);
   }
+  .header-light {
+    background-color: var(--mantine-color-white);
+    --text-color: var(--mantine-color-black);
+    --stroke-color: var(--mantine-color-black);
+    box-shadow: var(--mantine-shadow-md);
+  }
 
   .header :global(.mantine-Anchor-root) {
     font-weight: 400;
-    color: var(--mantine-color-white) !important;
-    font-family: Sweco Sans Medium, sans-serif;
-    --stroke-color: var(--mantine-color-white);
+    color: var(--text-color) !important;
+    --stroke-color: var(--stroke-color);
     box-shadow: none;
     position: relative;
   }
@@ -33,10 +38,17 @@
     opacity: 0;
     position: absolute;
     transform: translateY(-5px);
-    transition: height .2s, opacity .2s, transform .2s;
+    transition:
+      height 0.2s,
+      opacity 0.2s,
+      transform 0.2s;
     width: 100%;
   }
-  .header :global(.mantine-Anchor-root):hover:before, .header :global(.mantine-Anchor-root.active):before {
+  .header-light :global(.mantine-Anchor-root):before {
+    background-color: var(--mantine-color-black);
+  }
+  .header :global(.mantine-Anchor-root):hover:before,
+  .header :global(.mantine-Anchor-root.active):before {
     height: 2px;
     opacity: 1;
     transform: translateY(0);
@@ -55,7 +67,7 @@
     border: none;
     --ai-size: 40px !important;
   }
-  .header :global(.mantine-ActionIcon-root[data-variant=filled]) {
+  .header :global(.mantine-ActionIcon-root[data-variant="filled"]) {
     --_ai-color: var(--mantine-primary-color-filled);
   }
 }

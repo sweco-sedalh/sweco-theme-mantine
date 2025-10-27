@@ -73,7 +73,7 @@ export const SectionNavigation: FC = () => (
             <Anchor href="#">Lorem ipsum</Anchor>
           </Breadcrumbs>
           <Title order={2}>Pagination</Title>
-          <Pagination total={3} />
+          <Pagination total={10} />
           <Title order={2}>Accordion</Title>
           <Accordion defaultValue="1">
             <Accordion.Item value="1">
@@ -99,59 +99,65 @@ export const SectionNavigation: FC = () => (
       </Grid.Col>
       <Grid.Col span={12}>
         <Title order={2}>Navbar</Title>
-        <AppShell header={{ height: rem(56) }} padding="md">
-          <Header style={{ position: "relative" }}>
-            <Group>
-              <Burger size="sm" hiddenFrom="sm" color="white" />
-              <SwecoLogo size={28} />
-            </Group>
-            <Group visibleFrom="sm" gap={0}>
-              <Autocomplete
-                style={{}}
-                placeholder="Search"
-                data={[
-                  "React",
-                  "Angular",
-                  "Vue",
-                  "Next.js",
-                  "Riot.js",
-                  "Svelte",
-                  "Blitz.js",
-                ]}
-                visibleFrom="xs"
-              />
-              <ActionIcon variant="filled" color="green">
-                <FontAwesomeIcon icon={faSearch} />
-              </ActionIcon>
-            </Group>
-            <Group gap={15} style={{}} visibleFrom="sm">
-              <Anchor href="#">Start</Anchor>
-              <Menu
-                trigger="hover"
-                transitionProps={{ exitDuration: 0 }}
-                withinPortal
-                withArrow
-                offset={11}
-                arrowOffset={0}
-              >
-                <Menu.Target>
-                  <Anchor href="#" onClick={(evt) => evt.preventDefault()}>
-                    <Center>
-                      <span style={{ marginRight: rem(5) }}>Dropdown</span>
-                      <FontAwesomeIcon icon={faChevronDown} />
-                    </Center>
-                  </Anchor>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  <Menu.Item>Action</Menu.Item>
-                  <Menu.Item>Another action</Menu.Item>
-                  <Menu.Item>Something else here</Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
-              <Anchor href="#">Link</Anchor>
-            </Group>
-          </Header>
-        </AppShell>
+        {[false, true].map((light, idx) => (
+          <AppShell
+            key={idx}
+            header={{ height: rem(56) }}
+            padding="md"
+            mb={idx === 0 ? "xl" : 0}
+          >
+            <Header style={{ position: "relative" }} light={light}>
+              <Group>
+                <Burger size="sm" hiddenFrom="sm" color="white" />
+                <SwecoLogo size={28} black={light || undefined} />
+              </Group>
+              <Group visibleFrom="sm" gap={0}>
+                <Autocomplete
+                  style={{}}
+                  placeholder="Search"
+                  data={[
+                    "React",
+                    "Angular",
+                    "Vue",
+                    "Next.js",
+                    "Riot.js",
+                    "Svelte",
+                    "Blitz.js",
+                  ]}
+                  visibleFrom="xs"
+                />
+                <ActionIcon variant="filled" color="green">
+                  <FontAwesomeIcon icon={faSearch} />
+                </ActionIcon>
+              </Group>
+              <Group gap={15} style={{}} visibleFrom="sm">
+                <Anchor href="#">Start</Anchor>
+                <Menu
+                  trigger="hover"
+                  transitionProps={{ exitDuration: 0 }}
+                  withinPortal
+                  offset={11}
+                  arrowOffset={0}
+                >
+                  <Menu.Target>
+                    <Anchor href="#" onClick={(evt) => evt.preventDefault()}>
+                      <Center>
+                        <span style={{ marginRight: rem(5) }}>Dropdown</span>
+                        <FontAwesomeIcon icon={faChevronDown} />
+                      </Center>
+                    </Anchor>
+                  </Menu.Target>
+                  <Menu.Dropdown>
+                    <Menu.Item>Action</Menu.Item>
+                    <Menu.Item>Another action</Menu.Item>
+                    <Menu.Item>Something else here</Menu.Item>
+                  </Menu.Dropdown>
+                </Menu>
+                <Anchor href="#">Link</Anchor>
+              </Group>
+            </Header>
+          </AppShell>
+        ))}
       </Grid.Col>
     </Grid>
   </Section>

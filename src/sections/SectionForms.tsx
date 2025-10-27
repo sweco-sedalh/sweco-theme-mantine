@@ -7,7 +7,6 @@ import {
   ColorInput,
   Grid,
   Group,
-  MantineColor,
   MultiSelect,
   NumberInput,
   Paper,
@@ -22,19 +21,14 @@ import {
   TagsInput,
   TextInput,
   Title,
-  useMantineColorScheme,
 } from "@mantine/core";
 
 export const SectionForms: FC = () => {
-  const { colorScheme } = useMantineColorScheme();
-
-  const bg: MantineColor = colorScheme === "dark" ? "gray.1" : "gray.8";
-
   return (
     <Section title="Forms">
       <Grid mt="sm">
         <Grid.Col span={6}>
-          <Paper bg={bg} p="sm">
+          <Paper p="sm">
             <Stack>
               <Title order={2}>Input</Title>
               <TextInput label="Text" placeholder="The placeholder" />
@@ -91,7 +85,7 @@ export const SectionForms: FC = () => {
           </Paper>
         </Grid.Col>
         <Grid.Col span={6}>
-          <Paper bg={bg} p="sm">
+          <Paper p="sm">
             <Stack>
               <Title order={2}>Validation</Title>
               <TextInput
@@ -113,7 +107,7 @@ export const SectionForms: FC = () => {
               />
             </Stack>
           </Paper>
-          <Paper bg={bg} p="sm" mt="lg">
+          <Paper p="sm" mt="lg">
             <Stack>
               <Title order={2}>Alerts</Title>
               <Alert
@@ -136,7 +130,7 @@ export const SectionForms: FC = () => {
               </Alert>
               <Alert
                 variant="outline"
-                color="blue.0"
+                color="blue"
                 withCloseButton
                 title="Alert"
               >

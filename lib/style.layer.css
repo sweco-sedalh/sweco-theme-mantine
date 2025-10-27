@@ -1,289 +1,172 @@
 @import "./fonts.css";
 
 @layer sweco {
-    .mantine-Anchor-root {
-        color: currentColor;
-        text-decoration: none;
-        box-shadow: inset 0 -0.125rem 0 0 var(--stroke-color, var(--mantine-color-anchor));
-        transition: border-color .2s ease-in-out, box-shadow .2s ease-in-out;
-    }
+  .mantine-Anchor-root {
+    color: currentColor;
+    text-decoration: none;
+    box-shadow: inset 0 -0.125rem 0 0
+      var(--stroke-color, var(--mantine-color-anchor));
+    transition:
+      border-color 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out;
+  }
+  .mantine-Anchor-root:hover {
+    box-shadow: inset 0 -1rem 0 0
+      var(--stroke-color, var(--mantine-color-anchor));
+  }
 
-    .mantine-Anchor-root:hover {
-        box-shadow: inset 0 -1rem 0 0 var(--stroke-color, var(--mantine-color-anchor));
-    }
+  .mantine-NavLink-root {
+    --nl-bg: var(--mantine-secondary-color-1);
+    --nl-color: var(--mantine-color-black);
+    --nl-hover: var(--mantine-secondary-color-light-hover);
+  }
+  [data-mantine-color-scheme="dark"] .mantine-NavLink-root {
+    --nl-bg: var(--mantine-secondary-color-9);
+    --nl-color: var(--mantine-color-white);
+    --nl-hover: var(--mantine-secondary-color-9);
+  }
+  .mantine-NavLink-root:hover {
+    background-color: var(--nl-hover);
+  }
 
-    pre, code {
-        border-radius: 0;
-        border: 1px solid var(--mantine-color-gray-6);
-        --code-bg: var(--mantine-color-gray-8);
-        color: var(--mantine-color-ochre-0);
-    }
-    [data-mantine-color-scheme=dark] pre, [data-mantine-color-scheme=dark] code {
-        border-color: var(--mantine-color-gray-1);
-        --code-bg: var(--mantine-color-gray-2);
-        color: var(--mantine-color-ochre-3);
-    }
+  .mantine-NavLink-label,
+  .mantine-Tabs-tab,
+  .mantine-Breadcrumbs-root,
+  .mantine-Pagination-control,
+  .mantine-Accordion-control,
+  .mantine-InputWrapper-label,
+  .mantine-Radio-label,
+  .mantine-Checkbox-label,
+  .mantine-Switch-label,
+  .mantine-SegmentedControl-label {
+    font-size: 16px;
+    font-weight: 400;
+  }
 
-    .mantine-NavLink-root {
-        border-top: 1px solid var(--mantine-color-default-border);
-        --nl-bg: var(--mantine-color-gray-2);
-        --nl-color: var(--mantine-color-white);
-        --nl-hover: var(--mantine-color-default-hover);
-    }
+  .mantine-Tabs-root {
+    --tab-hover-color: var(--mantine-color-default-hover);
+  }
+  button.mantine-Tabs-tab:hover:not(:disabled, [data-active="true"]) {
+    background-color: var(--tab-hover-color);
+  }
+  button.mantine-Tabs-tab:hover[data-active="true"][data-variant="pills"] {
+    background-color: var(--mantine-color-gray-0);
+  }
 
-    .mantine-NavLink-root[data-active=true] {
-        --nl-hover: var(--mantine-color-gray-0);
-    }
+  .mantine-Breadcrumbs-breadcrumb {
+    color: var(--mantine-color-text);
+    padding-bottom: 4px;
+  }
+  .mantine-Breadcrumbs-breadcrumb:hover {
+    text-decoration: none;
+    box-shadow: inset 0 -1rem 0 0
+      var(--stroke-color, var(--mantine-color-anchor));
+  }
 
-    .mantine-NavLink-root:last-of-type {
-        border-bottom: 1px solid var(--mantine-color-default-border);
-    }
+  .mantine-Pagination-control {
+    border: none;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  [data-mantine-color-scheme="light"] .mantine-Pagination-control {
+    background-color: var(--mantine-secondary-color-0);
+  }
+  [data-mantine-color-scheme="light"] .mantine-Pagination-control:hover,
+  [data-mantine-color-scheme="light"]
+    .mantine-Pagination-control[data-active="true"] {
+    background-color: var(--mantine-secondary-color-3);
+  }
+  [data-mantine-color-scheme="dark"] .mantine-Pagination-control {
+    background-color: var(--mantine-secondary-color-9);
+    color: var(--mantine-color-white);
+  }
+  [data-mantine-color-scheme="dark"] .mantine-Pagination-control:hover,
+  [data-mantine-color-scheme="dark"]
+    .mantine-Pagination-control[data-active="true"] {
+    background-color: var(--mantine-secondary-color-4);
+    color: var(--mantine-color-black);
+  }
 
-    .mantine-NavLink-root:hover {
-        background-color: var(--nl-hover);
-    }
+  .mantine-Stepper-stepIcon[data-progress="true"] {
+    background-color: var(--mantine-secondary-color-light);
+  }
+  .mantine-Stepper-stepIcon:not([data-progress="true"]):not(
+      [data-completed="true"]
+    ) {
+    background-color: transparent;
+  }
+  .mantine-Stepper-verticalSeparator {
+    border-color: var(--mantine-color-default-border);
+  }
 
-    .mantine-NavLink-label, .mantine-Tabs-tab, .mantine-Breadcrumbs-root, .mantine-Pagination-control, .mantine-Accordion-control, .mantine-InputWrapper-label,
-    .mantine-Radio-label, .mantine-Checkbox-label, .mantine-Switch-label, .mantine-SegmentedControl-label {
-        font-size: 16px;
-        font-weight: 400;
-        font-family: Sweco Sans Medium, sans-serif;
-    }
+  .mantine-Input-input {
+    font-size: 1rem;
+    line-height: 1.5;
+    height: calc(1.5em + 0.88rem + 2px);
+  }
+  .mantine-InputWrapper-root[data-error="true"] .mantine-InputWrapper-label {
+    color: var(--mantine-color-error);
+  }
 
-    .mantine-Tabs-root {
-        --tab-hover-color: var(--mantine-color-default-hover);
-    }
+  .mantine-Slider-track,
+  .mantine-Slider-bar {
+    height: var(--slider-size-xs);
+  }
+  .mantine-Slider-thumb {
+    border-color: var(--slider-color);
+  }
 
-    button.mantine-Tabs-tab:hover:not(:disabled, [data-active=true]) {
-        background-color: var(--tab-hover-color);
-    }
+  .mantine-SegmentedControl-root {
+    background-color: transparent;
+    border: 1px solid var(--mantine-color-default-border);
+  }
 
-    button.mantine-Tabs-tab:hover[data-active=true][data-variant=pills] {
-        background-color: var(--mantine-color-gray-0);
-    }
+  .mantine-Drawer-header {
+    background-color: var(--mantine-primary-color-7);
+    margin-bottom: var(--mantine-spacing-md);
+    color: var(--mantine-color-white);
+  }
 
-    .mantine-Breadcrumbs-breadcrumb {
-        color: var(--mantine-color-text);
-        padding-bottom: 4px;
-    }
+  .mantine-Blockquote-root {
+    font-size: var(--mantine-font-size-xl);
+    font-style: italic;
+  }
 
-    .mantine-Breadcrumbs-breadcrumb:hover {
-        text-decoration: none;
-        box-shadow: inset 0 -0.125rem 0 0 var(--mantine-color-green-3);
-    }
-
-    [data-mantine-color-scheme=light] .mantine-Breadcrumbs-breadcrumb:last-of-type {
-        color: var(--mantine-color-gray-0);
-    }
-    [data-mantine-color-scheme=dark] .mantine-Breadcrumbs-breadcrumb:last-of-type {
-        color: var(--mantine-color-gray-8);
-    }
-
-    .mantine-Pagination-control {
-        border: none;
-    }
-
-    .mantine-Pagination-control:hover {
-        background-color: var(--mantine-color-default-hover);
-    }
-
-    [data-mantine-color-scheme=light] .mantine-Accordion-control:where(:not(:disabled, [data-disabled])):hover {
-        background-color: var(--mantine-color-gray-6);
-    }
-    [data-mantine-color-scheme=light] .mantine-Accordion-item {
-        --_item-filled-color: var(--mantine-color-gray-6);
-    }
-    [data-mantine-color-scheme=dark] .mantine-Accordion-control:where(:not(:disabled, [data-disabled])):hover {
-        background-color: var(--mantine-color-gray-2);
-    }
-    [data-mantine-color-scheme=dark] .mantine-Accordion-item {
-        --_item-filled-color: var(--mantine-color-gray-2);
-    }
-
-    .mantine-Stepper-stepIcon[data-progress=true] {
-        background-color: transparent;
-        border: none;
-        box-shadow: inset 0 0 0 0.125rem var(--mantine-color-gray-7);
-        color: var(--mantine-color-gray-1);
-    }
-
-    .mantine-Stepper-verticalSeparator {
-        border-color: var(--mantine-color-gray-7);
-    }
-
-    .mantine-Input-wrapper {
-        --input-bd: var(--mantine-color-default-border);
-    }
-
-    .mantine-Input-input {
-        color: var(--mantine-color-text);
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        height: calc(1.5em + 0.88rem + 2px);
-        font-family: Sweco Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
-    }
-
-    .mantine-Input-input:is(:disabled, [data-disabled]) {
-        background-color: inherit;
-    }
-
-    .mantine-InputWrapper-root[data-error=true] .mantine-InputWrapper-label {
-        color: var(--mantine-color-error);
-    }
-
-    .mantine-Slider-track, .mantine-Slider-bar {
-        height: var(--slider-size-xs);
-    }
-
-    .mantine-Slider-bar {
-        --slider-color: var(--mantine-secondary-color-3);
-    }
-
-    .mantine-Slider-thumb {
-        background-color: var(--slider-color);
-    }
-
-    .mantine-Slider-label {
-        background-color: var(--slider-color);
-        color: var(--mantine-color-white);
-    }
-
-    .mantine-Chip-label, .mantine-Pill-label, .mantine-Pill-remove {
-        color: var(--mantine-color-white);
-    }
-    .mantine-Chip-label {
-        background-color: var(--chip-bg);
-    }
-    .mantine-Chip-label:hover {
-        background-color: var(--chip-hover);
-    }
-    .mantine-Pill-root {
-        background-color: var(--mantine-primary-color-2);
-    }
-    .mantine-Pill-root:hover {
-        background-color: var(--mantine-primary-color-1);
-    }
-
-    .mantine-SegmentedControl-root {
-        background-color: var(--mantine-primary-color-light);
-        border: 1px solid var(--mantine-color-default-border);
-        --sc-color: var(--mantine-primary-color-2);
-    }
-
-    .mantine-SegmentedControl-label {
-        color: var(--mantine-color-text);
-    }
-
-    .mantine-SegmentedControl-label[data-active=true] {
-        color: color-mix(in srgb, var(--mantine-primary-color-8) 70%, white);
-    }
-
-    .mantine-Select-option:hover, .mantine-MultiSelect-option:hover {
-        background-color: var(--mantine-color-default-hover);
-    }
-
-    .mantine-Menu-item {
-        --menu-item-hover: var(--mantine-color-default-hover);
-    }
-
-    .mantine-Menu-arrow {
-        top: calc(-0.225rem * var(--mantine-scale));
-    }
-
-    .mantine-Modal-body > .mantine-ButtonGroup-group:last-child,
-    .mantine-Modal-body > .mantine-Button-root:last-child,
-    .mantine-Modal-body > form:last-child > .mantine-ButtonGroup-group:last-child,
-    .mantine-Modal-body > form:last-child > .mantine-Button-root:last-child {
-        margin-top: var(--mb-padding, var(--mantine-spacing-md));
-        margin-bottom: calc(-1 * var(--mb-padding, var(--mantine-spacing-md)));
-        margin-left: calc(-1 * var(--mb-padding, var(--mantine-spacing-md)));
-        width: calc(100% + 2 * var(--mb-padding, var(--mantine-spacing-md)));
-    }
-    .mantine-Modal-body > .mantine-ButtonGroup-group:last-child > .mantine-Button-root,
-    .mantine-Modal-body > .mantine-Button-root:last-child,
-    .mantine-Modal-body > form:last-child > :is(.mantine-ButtonGroup-group, .mantine-Button-root):last-child > .mantine-Button-root,
-    .mantine-Modal-body > form:last-child > .mantine-Button-root:last-child {
-        flex-grow: 1;
-    }
-    .mantine-Modal-body > .mantine-ButtonGroup-group:last-child > .mantine-Button-root:first-child,
-    .mantine-Modal-body > form:last-child > :is(.mantine-ButtonGroup-group, .mantine-Button-root):last-child > .mantine-Button-root:first-child {
-        border-left: none;
-    }
-    .mantine-Modal-body > .mantine-ButtonGroup-group:last-child > .mantine-Button-root:last-child,
-    .mantine-Modal-body > form:last-child > :is(.mantine-ButtonGroup-group, .mantine-Button-root):last-child > .mantine-Button-root:last-child {
-        border-right: none;
-    }
-    .mantine-Modal-body > .mantine-Button-root:last-child,
-    .mantine-Modal-body > form:last-child > .mantine-Button-root:last-child {
-        border-left: none;
-        border-right: none;
-    }
-
-    .mantine-Drawer-header {
-        background-color: var(--mantine-color-gray-filled);
-        margin-bottom: var(--mantine-spacing-md);
-    }
-    .mantine-Drawer-title {
-        color: white;
-        font-weight: 400;
-        font-family: Sweco Sans Medium, sans-serif;
-        font-size: 1.25rem;
-    }
-
-    .mantine-Notification-root {
-        padding: 0;
-        position: relative;
-    }
-    .mantine-Notification-root::before {
-        content: none;
-    }
-    .mantine-Notification-root .mantine-Notification-body {
-        margin-right: 0;
-    }
-    .mantine-Notification-root .mantine-Notification-title {
-        background-color: var(--notification-color);
-        padding: 0.25rem 0.5rem 0.25rem 0.5rem;
-        font-weight: 400;
-        font-family: Sweco Sans Medium, sans-serif;
-    }
-    .mantine-Notification-root .mantine-Notification-description {
-        color: var(--mantine-color-text);
-        padding: 0.5rem;
-    }
-    .mantine-Notification-root > .mantine-Notification-closeButton {
-        color: var(--mantine-color-white);
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-    .mantine-Notification-root > .mantine-Notification-closeButton:hover {
-        background-color: transparent;
-    }
-
-    .mantine-Timeline-itemBullet {
-        --_bullet-bg-color: var(--mantine-color-gray-8);
-        --_bullet-color: var(--mantine-primary-color-3);
-    }
-    .mantine-Timeline-itemBullet[data-active] {
-        --_bullet-bg-color: var(--_tli-color, var(--tl-color));
-        --_bullet-color: var(--mantine-color-white);
-    }
-    [data-mantine-color-scheme=dark] .mantine-Timeline-root {
-        --tl-color: var(--mantine-color-white);
-    }
-    [data-mantine-color-scheme=dark] .mantine-Timeline-itemBullet[data-active] {
-        --_bullet-border-color: var(--mantine-color-white);
-        --_bullet-color: var(--mantine-primary-color-0);
-    }
-
-    .mantine-Blockquote-root {
-        --bq-bg-dark: var(--mantine-primary-color-filled) !important;
-        --bq-bg-light: var(--mantine-primary-color-filled) !important;
-        --bq-bd: var(--mantine-color-default-border) !important;
-    }
-
-    .mantine-Loader-root {
-        --loader-color: var(--mantine-color-text);
-    }
+  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"] {
+    background-color: var(--mantine-color-gray-1);
+    color: var(--mantine-color-text);
+    border: none;
+  }
+  [data-mantine-color-scheme="dark"]
+    .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"] {
+    background-color: var(--mantine-color-gray-8);
+    --button-color: var(
+      --mantine-color-green-8
+    ) !important; /* NOTE: does not take into account assigned color */
+  }
+  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
+    .mantine-Button-inner {
+    justify-content: space-between;
+  }
+  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
+    .mantine-Button-section {
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--button-color);
+    height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: var(--button-radius);
+    margin-right: calc(-1 * var(--button-padding-x) / 1.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]:hover
+    .mantine-Button-section {
+    background-color: var(--mantine-color-green-3);
+  }
+  [data-mantine-color-scheme="dark"]
+    .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]:hover
+    .mantine-Button-section {
+    background-color: var(--mantine-color-green-9);
+  }
 }
