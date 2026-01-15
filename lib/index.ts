@@ -30,7 +30,7 @@ export { Header } from "./components/Header.tsx";
 
 import "./style.layer.css";
 
-type ExtendedColor =
+export type ExtendedColor =
   | "white"
   | "gray"
   | "green"
