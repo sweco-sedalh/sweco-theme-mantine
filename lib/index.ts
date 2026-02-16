@@ -144,28 +144,28 @@ export const theme = createTheme({
       darken("#727063", 0.1),
     ],
     alert: [
-      "#a70707",
-      "#a70707",
-      "#a70707",
-      "#a70707",
-      "#a70707",
-      "#a70707",
-      "#a70707",
-      "#a70707",
-      "#a70707",
-      "#a70707",
+      "#fbeaea", // lightest
+      "#f5c2c2",
+      "#ee9a9a", // official
+      "#e66e6e",
+      "#de4242", // official
+      "#b32f2f",
+      "#871c1c", // official
+      "#770f0f",
+      "#660707", // official
+      darken("#660707", 0.1),
     ],
     warning: [
+      "#fff8e1", // lightest
+      "#ffe1a3",
+      "#ffd066", // official
+      "#ffc233",
+      "#ffb300", // official
       "#cd9e08",
-      "#cd9e08",
-      "#cd9e08",
-      "#cd9e08",
-      "#cd9e08",
-      "#cd9e08",
-      "#cd9e08",
-      "#cd9e08",
-      "#cd9e08",
-      "#cd9e08",
+      "#a67c00", // official
+      "#8c6a00",
+      "#735800", // official
+      darken("#735800", 0.1),
     ],
     success: [
       "#eef9e9", // official
@@ -322,7 +322,7 @@ const BUILTIN_COLORS = [
 function clearColors(input: Record<string, string>): Record<string, string> {
   return Object.fromEntries(
     Object.entries(input).filter(
-      ([key]) =>
+      ([key, _]) =>
         !BUILTIN_COLORS.some((c) => key.startsWith(`--mantine-color-${c}-`)),
     ),
   );
