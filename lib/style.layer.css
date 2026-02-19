@@ -87,16 +87,16 @@
     color: var(--mantine-color-black);
   }
 
-  .mantine-Stepper-stepIcon[data-progress="true"] {
-    background-color: var(--mantine-secondary-color-light);
+  .mantine-Stepper-stepIcon {
+    background-color: var(--mantine-color-green-2);
+    border-color: var(--mantine-color-green-4);
   }
-  .mantine-Stepper-stepIcon:not([data-progress="true"]):not(
-      [data-completed="true"]
-    ) {
+  .mantine-Stepper-stepIcon:not([data-progress="true"]) {
     background-color: transparent;
   }
   .mantine-Stepper-verticalSeparator {
     border-color: var(--mantine-color-default-border);
+    border-radius: 2px;
   }
 
   .mantine-Input-input {
