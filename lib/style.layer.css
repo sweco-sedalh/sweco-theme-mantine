@@ -94,9 +94,16 @@
   .mantine-Stepper-stepIcon:not([data-progress="true"]) {
     background-color: transparent;
   }
-  .mantine-Stepper-verticalSeparator {
+
+  .mantine-Stepper-verticalSeparator,
+  .mantine-Stepper-separator[data-active],
+  .mantine-Stepper-separator {
+    background-color: var(--mantine-color-default-border);
     border-color: var(--mantine-color-default-border);
-    border-radius: 2px;
+  }
+
+  .mantine-Stepper-separator {
+    width: var(--mantine-spacing-xl);
   }
 
   .mantine-Input-input {
