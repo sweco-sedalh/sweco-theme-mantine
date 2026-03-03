@@ -55,6 +55,11 @@ export const theme = createTheme({
   primaryColor: "gray",
   primaryShade: 4,
   defaultRadius: 4,
+  radius: {
+    pill: "9999px", // Usage: Button, Search field
+    md: "4px", // Forms, Input, Select, Choice chip, Checkbox, Tooltip, Dropdowns, Toast
+    sm: "2px", // Modal dialogs, Link body text hover, focus-visible
+  },
   autoContrast: true,
   fontFamily:
     "Sweco Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif",
