@@ -2,7 +2,6 @@ import { FC } from "react";
 import Section from "../Section.tsx";
 import {
   Anchor,
-  Blockquote,
   Code,
   Grid,
   List,
@@ -21,11 +20,21 @@ export const SectionTypography: FC = () => (
             Heading h{h}
           </Title>
         ))}
+        <Text variant="preamble">Preamble</Text>
+        <Text variant="blockquote">Blockquote</Text>
+        <Text variant="bodyDefault">Default body text, forms</Text>
+        <Text variant="bodySmall">
+          Small body text, form label, breadcrumbs
+        </Text>
+        <Text variant="bodyInfoText">Toast, info text, badge, tags</Text>
+        <Text variant="bodyTiny">Tiny body text, Form helper text</Text>
         <Text size="xs">Font-size-xs</Text>
         <Text size="sm">Font-size-sm</Text>
         <Text size="md">Font-size-sm</Text>
         <Text size="lg">Font-size-lg</Text>
         <Text size="xl">Font-size-xl</Text>
+      </Grid.Col>
+      <Grid.Col span={6}>
         <Text>
           This line has <Anchor href="#">inline link</Anchor>
         </Text>
@@ -53,11 +62,6 @@ export const SectionTypography: FC = () => (
           &lt;pre&gt; &lt;code&gt;This is a pre code block&lt;/code&gt;
           &lt;/pre&gt;
         </Code>
-      </Grid.Col>
-      <Grid.Col span={6}>
-        <Blockquote cite="- Persona Persona - Source Title">
-          Blockquote, adipiscing elit. Integer posuere lorem.
-        </Blockquote>
         <Title order={2}>Lists</Title>
         <List>
           <List.Item>Unordered list item 1</List.Item>
