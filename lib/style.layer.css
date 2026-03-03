@@ -158,7 +158,7 @@
   .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
     .mantine-Button-section {
     transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background-color: var(--button-color);
+    background-color: var(--mantine-color-green-4);
     height: 100%;
     aspect-ratio: 1/1;
     border-radius: var(--button-radius);

@@ -22,12 +22,15 @@ import {
   Slider,
   Stepper,
   Switch,
+  Text,
   Timeline,
   Tooltip,
 } from "@mantine/core";
 
 export { SwecoLogo } from "./components/SwecoLogo.tsx";
 export { Header } from "./components/Header.tsx";
+import { textStyles } from "./textStyles.tsx";
+import type { TextStyle } from "./textStyles.tsx";
 
 import "./style.layer.css";
 
@@ -50,6 +53,9 @@ declare module "@mantine/core" {
   export interface MantineThemeOther {
     secondaryColor: "green" | "blue" | "peach" | "sand";
   }
+  export interface TextProps {
+    variant?: TextStyle;
+  }
 }
 
 export const theme = createTheme({
@@ -68,12 +74,12 @@ export const theme = createTheme({
     fontFamily:
       "Sweco Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif",
     sizes: {
-      h1: { fontWeight: "400", fontSize: "2.25rem", lineHeight: "2.625rem" },
-      h2: { fontWeight: "400", fontSize: "1.75rem", lineHeight: "2.25rem" },
-      h3: { fontWeight: "400", fontSize: "1.5rem", lineHeight: "1.75rem" },
-      h4: { fontWeight: "400", fontSize: "1.25rem", lineHeight: "1.5rem" },
-      h5: { fontWeight: "400", fontSize: "1rem", lineHeight: "1.5rem" },
-      h6: { fontWeight: "400", fontSize: ".75rem", lineHeight: "1rem" },
+      h1: { fontWeight: "400", fontSize: "3.5rem", lineHeight: "5rem" },
+      h2: { fontWeight: "400", fontSize: "2.5rem", lineHeight: "3rem" },
+      h3: { fontWeight: "400", fontSize: "2rem", lineHeight: "2.5rem" },
+      h4: { fontWeight: "400", fontSize: "1.5rem", lineHeight: "2rem" },
+      h5: { fontWeight: "500", fontSize: "1.125rem", lineHeight: "1.5rem" },
+      h6: { fontWeight: "500", fontSize: "1rem", lineHeight: "1.5rem" },
     },
   },
   colors: {
@@ -313,6 +319,46 @@ export const theme = createTheme({
       },
     }),
     Button: Button.extend({
+      styles: (theme, props) => ({
+        label: {
+          fontWeight: "500",
+        },
+        root: props.variant === "outline" ? { borderWidth: "2px" } : {},
+      }),
+      vars: (theme, props) => {
+        const baseVars = {
+          "--button-hover": "var(--mantine-color-green-2)",
+          "--button-color": "var(--mantine-color-text)",
+        };
+
+        if (props.size === "sm") {
+          return {
+            root: {
+              "--button-fz": "0.875rem",
+              "--button-padding-x": "0.75rem",
+              ...baseVars,
+            },
+          };
+        }
+
+        if (props.size === "lg") {
+          return {
+            root: {
+              "--button-fz": "1.25rem",
+              "--button-padding-x": "1.5rem",
+              ...baseVars,
+            },
+          };
+        }
+
+        return {
+          root: {
+            "--button-fz": "1rem",
+            "--button-padding-x": "1.5rem",
+            ...baseVars,
+          },
+        };
+      },
       defaultProps: {
         radius: "xl",
       },
@@ -321,6 +367,11 @@ export const theme = createTheme({
       defaultProps: {
         color: "green",
       },
+    }),
+    Text: Text.extend({
+      styles: (_theme, props) => ({
+        root: textStyles[props.variant as keyof typeof textStyles],
+      }),
     }),
   },
   other: {
