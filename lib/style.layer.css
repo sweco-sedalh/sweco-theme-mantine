@@ -178,18 +178,14 @@
   }
 
   .mantine-Chip-label {
-    background-color: var(--mantine-color-green-0);
-    color: var(--mantine-color-text);
-    border-radius: var(--mantine-radius-md);
     padding: 6px 12px;
-    font-size: var(--mantine-font-size-md);
+  }
+
+  .mantine-Chip-label:not([data-checked="true"]) {
+    background-color: var(--mantine-color-green-0);
   }
 
   .mantine-Chip-label:hover {
-    background-color: var(--mantine-color-green-2);
-  }
-
-  .mantine-Chip-label[data-checked="true"] {
     background-color: var(--mantine-color-green-2);
   }
 }
