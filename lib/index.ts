@@ -272,9 +272,15 @@ export const theme = createTheme({
       },
     }),
     Chip: Chip.extend({
-      defaultProps: {
-        color: "green",
-      },
+      vars: () => ({
+        root: {
+          "--chip-bg": "var(--mantine-color-green-2)",
+          "--chip-color": "var(--mantine-color-text)",
+          "--chip-hover": "var(--mantine-color-green-2)",
+          "--chip-radius": "var(--mantine-radius-md)",
+          "--chip-fz": "var(--mantine-font-size-md)",
+        },
+      }),
     }),
     Stepper: Stepper.extend({
       defaultProps: {
