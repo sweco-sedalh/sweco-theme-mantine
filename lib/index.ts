@@ -188,6 +188,13 @@ export const theme = createTheme({
     inset:
       "inset 0 .6px 1.8px var(--sweco-shadow-color-1a), inset 0 3.2px 7.2px var(--sweco-shadow-color-1b)",
   },
+  spacing: {
+    xs: "0.125rem",
+    sm: "0.5rem",
+    md: "1rem",
+    lg: "1.5rem",
+    xl: "2rem",
+  },
   components: {
     Mark: Mark.extend({
       defaultProps: {
