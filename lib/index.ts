@@ -301,13 +301,13 @@ export const theme = createTheme({
       },
     }),
     Button: Button.extend({
-      styles: (theme, props) => ({
+      styles: (_theme, props) => ({
         label: {
           fontWeight: "500",
         },
         root: props.variant === "outline" ? { borderWidth: "2px" } : {},
       }),
-      vars: (theme, props) => {
+      vars: (_theme, props) => {
         const baseVars = {
           "--button-hover": "var(--mantine-color-green-2)",
           "--button-color": "var(--mantine-color-text)",
