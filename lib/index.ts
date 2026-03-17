@@ -24,6 +24,7 @@ import {
   Switch,
   Text,
   Timeline,
+  Tooltip,
 } from "@mantine/core";
 
 export { SwecoLogo } from "./components/SwecoLogo.tsx";
@@ -298,6 +299,23 @@ export const theme = createTheme({
     Stepper: Stepper.extend({
       defaultProps: {
         color: "green",
+      },
+    }),
+    Tooltip: Tooltip.extend({
+      styles: () => ({
+        tooltip: {
+          "box-shadow": "var(--mantine-shadow-lg)",
+        },
+        arrow: {
+          "box-shadow": "var(--mantine-shadow-lg)",
+        },
+      }),
+      defaultProps: {
+        color: "white",
+        arrowSize: 8,
+        radius: "md",
+        multiline: true,
+        withArrow: true,
       },
     }),
     Button: Button.extend({
