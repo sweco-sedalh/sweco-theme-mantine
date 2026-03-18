@@ -29,6 +29,7 @@ import {
 
 export { SwecoLogo } from "./components/SwecoLogo.tsx";
 export { Header } from "./components/Header.tsx";
+export { PrimaryButton, SecondaryButton, TertiaryButton } from "./components/Button";
 import { textStyles } from "./textStyles.tsx";
 import type { TextStyle } from "./textStyles.tsx";
 
