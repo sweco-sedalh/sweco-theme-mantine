@@ -1,14 +1,16 @@
-import { FC } from "react";
+import { ComponentPropsWithoutRef, FC } from "react";
 import { Button, ButtonProps } from "@mantine/core";
 
-export const PrimaryButton: FC<ButtonProps> = ({ ...props }) => {
+type Props = ButtonProps & ComponentPropsWithoutRef<"button">;
+
+export const PrimaryButton: FC<Props> = ({ ...props }) => {
   return <Button color="green" {...props} />;
 };
 
-export const SecondaryButton: FC<ButtonProps> = ({ ...props }) => {
+export const SecondaryButton: FC<Props> = ({ ...props }) => {
   return <Button variant="outline" color="green" {...props} />;
 };
 
-export const TertiaryButton: FC<ButtonProps> = ({ ...props }) => {
+export const TertiaryButton: FC<Props> = ({ ...props }) => {
   return <Button color="green.0" {...props} />;
 };
