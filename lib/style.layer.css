@@ -1,6 +1,53 @@
 @import "./fonts.css";
 
 @layer sweco {
+  /* ── Sweco design-system tokens ─────────────────────────────────────────────
+   * Default transition timing for all hover/focus/state changes across the
+   * theme. Use as either the shorthand (`var(--default-sweco-transition)`)
+   * or the separate duration / timing-function vars when only one is needed.
+   */
+  :root {
+    --default-sweco-transition-duration: 0.3s;
+    --default-sweco-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    --default-sweco-transition: var(--default-sweco-transition-duration)
+      var(--default-sweco-transition-timing-function);
+  }
+
+  /* ── Global element overrides ── */
+  button {
+    font-weight: 500 !important;
+  }
+  th {
+    font-weight: 500 !important;
+  }
+
+  /* ── Global outline reset ─────────────────────────────────────────────
+   * Browsers default to a black focus outline that briefly flashes before
+   * our themed (often green) outline fades in. Reserve a transparent
+   * outline slot on every focusable element so transitions look clean
+   * and no black ring ever appears.
+   */
+  *:focus,
+  *:focus-visible {
+    outline-color: transparent;
+  }
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [tabindex],
+  [role="button"],
+  [role="link"],
+  [role="tab"],
+  [role="option"],
+  [role="menuitem"] {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+
+  /* ── Anchor ── */
   .mantine-Anchor-root {
     color: currentColor;
     text-decoration: none;
@@ -15,6 +62,7 @@
       var(--stroke-color, var(--mantine-color-anchor));
   }
 
+  /* ── NavLink ── */
   .mantine-NavLink-root {
     --nl-bg: var(--mantine-secondary-color-1);
     --nl-color: var(--mantine-color-black);
@@ -25,10 +73,16 @@
     --nl-color: var(--mantine-color-white);
     --nl-hover: var(--mantine-secondary-color-9);
   }
+  .mantine-NavLink-root {
+    transition:
+      background-color var(--default-sweco-transition),
+      color var(--default-sweco-transition);
+  }
   .mantine-NavLink-root:hover {
     background-color: var(--nl-hover);
   }
 
+  /* ── Shared label/control font ── */
   .mantine-NavLink-label,
   .mantine-Tabs-tab,
   .mantine-Breadcrumbs-root,
@@ -43,6 +97,7 @@
     font-weight: 400;
   }
 
+  /* ── Tabs ── */
   .mantine-Tabs-root {
     --tab-hover-color: var(--mantine-color-default-hover);
   }
@@ -52,10 +107,62 @@
   button.mantine-Tabs-tab:hover[data-active="true"][data-variant="pills"] {
     background-color: var(--mantine-color-gray-0);
   }
+  :where([data-mantine-color-scheme="light"]) .mantine-Tabs-tab {
+    /* Reserve the 2px bottom border at all times so active/hover states can
+     * just swap its color without causing a 2px layout shift. */
+    border-bottom: 2px solid transparent;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  :where([data-mantine-color-scheme="light"]) .mantine-Tabs-tab[data-active="true"] {
+    border-bottom-color: var(--mantine-color-green-filled);
+    background-color: var(--mantine-color-green-0);
+  }
+  :where([data-mantine-color-scheme="light"]) .mantine-Tabs-tab:hover {
+    border-bottom-color: var(--mantine-color-green-3);
+  }
+  :where([data-mantine-color-scheme="light"]) .mantine-Tabs-tab:hover:not([data-active="true"]) {
+    background-color: var(--mantine-color-green-1);
+  }
 
+  /* ── Badge ── */
+  .mantine-Badge-root {
+    text-transform: none;
+    font-weight: normal;
+  }
+
+  /* ── Combobox ── */
+  :where([data-mantine-color-scheme="light"])
+    .mantine-Combobox-option:hover:where(
+      :not([data-combobox-selected], [data-combobox-disabled])
+    ) {
+    background-color: var(--mantine-color-default-hover);
+    transition: all var(--default-sweco-transition);
+  }
+
+  /* ── Dropzone ── */
+  :where([data-mantine-color-scheme="light"])
+    .mantine-Dropzone-root:hover:where(
+      [data-activate-on-click]:not([data-loading])
+    ) {
+    background-color: var(--mantine-color-default-hover);
+    transition: all var(--default-sweco-transition);
+  }
+
+  /* ── Table ── */
+  :where([data-sticky]) .mantine-Table-th {
+    background-color: transparent;
+  }
+
+  /* ── Breadcrumbs ── */
   .mantine-Breadcrumbs-breadcrumb {
     color: var(--mantine-color-text);
     padding-bottom: 4px;
+    transition:
+      box-shadow 0.2s ease-in-out,
+      color var(--default-sweco-transition);
   }
   .mantine-Breadcrumbs-breadcrumb:hover {
     text-decoration: none;
@@ -63,10 +170,15 @@
       var(--stroke-color, var(--mantine-color-anchor));
   }
 
+  /* ── Pagination ── */
   .mantine-Pagination-control {
     border: none;
     font-weight: 500;
     font-size: 14px;
+    transition:
+      background-color var(--default-sweco-transition),
+      color var(--default-sweco-transition),
+      border-color var(--default-sweco-transition);
   }
   [data-mantine-color-scheme="light"] .mantine-Pagination-control {
     background-color: var(--mantine-secondary-color-0);
@@ -87,6 +199,7 @@
     color: var(--mantine-color-black);
   }
 
+  /* ── Stepper ── */
   .mantine-Stepper-stepIcon {
     background-color: var(--mantine-color-green-2);
     border-color: var(--mantine-color-green-4);
@@ -106,15 +219,35 @@
     width: var(--mantine-spacing-xl);
   }
 
+  /* ── Input ── */
+  .mantine-Input-wrapper {
+    /* Reserve space so the focus outline (2px + 2px offset = 4px)
+       is never clipped by ancestors with overflow:hidden. */
+    padding: 4px;
+  }
   .mantine-Input-input {
     font-size: 1rem;
     line-height: 1.5;
     height: calc(1.5em + 0.88rem + 2px);
+    /* Reserve outline slot up-front so the focus ring fades in/out cleanly
+       instead of jumping from a default black browser outline. */
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    transition:
+      outline-color 0.15s ease,
+      border-color 0.15s ease;
   }
+  .mantine-Input-input:focus {
+    border-color: var(--mantine-color-green-4);
+    outline: 2px solid var(--mantine-color-green-4);
+    outline-offset: 2px;
+  }
+
   .mantine-InputWrapper-root[data-error="true"] .mantine-InputWrapper-label {
     color: var(--mantine-color-error);
   }
 
+  /* ── Slider ── */
   .mantine-Slider-track,
   .mantine-Slider-bar {
     height: var(--slider-size-xs);
@@ -123,26 +256,51 @@
     border-color: var(--slider-color);
   }
 
+  /* ── SegmentedControl ── */
   .mantine-SegmentedControl-root {
     background-color: transparent;
     border: 1px solid var(--mantine-color-default-border);
   }
 
+  /* ── Drawer ── */
   .mantine-Drawer-header {
     background-color: var(--mantine-primary-color-7);
     margin-bottom: var(--mantine-spacing-md);
     color: var(--mantine-color-white);
   }
 
+  /* ── Blockquote ── */
   .mantine-Blockquote-root {
     font-size: var(--mantine-font-size-xl);
     font-style: italic;
   }
 
+  /* ── Button: hero variant (variant="subtle" + rightSection) ────────────────
+   * Matches Tailwind's `.btn-hero`:
+   *   height: 56px, gray-100 bg, 16px vertical padding, 24px left padding,
+   *   padding-right 0 (the right section takes the full right edge),
+   *   space-between layout, isolation: isolate, and a green focus ring on
+   *   hover (2px ring + 2px white offset).
+   */
   .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"] {
+    isolation: isolate;
     background-color: var(--mantine-color-gray-1);
     color: var(--mantine-color-text);
     border: none;
+    padding-left: 1.5rem;
+    padding-right: 0 !important;
+    font-size: var(--mantine-font-size-md);
+    /* Reserve outline slot up-front so the ring fades in/out cleanly
+       instead of jumping from a default black browser outline. */
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    transition:
+      outline-color var(--default-sweco-transition),
+      background-color var(--default-sweco-transition),
+      color var(--default-sweco-transition);
+  }
+  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]:hover {
+    outline-color: var(--mantine-color-green-4);
   }
   [data-mantine-color-scheme="dark"]
     .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"] {
@@ -154,15 +312,16 @@
   .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
     .mantine-Button-inner {
     justify-content: space-between;
+    height: 100%;
   }
   .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
     .mantine-Button-section {
-    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color var(--default-sweco-transition);
     background-color: var(--mantine-color-green-4);
     height: 100%;
     aspect-ratio: 1/1;
-    border-radius: var(--button-radius);
-    margin-right: calc(-1 * var(--button-padding-x) / 1.5);
+    /* Perfect circle that terminates the button on the right edge */
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -177,8 +336,84 @@
     background-color: var(--mantine-color-green-9);
   }
 
+  /* ── Button: warning variant ───────────────────────────────────────────────
+   * Despite the name, this uses the "error" (red) palette per design:
+   *   2px error border, light pink (alert-0) bg, error-colored text — on
+   *   hover swap to error bg + white text. Focus/hover ring matches the
+   *   error color for a coherent destructive-action look.
+   */
+  .btn-warning {
+    border: 2px solid var(--mantine-color-error) !important;
+    background-color: var(--mantine-color-alert-0) !important;
+    color: var(--mantine-color-error) !important;
+    --button-bg: var(--mantine-color-alert-0);
+    --button-hover: var(--mantine-color-error);
+    --button-color: var(--mantine-color-error);
+    --button-bd: 2px solid var(--mantine-color-error);
+    /* Reserve outline slot up-front so the focus ring fades in/out cleanly
+       instead of jumping from a default black browser outline. */
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    transition:
+      outline-color var(--default-sweco-transition),
+      background-color var(--default-sweco-transition),
+      color var(--default-sweco-transition);
+  }
+  .btn-warning:hover {
+    background-color: var(--mantine-color-error) !important;
+    color: var(--mantine-color-white) !important;
+  }
+
+  /* Muted look when disabled — no red, no hover effect */
+  .btn-warning:disabled,
+  .btn-warning[data-disabled],
+  .btn-warning[data-loading] {
+    background-color: var(--mantine-color-gray-1) !important;
+    color: var(--mantine-color-gray-5) !important;
+    cursor: not-allowed;
+    outline-color: transparent !important;
+    border-color: transparent !important;
+  }
+  .btn-warning:disabled:hover,
+  .btn-warning[data-disabled]:hover,
+  .btn-warning[data-loading]:hover {
+    background-color: var(--mantine-color-gray-1) !important;
+    color: var(--mantine-color-gray-5) !important;
+    outline-color: transparent !important;
+  }
+
+  /* ── CircularLink — destructive/colored ActionIcon ──────────────────────────
+   * On hover, fill with the outline color and turn the icon white, matching
+   * the .btn-warning visual language for destructive actions.
+   */
+  .circular-link {
+    transition:
+      background-color var(--default-sweco-transition),
+      color var(--default-sweco-transition),
+      border-color var(--default-sweco-transition);
+  }
+  .circular-link[data-variant="outline"]:not(:disabled, [data-disabled]):hover {
+    background-color: var(--ai-color);
+    color: var(--mantine-color-white);
+  }
+  /* When `iconColor` is set on FontAwesomeIcon it adds an inline `style="color:..."`
+     on the SVG itself, which breaks the parent's `color: white` cascade on hover.
+     Force the icon (and any nested SVG) to white on hover so the contrast stays
+     correct regardless of the explicitly-set icon color. */
+  .circular-link[data-variant="outline"]:not(:disabled, [data-disabled]):hover
+    .mantine-ActionIcon-icon,
+  .circular-link[data-variant="outline"]:not(:disabled, [data-disabled]):hover
+    .mantine-ActionIcon-icon svg {
+    color: var(--mantine-color-white) !important;
+  }
+
+  /* ── Chip ── */
   .mantine-Chip-label {
     padding: 6px 12px;
+    transition:
+      background-color var(--default-sweco-transition),
+      color var(--default-sweco-transition),
+      border-color var(--default-sweco-transition);
   }
 
   .mantine-Chip-label:not([data-checked="true"]) {
@@ -187,5 +422,48 @@
 
   .mantine-Chip-label:hover {
     background-color: var(--mantine-color-green-2);
+  }
+
+  /* ── Quaternary button variant ── */
+  .btn-quaternary {
+    --button-height: auto !important;
+    --button-bg: transparent;
+    --button-hover: transparent !important;
+    --button-bd: none;
+    --button-radius: 0 !important;
+    min-width: unset;
+  }
+
+  .btn-quaternary .mantine-Button-label {
+    font-weight: 500 !important;
+    padding: 6px 0;
+    background-image: linear-gradient(
+      to right,
+      var(--mantine-color-green-4),
+      var(--mantine-color-green-4)
+    );
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 2px;
+    transition: background-size 150ms var(--default-sweco-transition-timing-function);
+  }
+
+  .btn-quaternary:hover .mantine-Button-label {
+    background-size: 100% 2px;
+  }
+
+  /* ── Search input – pill-shaped input with embedded search icon ── */
+  .search-input .mantine-Input-input {
+    border-radius: 9999px;
+    padding-inline: 2.75rem;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='%23111111' focusable='false' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.6914 20.3984L16.457 15.1641C17.5899 13.7773 18.2149 12.0312 18.2149 10.125C18.2149 5.63672 14.577 2 10.0899 2C5.60274 2 2 5.63789 2 10.125C2 14.6121 5.63751 18.25 10.0899 18.25C11.9957 18.25 13.7442 17.5895 15.1289 16.4906L20.3633 21.725C20.582 21.9102 20.8242 22 21.0625 22C21.3008 22 21.5422 21.9084 21.7254 21.7254C22.0899 21.3594 22.0899 20.7656 21.6914 20.3984ZM3.87501 10.125C3.87501 6.67891 6.67891 3.875 10.125 3.875C13.5711 3.875 16.375 6.67891 16.375 10.125C16.375 13.5711 13.5711 16.375 10.125 16.375C6.67891 16.375 3.87501 13.5703 3.87501 10.125Z'/%3E%3C/svg%3E");
+    background-position: 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+  }
+  /* Hide the Mantine leftSection icon when search-input is used –
+     the CSS background-image replaces it. */
+  .search-input .mantine-Input-section[data-position="left"] {
+    display: none;
   }
 }

@@ -45,6 +45,7 @@ export type ExtendedColor =
   | "alert"
   | "warning"
   | "success"
+  | "error"
   | (string & {});
 
 declare module "@mantine/core" {
@@ -169,28 +170,40 @@ export const theme = createTheme({
       darken("#660707", 0.1),
     ],
     warning: [
-      "#fff8e1", // lightest
+      "#fff8e1",
       "#ffe1a3",
-      "#ffd066", // official
+      "#ffd066",
       "#ffc233",
-      "#ffb300", // official
+      "#ffb300",
       "#cd9e08",
-      "#a67c00", // official
+      "#a67c00",
       "#8c6a00",
-      "#735800", // official
+      "#735800",
       darken("#735800", 0.1),
     ],
     success: [
-      "#eef9e9", // official
+      "#eef9e9",
       "#d6eecc",
-      "#bde3af", // official
+      "#bde3af",
       "#a2d191",
-      "#87be73", // official
+      "#87be73",
       "#6da35a",
-      "#538840", // official
+      "#538840",
       "#497838",
-      "#3f6730", // official
+      "#3f6730",
       darken("#3f6730", 0.1),
+    ],
+    error: [
+      "#fbeaea",
+      "#f5c2c2",
+      "#ee9a9a",
+      "#e66e6e",
+      "#b32f2f", // index 4 — used by filled / outline / light variants
+      "#871c1c",
+      "#770f0f",
+      "#660707",
+      "#4d0303",
+      "#330000",
     ],
   },
   shadows: {
@@ -202,11 +215,25 @@ export const theme = createTheme({
       "inset 0 .6px 1.8px var(--sweco-shadow-color-1a), inset 0 3.2px 7.2px var(--sweco-shadow-color-1b)",
   },
   spacing: {
-    xs: "0.125rem",
-    sm: "0.5rem",
+    xs: "0.5rem",
+    sm: "0.75rem",
     md: "1rem",
     lg: "1.5rem",
     xl: "2rem",
+  },
+  fontSizes: {
+    xs: "0.75rem",   // 12px
+    sm: "0.875rem",  // 14px
+    md: "1rem",      // 16px
+    lg: "1.125rem",  // 18px
+    xl: "1.25rem",   // 20px
+  },
+  lineHeights: {
+    xs: "1.4",
+    sm: "1.45",
+    md: "1.55",
+    lg: "1.6",
+    xl: "1.65",
   },
   components: {
     Mark: Mark.extend({
@@ -320,46 +347,27 @@ export const theme = createTheme({
       },
     }),
     Button: Button.extend({
+      classNames: (_theme, props) => {
+        if (props.variant === "quaternary") return { root: "btn-quaternary" };
+        if (props.variant === "warning") return { root: "btn-warning" };
+        return { root: "" };
+      },
       styles: (_theme, props) => ({
         label: {
           fontWeight: "500",
         },
-        root: props.variant === "outline" ? { borderWidth: "2px" } : {},
+        root: {
+          transition:
+            "background-color var(--default-sweco-transition), color var(--default-sweco-transition), border-color var(--default-sweco-transition), outline-color var(--default-sweco-transition)",
+          ...(props.variant === "outline" ? { borderWidth: "2px" } : {}),
+        },
       }),
-      vars: (_theme, props) => {
-        const baseVars = {
+      vars: () => ({
+        root: {
           "--button-hover": "var(--mantine-color-green-2)",
           "--button-color": "var(--mantine-color-text)",
-        };
-
-        if (props.size === "sm") {
-          return {
-            root: {
-              "--button-fz": "0.875rem",
-              "--button-padding-x": "0.75rem",
-              ...baseVars,
-            },
-          };
-        }
-
-        if (props.size === "lg") {
-          return {
-            root: {
-              "--button-fz": "1.25rem",
-              "--button-padding-x": "1.5rem",
-              ...baseVars,
-            },
-          };
-        }
-
-        return {
-          root: {
-            "--button-fz": "1rem",
-            "--button-padding-x": "1.5rem",
-            ...baseVars,
-          },
-        };
-      },
+        },
+      }),
       defaultProps: {
         radius: "xl",
       },
@@ -440,7 +448,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       "--sweco-shadow-color-1b": "#00000021",
       "--sweco-shadow-color-2a": "#0000002e",
       "--sweco-shadow-color-2b": "#00000038",
-      "--mantine-color-error": `var(--mantine-color-alert-${theme.primaryShade})`,
+      "--mantine-color-error": "var(--mantine-color-alert-5)",
       //      "--mantine-color-default-border": "var(--mantine-color-gray-5)",
       //      "--mantine-color-default-hover": "var(--mantine-color-gray-8)",
       //      "--mantine-color-dimmed": "var(--mantine-color-gray-3)",
