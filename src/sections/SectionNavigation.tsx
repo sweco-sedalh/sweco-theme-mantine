@@ -130,7 +130,7 @@ export const SectionNavigation: FC = () => (
                   <FontAwesomeIcon icon={faSearch} />
                 </ActionIcon>
               </Group>
-              <Group gap={15} style={{}} visibleFrom="sm">
+              <Group gap="md" visibleFrom="sm">
                 <Anchor href="#">Start</Anchor>
                 <Menu
                   trigger="hover"
