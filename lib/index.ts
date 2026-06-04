@@ -68,16 +68,15 @@ declare module "@mantine/core" {
 }
 
 // ── Color palettes ─────────────────────────────────────────────────────────
-// Each tuple: indices 0/2/4/6/8 are the official Sweco shades.
-// `withDarkest(palette)` appends a darkened 10th step at index 9.
-const withDarkest = (p: readonly string[]): MantineColorsTuple =>
-  [...p, darken(p[8]!, 0.1)] as unknown as MantineColorsTuple;
+// One explicit tuple per palette. Indices 0/2/4/6/8 are the official Sweco
+// shades; the in-between odd indices keep the visual ramp smooth, and index 9
+// is a darker shade for dark-mode `filled-hover`/`outline-hover`.
 
 const solidWhite: MantineColorsTuple = Array(10).fill(
   "#FFFFFF",
 ) as unknown as MantineColorsTuple;
 
-const grayBase = [
+const gray: MantineColorsTuple = [
   "#f2f2f2",
   "#eaeaea",
   "#e1e1e1",
@@ -87,8 +86,10 @@ const grayBase = [
   "#575656",
   "#343434",
   "#111111",
-] as const;
-const greenBase = [
+  "#000000",
+];
+
+const green: MantineColorsTuple = [
   "#eef9e9",
   "#d6eecc",
   "#bde3af",
@@ -98,8 +99,10 @@ const greenBase = [
   "#538840",
   "#497838",
   "#3f6730",
-] as const;
-const blueBase = [
+  darken("#3f6730", 0.1),
+];
+
+const blue: MantineColorsTuple = [
   "#f3f8fc",
   "#e5eef7",
   "#d6e4f1",
@@ -109,8 +112,10 @@ const blueBase = [
   "#3a7dbf",
   "#325d89",
   "#293c53",
-] as const;
-const peachBase = [
+  darken("#293c53", 0.1),
+];
+
+const peach: MantineColorsTuple = [
   "#fcf3f0",
   "#f5dacf",
   "#eec1ae",
@@ -120,8 +125,10 @@ const peachBase = [
   "#874c33",
   "#773d30",
   "#662d2d",
-] as const;
-const sandBase = [
+  darken("#662d2d", 0.1),
+];
+
+const sand: MantineColorsTuple = [
   "#f7f6ed",
   "#e7e2ce",
   "#d7cdaf",
@@ -131,19 +138,23 @@ const sandBase = [
   "#989077",
   "#85806d",
   "#727063",
-] as const;
-const alertBase = [
+  darken("#727063", 0.1),
+];
+
+const alert: MantineColorsTuple = [
   "#fbeaea",
   "#f5c2c2",
   "#ee9a9a",
   "#e66e6e",
-  "#de4242",
-  "#b32f2f",
+  "#b32f2f", // filled — darker red per design
   "#871c1c",
   "#770f0f",
   "#660707",
-] as const;
-const warningBase = [
+  "#4d0303",
+  darken("#4d0303", 0.1),
+];
+
+const warning: MantineColorsTuple = [
   "#fff8e1",
   "#ffe1a3",
   "#ffd066",
@@ -153,46 +164,24 @@ const warningBase = [
   "#a67c00",
   "#8c6a00",
   "#735800",
-] as const;
+  darken("#735800", 0.1),
+];
 
-const gray: MantineColorsTuple = [
-  ...grayBase,
-  "#000000",
-] as unknown as MantineColorsTuple;
-const green = withDarkest(greenBase);
-const blue = withDarkest(blueBase);
-const peach = withDarkest(peachBase);
-const sand = withDarkest(sandBase);
-const alert = withDarkest(alertBase);
-const warning = withDarkest(warningBase);
-// `error` shares the lighter shades with `alert` but uses a shifted darker ramp.
-const error: MantineColorsTuple = [
-  ...alertBase.slice(0, 4), // 0..3 same as alert
-  "#b32f2f", // 4 — used by filled / outline / light variants
-  "#871c1c",
-  "#770f0f",
-  "#660707",
-  "#4d0303",
-  "#330000",
-] as unknown as MantineColorsTuple;
+// `error` is an alias for `alert` — same palette, kept as a separate key so
+// existing call-sites using `color="error"` keep working. The slightly darker
+// "filled" shade used by some components comes from the
+// `--mantine-color-error` override in cssVariablesResolver below, which
+// points at alert-5 (light) / alert-8 mixed with red (dark).
+const error = alert;
 
-// Components that should all default to the brand green.
-// Key = Mantine component name (must match `components` map keys exactly).
-const GREEN_DEFAULT_COMPONENTS = {
-  Checkbox,
-  Radio,
-  Switch,
-  SegmentedControl,
-  Slider,
-  Stepper,
-  Timeline,
-} as const;
-const greenDefaults = Object.fromEntries(
-  Object.entries(GREEN_DEFAULT_COMPONENTS).map(([name, C]) => [
-    name,
-    C.extend({ defaultProps: { color: "green" } }),
-  ]),
-);
+// Components that all default to the brand green are declared individually
+// in the `components` map below (Checkbox, Radio, Switch, SegmentedControl,
+// Slider, Stepper, Timeline). Keeping the extends inline makes it obvious
+// where to add per-component overrides later.
+
+const FONT_FAMILY =
+  '"Sweco Sans", Arial, ui-sans-serif, system-ui, sans-serif, ' +
+  '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"';
 
 export const theme = createTheme({
   primaryColor: "gray",
@@ -204,40 +193,16 @@ export const theme = createTheme({
     sm: "2px", // Modal dialogs, Link body text hover, focus-visible
   },
   autoContrast: true,
-  fontFamily: "var(--font-sans)",
+  fontFamily: FONT_FAMILY,
   headings: {
-    fontFamily: "var(--font-sans)",
+    fontFamily: FONT_FAMILY,
     sizes: {
-      h1: {
-        fontWeight: "var(--font-weight-normal)",
-        fontSize: "var(--text-4xl)",
-        lineHeight: "var(--text-5xl--line-height)",
-      },
-      h2: {
-        fontWeight: "var(--font-weight-normal)",
-        fontSize: "var(--text-2xl)",
-        lineHeight: "var(--text-2xl--line-height)",
-      },
-      h3: {
-        fontWeight: "var(--font-weight-normal)",
-        fontSize: "var(--text-xl)",
-        lineHeight: "var(--text-xl--line-height)",
-      },
-      h4: {
-        fontWeight: "var(--font-weight-normal)",
-        fontSize: "var(--text-lg)",
-        lineHeight: "var(--text-lg--line-height)",
-      },
-      h5: {
-        fontWeight: "var(--font-weight-medium)",
-        fontSize: "var(--text-md)",
-        lineHeight: "var(--text-md--line-height)",
-      },
-      h6: {
-        fontWeight: "var(--font-weight-medium)",
-        fontSize: "var(--text-base)",
-        lineHeight: "var(--text-base--line-height)",
-      },
+      h1: { fontWeight: "400", fontSize: "3.5rem", lineHeight: "5rem" },
+      h2: { fontWeight: "400", fontSize: "2.5rem", lineHeight: "3rem" },
+      h3: { fontWeight: "400", fontSize: "2rem", lineHeight: "2.5rem" },
+      h4: { fontWeight: "400", fontSize: "1.5rem", lineHeight: "2rem" },
+      h5: { fontWeight: "500", fontSize: "1.125rem", lineHeight: "1.5rem" },
+      h6: { fontWeight: "500", fontSize: "1rem", lineHeight: "1.5rem" },
     },
   },
   colors: {
@@ -270,11 +235,11 @@ export const theme = createTheme({
     hero: "4rem",
   },
   fontSizes: {
-    xs: "var(--text-xs)", // 12px
-    sm: "var(--text-sm)", // 14px
-    md: "var(--text-base)", // 16px
-    lg: "var(--text-md)", // 18px
-    xl: "1.25rem", // 20px — no matching design-system token
+    xs: "0.75rem", // 12px
+    sm: "0.875rem", // 14px
+    md: "1rem", // 16px
+    lg: "1.125rem", // 18px
+    xl: "1.25rem", // 20px
   },
   lineHeights: {
     xs: "1.4",
@@ -309,15 +274,21 @@ export const theme = createTheme({
     ModalHeader: ModalHeader.extend({ defaultProps: {} }),
     ModalBody: ModalBody.extend({ defaultProps: { style: {} } }),
     ModalTitle: ModalTitle.extend({
-      defaultProps: {
-        fw: "var(--font-weight-normal)",
-        fz: "var(--text-lg)",
-      },
+      defaultProps: { fw: 400, fz: "1.5rem" },
     }),
     Pagination: Pagination.extend({ defaultProps: { radius: "xl" } }),
-    MenuItem: MenuItem.extend({ defaultProps: { fz: "var(--text-base)" } }),
-    // Checkbox/Radio/Switch/SegmentedControl/Slider/Stepper/Timeline → color: "green"
-    ...greenDefaults,
+    MenuItem: MenuItem.extend({
+      defaultProps: { fz: "var(--mantine-font-size-md)" },
+    }),
+    Checkbox: Checkbox.extend({ defaultProps: { color: "green" } }),
+    Radio: Radio.extend({ defaultProps: { color: "green" } }),
+    Switch: Switch.extend({ defaultProps: { color: "green" } }),
+    SegmentedControl: SegmentedControl.extend({
+      defaultProps: { color: "green" },
+    }),
+    Slider: Slider.extend({ defaultProps: { color: "green" } }),
+    Stepper: Stepper.extend({ defaultProps: { color: "green" } }),
+    Timeline: Timeline.extend({ defaultProps: { color: "green" } }),
     Chip: Chip.extend({
       vars: () => ({
         root: {
@@ -349,7 +320,7 @@ export const theme = createTheme({
         return { root: "" };
       },
       styles: (_theme, props) => ({
-        label: { fontWeight: "var(--font-weight-medium)" },
+        label: { fontWeight: 500 },
         root: {
           transition:
             "background-color var(--default-sweco-transition), color var(--default-sweco-transition), border-color var(--default-sweco-transition), outline-color var(--default-sweco-transition)",
@@ -482,7 +453,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       ...clearColors(default_.light),
       ...SHADOW_VARS("light"),
       "--mantine-color-anchor": anchorColor,
-      "--mantine-color-error": "var(--mantine-color-alert-5)",
+      "--mantine-color-error": "var(--mantine-color-alert-4)",
       "--table-border-color": "var(--mantine-color-gray-2)",
     },
     dark: {
