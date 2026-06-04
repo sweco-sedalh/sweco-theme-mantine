@@ -1,0 +1,330 @@
+@layer sweco {
+  /* ════════════════════════════════════════════════════════════════════════
+   * Button: size system
+   * A single --btn-scale var drives height, padding-x, padding-y and gap.
+   * Each [data-size] only sets --btn-scale, --btn-fz and --btn-icon.
+   *
+   *   height    = scale            padding-x = scale / 2
+   *   padding-y = scale / 4        gap       = scale / 4
+   *   xs=8  sm=10  md=12  lg=14  xl=16  (step of 2 → 8px)
+   *
+   * NOTE: Mantine ships component styles UNLAYERED, so `!important` is
+   * needed for these overrides to take effect.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Button-root {
+    --btn-scale: 12; /* default = md */
+    --btn-fz: var(--mantine-font-size-md);
+    --btn-icon: 5; /* spacing multiplier for icon w/h */
+
+    --button-height: calc(var(--sweco-spacing) * var(--btn-scale)) !important;
+    --button-padding-x: calc(
+      var(--sweco-spacing) * var(--btn-scale) / 2
+    ) !important;
+    --button-fz: var(--btn-fz) !important;
+    height: calc(var(--sweco-spacing) * var(--btn-scale)) !important;
+    padding-block: calc(var(--sweco-spacing) * var(--btn-scale) / 4);
+  }
+
+  .mantine-Button-root .mantine-Button-section {
+    margin: 0 !important;
+  }
+
+  .mantine-Button-root .mantine-Button-inner {
+    /* Icon/text gap snapped to the 4px spacing grid (4, 8, 16, 24, 32).
+        md default = 8px; per-size overrides below. */
+    gap: calc(var(--sweco-spacing) * 2); /* 8px */
+  }
+  .mantine-Button-root[data-size="xs"] .mantine-Button-inner {
+    gap: calc(var(--sweco-spacing) * 1); /* 4px */
+  }
+  .mantine-Button-root[data-size="sm"] .mantine-Button-inner {
+    gap: calc(var(--sweco-spacing) * 2); /* 8px */
+  }
+  .mantine-Button-root[data-size="lg"] .mantine-Button-inner {
+    gap: calc(var(--sweco-spacing) * 4); /* 16px */
+  }
+  .mantine-Button-root[data-size="xl"] .mantine-Button-inner {
+    gap: calc(var(--sweco-spacing) * 6); /* 24px */
+  }
+
+  /* Per-size tokens: only set what differs from the md defaults above */
+  .mantine-Button-root[data-size="xs"] {
+    --btn-scale: 8;
+    --btn-fz: var(--mantine-font-size-sm);
+    --btn-icon: 3;
+  }
+
+  .mantine-Button-root[data-size="sm"] {
+    --btn-scale: 10;
+    --btn-fz: var(--mantine-font-size-sm);
+    --btn-icon: 5;
+  }
+
+  /* md uses defaults: scale 12, text-base, icon 5 */
+  .mantine-Button-root[data-size="lg"] {
+    --btn-scale: 14;
+    --btn-fz: var(--mantine-font-size-md);
+    --btn-icon: 7;
+  }
+
+  .mantine-Button-root[data-size="xl"] {
+    --btn-scale: 16;
+    --btn-fz: var(--mantine-font-size-lg);
+    --btn-icon: 8;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+    * Button: hero variant (variant="subtle" + rightSection)
+    * Matches Tailwind `.btn-hero`: 56px tall, gray-100 bg, 24px left
+    * padding, 0 right padding (circle section fills the edge), green
+    * focus ring on hover.
+    * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"] {
+    isolation: isolate;
+    background-color: var(--mantine-color-gray-1);
+    color: var(--mantine-color-text);
+    border: none;
+    padding-left: 1.5rem;
+    padding-right: 0 !important;
+    /* Zero vertical padding so the right-section circle fills the full
+      * button height edge-to-edge (otherwise the global .mantine-Button-root
+      * padding-block shrinks it to a small dot). */
+    padding-block: 0 !important;
+    font-size: var(--mantine-font-size-md);
+    outline: none !important;
+    box-shadow: var(--sweco-focus-ring-reset) !important;
+    transition:
+      box-shadow 0.15s var(--sweco-transition-timing-function-long),
+      background-color var(--sweco-transition),
+      color var(--sweco-transition) !important;
+  }
+
+  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]:hover {
+    box-shadow: var(--sweco-focus-ring) !important;
+  }
+
+  [data-mantine-color-scheme="dark"]
+    .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"] {
+    background-color: var(--mantine-color-gray-8);
+    --button-color: var(
+      --mantine-secondary-color-8
+    ) !important; /* NOTE: does not take into account assigned color */
+  }
+
+  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
+    .mantine-Button-inner {
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
+    .mantine-Button-section {
+    transition: background-color var(--sweco-transition);
+    background-color: var(--mantine-secondary-color-4);
+    height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* In the circular right-section, scale the icon up so it visually fills
+      the green circle. Other variants keep the icon at its default size. */
+  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
+    .mantine-Button-section
+    svg {
+    width: auto !important;
+    height: 1.25rem !important; /* 20px */
+  }
+
+  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]:hover
+    .mantine-Button-section {
+    background-color: var(--mantine-secondary-color-3);
+  }
+
+  [data-mantine-color-scheme="dark"]
+    .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]:hover
+    .mantine-Button-section {
+    background-color: var(--mantine-secondary-color-9);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+    * Button: warning variant
+    * Despite the name uses the "error" (red) palette per design: 2px error
+    * border, light pink bg, error-colored text — on hover swap to error bg
+    * + white text.
+    * ──────────────────────────────────────────────────────────────────────── */
+  .btn-warning {
+    --button-bg: var(--mantine-color-peach-0);
+    --button-hover: var(--mantine-color-error);
+    --button-color: var(--mantine-color-error);
+    --button-bd: 2px solid var(--mantine-color-error);
+    border: 2px solid var(--mantine-color-error) !important;
+    background-color: var(--mantine-color-peach-0) !important;
+    color: var(--mantine-color-error) !important;
+    outline: none !important;
+    box-shadow: var(--sweco-focus-ring-reset) !important;
+    transition:
+      box-shadow var(--sweco-transition),
+      background-color var(--sweco-transition),
+      color var(--sweco-transition) !important;
+  }
+
+  .btn-warning:hover {
+    background-color: var(--mantine-color-error) !important;
+    color: var(--mantine-color-white) !important;
+  }
+
+  /* Muted look when disabled — no red, no hover effect */
+  .btn-warning:disabled,
+  .btn-warning[data-disabled],
+  .btn-warning[data-loading],
+  .btn-warning:disabled:hover,
+  .btn-warning[data-disabled]:hover,
+  .btn-warning[data-loading]:hover {
+    background-color: var(--mantine-color-gray-1) !important;
+    color: var(--mantine-color-gray-5) !important;
+    cursor: not-allowed;
+    box-shadow: none !important;
+    border-color: transparent !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+    * Quaternary button variant
+    * Matches Tailwind `.btn.btn-quaternary`: 32px height, padding-inline 8px,
+    * padding-block 4px, font-size 1rem, transparent bg, left-aligned, no
+    * border-radius. Label has an animated green underline on hover.
+    * ──────────────────────────────────────────────────────────────────────── */
+  .btn-quaternary {
+    --button-height: calc(var(--sweco-spacing) * 8) !important; /* 32px */
+    --button-padding-x: calc(var(--sweco-spacing) * 2) !important; /* 8px */
+    --button-fz: var(--mantine-font-size-md) !important; /* 16px */
+    --button-bg: transparent;
+    --button-hover: transparent !important;
+    --button-bd: none;
+    --button-radius: 0 !important;
+    height: calc(var(--sweco-spacing) * 8) !important;
+    padding-block: calc(var(--sweco-spacing) * 1);
+    min-width: unset;
+    justify-content: flex-start;
+  }
+
+  /* Shared animated-underline labels (btn-quaternary + btn-caution)
+    * 0.25rem padding reserves space for the hover underline below the text;
+    * negative margin cancels the extra height so the box stays unchanged.
+    * Each variant only overrides --sweco-label-stroke for its color.
+    * ──────────────────────────────────────────────────────────────────────── */
+  .btn-quaternary .mantine-Button-label,
+  .btn-caution .mantine-Button-label {
+    font-weight: var(--sweco-font-weight-medium) !important;
+    padding: 0 0 0.25rem 0;
+    margin-bottom: -0.25rem;
+    background-image: linear-gradient(
+      to right,
+      var(--sweco-label-stroke, var(--sweco-underline-color)),
+      var(--sweco-label-stroke, var(--sweco-underline-color))
+    );
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 2px;
+    transition: background-size var(--sweco-transition);
+  }
+
+  .btn-quaternary .mantine-Button-label {
+    font-size: var(--mantine-font-size-md);
+    line-height: 1.5rem;
+  }
+
+  .btn-quaternary:hover .mantine-Button-label,
+  .btn-caution:hover .mantine-Button-label {
+    background-size: 100% 2px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+    * Caution button variant
+    * Compact, transparent, error-colored button (e.g. "Ta bort alla").
+    * ──────────────────────────────────────────────────────────────────────── */
+  .btn-caution {
+    --button-bg: transparent;
+    --button-hover: transparent !important;
+    --button-bd: none;
+    --button-color: var(--mantine-color-error) !important;
+    --button-radius: 0 !important;
+    --sweco-label-stroke: var(--mantine-color-error);
+    min-width: unset;
+    padding-inline: 0.5rem !important;
+    color: var(--mantine-color-error);
+    background-color: transparent;
+  }
+
+  /* At xs, btn-caution matches badge-chip-x font (14px) instead of default xs (12px) */
+  .btn-caution[data-size="xs"] {
+    --button-fz: 0.875rem !important;
+  }
+
+  .btn-caution .mantine-Button-section {
+    color: var(--mantine-color-error);
+  }
+
+  .btn-caution .mantine-Button-inner {
+    gap: calc(var(--sweco-spacing) * 1.5);
+  }
+
+  /* Let FontAwesome's defaults render btn-caution sm icons too. */
+  .btn-caution[data-size="sm"] .mantine-Button-section svg {
+    /* (no overrides) */
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+    * CircularLink — destructive/colored ActionIcon
+    * On hover, fill with the outline color and turn the icon white.
+    * ──────────────────────────────────────────────────────────────────────── */
+  .circular-link {
+    transition:
+      background-color var(--sweco-transition),
+      color var(--sweco-transition),
+      border-color var(--sweco-transition);
+  }
+
+  .circular-link[data-variant="outline"]:not(:disabled, [data-disabled]):hover {
+    background-color: var(--ai-color);
+    color: var(--mantine-color-white);
+  }
+
+  /* `iconColor` on FontAwesomeIcon emits an inline `style="color:..."` on
+    * the SVG itself, which breaks the parent's `color: white` cascade.
+    * Force the icon white on hover regardless of inline color. */
+  .circular-link[data-variant="outline"]:not(:disabled, [data-disabled]):hover
+    .mantine-ActionIcon-icon,
+  .circular-link[data-variant="outline"]:not(:disabled, [data-disabled]):hover
+    .mantine-ActionIcon-icon
+    svg {
+    color: var(--mantine-color-white) !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+    * Icon size utilities
+    * Use className="icon-lg" on an SVG to force 24px, overriding even the
+    * per-size button rules.
+    * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Button-root .mantine-Button-section svg.icon-lg,
+  svg.icon-lg {
+    width: auto !important; /* keep aspect ratio */
+    height: 1.5rem !important; /* 24px */
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+    * Icon-only square button (e.g. chevron toggles)
+    * Forces a perfect square so the hover/focus ring stays circular.
+    * ──────────────────────────────────────────────────────────────────────── */
+  .btn-icon-square {
+    width: 2rem !important;
+    height: 2rem !important;
+    min-width: 2rem !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}

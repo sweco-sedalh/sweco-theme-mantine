@@ -16,7 +16,9 @@ export const SectionCard: FC = () => (
           </Card.Section>
 
           <Group justify="space-between" mt="md" mb="xs">
-            <Text fw={500}>Norway Fjord Adventures</Text>
+            <Text fw="var(--sweco-font-weight-medium)">
+              Norway Fjord Adventures
+            </Text>
             <Badge color="ochre">On Sale</Badge>
           </Group>
 

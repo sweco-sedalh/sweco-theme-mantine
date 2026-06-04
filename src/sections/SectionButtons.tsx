@@ -1,12 +1,6 @@
 import { FC } from "react";
 import Section from "../Section.tsx";
-import {
-  Burger,
-  Button,
-  Flex,
-  CloseButton,
-  Title,
-} from "@mantine/core";
+import { Burger, Button, Flex, CloseButton, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";

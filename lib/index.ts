@@ -1,4 +1,5 @@
 import {
+  Badge,
   Blockquote,
   Button,
   Checkbox,
@@ -36,6 +37,7 @@ export {
   TertiaryButton,
 } from "./components/Button";
 export { SwecoLoader } from "./components/SwecoLoader.tsx";
+export { SearchIcon } from "./components/SearchIcon.tsx";
 import { SwecoLoader } from "./components/SwecoLoader.tsx";
 import { textStyles } from "./textStyles.tsx";
 import type { TextStyle } from "./textStyles.tsx";
@@ -65,6 +67,19 @@ declare module "@mantine/core" {
   export interface TextProps {
     variant?: TextStyle;
   }
+  export interface ButtonProps {
+    variant?:
+      | "filled"
+      | "outline"
+      | "light"
+      | "subtle"
+      | "default"
+      | "transparent"
+      | "quaternary"
+      | "warning"
+      | "caution"
+      | (string & {});
+  }
 }
 
 // ── Color palettes ─────────────────────────────────────────────────────────
@@ -72,9 +87,18 @@ declare module "@mantine/core" {
 // shades; the in-between odd indices keep the visual ramp smooth, and index 9
 // is a darker shade for dark-mode `filled-hover`/`outline-hover`.
 
-const solidWhite: MantineColorsTuple = Array(10).fill(
+const solidWhite: MantineColorsTuple = [
   "#FFFFFF",
-) as unknown as MantineColorsTuple;
+  "#FFFFFF",
+  "#FFFFFF",
+  "#FFFFFF",
+  "#FFFFFF",
+  "#FFFFFF",
+  "#FFFFFF",
+  "#FFFFFF",
+  "#FFFFFF",
+  "#FFFFFF",
+];
 
 const gray: MantineColorsTuple = [
   "#f2f2f2",
@@ -167,11 +191,10 @@ const warning: MantineColorsTuple = [
   darken("#735800", 0.1),
 ];
 
-// `error` is an alias for `alert` — same palette, kept as a separate key so
-// existing call-sites using `color="error"` keep working. The slightly darker
-// "filled" shade used by some components comes from the
-// `--mantine-color-error` override in cssVariablesResolver below, which
-// points at alert-5 (light) / alert-8 mixed with red (dark).
+// `error` is an alias for `alert` — same palette, same shades. Kept as a
+// separate key so call-sites using `color="error"` keep working without
+// mapping to "alert". The actual error color used by Mantine's error UI
+// comes from the `--mantine-color-error` override in cssVariablesResolver.
 const error = alert;
 
 // Components that all default to the brand green are declared individually
@@ -197,12 +220,36 @@ export const theme = createTheme({
   headings: {
     fontFamily: FONT_FAMILY,
     sizes: {
-      h1: { fontWeight: "400", fontSize: "3.5rem", lineHeight: "5rem" },
-      h2: { fontWeight: "400", fontSize: "2.5rem", lineHeight: "3rem" },
-      h3: { fontWeight: "400", fontSize: "2rem", lineHeight: "2.5rem" },
-      h4: { fontWeight: "400", fontSize: "1.5rem", lineHeight: "2rem" },
-      h5: { fontWeight: "500", fontSize: "1.125rem", lineHeight: "1.5rem" },
-      h6: { fontWeight: "500", fontSize: "1rem", lineHeight: "1.5rem" },
+      h1: {
+        fontWeight: "var(--sweco-h1-font-weight)",
+        fontSize: "var(--sweco-h1-font-size)",
+        lineHeight: "var(--sweco-h1-line-height)",
+      },
+      h2: {
+        fontWeight: "var(--sweco-h2-font-weight)",
+        fontSize: "var(--sweco-h2-font-size)",
+        lineHeight: "var(--sweco-h2-line-height)",
+      },
+      h3: {
+        fontWeight: "var(--sweco-h3-font-weight)",
+        fontSize: "var(--sweco-h3-font-size)",
+        lineHeight: "var(--sweco-h3-line-height)",
+      },
+      h4: {
+        fontWeight: "var(--sweco-h4-font-weight)",
+        fontSize: "var(--sweco-h4-font-size)",
+        lineHeight: "var(--sweco-h4-line-height)",
+      },
+      h5: {
+        fontWeight: "var(--sweco-h5-font-weight)",
+        fontSize: "var(--sweco-h5-font-size)",
+        lineHeight: "var(--sweco-h5-line-height)",
+      },
+      h6: {
+        fontWeight: "var(--sweco-h6-font-weight)",
+        fontSize: "var(--sweco-h6-font-size)",
+        lineHeight: "var(--sweco-h6-line-height)",
+      },
     },
   },
   colors: {
@@ -218,7 +265,7 @@ export const theme = createTheme({
     error,
   },
   shadows: {
-    sm: "0 .3px .9px var(--sweco-shadow-color-1a), 0 1.5px 3.6px var(--sweco-shadow-color-1b)",
+    sm: "0 .3px .9px var(--sweco-shadow-color-1a), 0 1.6px 3.6px var(--sweco-shadow-color-1b)",
     md: "0 .6px 1.8px var(--sweco-shadow-color-1a), 0 3.2px 7.2px var(--sweco-shadow-color-1b)",
     lg: "0 1.2px 3.6px var(--sweco-shadow-color-1a), 0 6.4px 14.4px var(--sweco-shadow-color-1b)",
     xl: "0 4.8px 14.4px var(--sweco-shadow-color-2a), 0 25.6px 57.6px var(--sweco-shadow-color-2b)",
@@ -231,22 +278,22 @@ export const theme = createTheme({
     md: "1rem",
     lg: "1.5rem",
     xl: "2rem",
-    xxl: "3rem",
-    hero: "4rem",
+    "2xl": "3rem",
+    "3xl": "4rem",
   },
   fontSizes: {
-    xs: "0.75rem", // 12px
-    sm: "0.875rem", // 14px
-    md: "1rem", // 16px
-    lg: "1.125rem", // 18px
-    xl: "1.25rem", // 20px
+    xs: "var(--sweco-text-xs)",
+    sm: "var(--sweco-text-sm)",
+    md: "var(--sweco-text-base)",
+    lg: "var(--sweco-text-md)",
+    xl: "var(--sweco-text-lg)",
   },
   lineHeights: {
-    xs: "1.4",
-    sm: "1.45",
-    md: "1.55",
-    lg: "1.6",
-    xl: "1.65",
+    xs: "var(--sweco-text-xs-line-height)",
+    sm: "var(--sweco-text-sm-line-height)",
+    md: "var(--sweco-text-base-line-height)",
+    lg: "var(--sweco-text-md-line-height)",
+    xl: "var(--sweco-text-lg-line-height)",
   },
   components: {
     Loader: Loader.extend({
@@ -256,8 +303,32 @@ export const theme = createTheme({
       },
     }),
     Mark: Mark.extend({ defaultProps: { color: "gray" } }),
+    Badge: Badge.extend({
+      styles: () => ({
+        root: {
+          textTransform: "none",
+          fontWeight: "var(--sweco-font-weight-normal)",
+        },
+      }),
+    }),
     Drawer: Drawer.extend({
       defaultProps: { closeButtonProps: { size: "lg" } },
+      styles: () => ({
+        header: {
+          backgroundColor: "var(--mantine-primary-color-7)",
+          marginBottom: "var(--mantine-spacing-md)",
+          color: "var(--mantine-color-white)",
+        },
+      }),
+    }),
+    SegmentedControl: SegmentedControl.extend({
+      defaultProps: { color: "green" },
+      styles: () => ({
+        root: {
+          backgroundColor: "transparent",
+          border: "1px solid var(--mantine-color-default-border)",
+        },
+      }),
     }),
     Blockquote: Blockquote.extend({
       vars: () => ({
@@ -269,23 +340,40 @@ export const theme = createTheme({
       }),
     }),
     Modal: Modal.extend({
-      defaultProps: { closeButtonProps: { size: "lg" } },
+      defaultProps: { closeButtonProps: { size: "lg" }, radius: "sm" },
+      styles: () => ({
+        content: {
+          padding: "var(--mantine-spacing-xl)",
+        },
+        header: {
+          padding: 0,
+          minHeight: "unset",
+          marginBottom: "var(--mantine-spacing-md)",
+        },
+        body: {
+          padding: 0,
+        },
+        close: {
+          color: "var(--mantine-color-text)",
+        },
+      }),
     }),
-    ModalHeader: ModalHeader.extend({ defaultProps: {} }),
-    ModalBody: ModalBody.extend({ defaultProps: { style: {} } }),
+    ModalHeader: ModalHeader.extend({}),
+    ModalBody: ModalBody.extend({}),
     ModalTitle: ModalTitle.extend({
-      defaultProps: { fw: 400, fz: "1.5rem" },
+      defaultProps: {
+        fw: "var(--sweco-h3-font-weight)",
+        fz: "var(--sweco-h3-font-size)",
+        lh: "var(--sweco-h3-line-height)",
+      },
     }),
     Pagination: Pagination.extend({ defaultProps: { radius: "xl" } }),
     MenuItem: MenuItem.extend({
-      defaultProps: { fz: "var(--mantine-font-size-md)" },
+      defaultProps: { fz: "var(--sweco-text-base)" },
     }),
     Checkbox: Checkbox.extend({ defaultProps: { color: "green" } }),
     Radio: Radio.extend({ defaultProps: { color: "green" } }),
     Switch: Switch.extend({ defaultProps: { color: "green" } }),
-    SegmentedControl: SegmentedControl.extend({
-      defaultProps: { color: "green" },
-    }),
     Slider: Slider.extend({ defaultProps: { color: "green" } }),
     Stepper: Stepper.extend({ defaultProps: { color: "green" } }),
     Timeline: Timeline.extend({ defaultProps: { color: "green" } }),
@@ -294,16 +382,16 @@ export const theme = createTheme({
         root: {
           "--chip-bg": "var(--mantine-color-green-2)",
           "--chip-color": "var(--mantine-color-text)",
-          "--chip-hover": "var(--mantine-color-green-2)",
+          "--chip-hover": "var(--mantine-secondary-color-filled-hover)",
           "--chip-radius": "var(--mantine-radius-md)",
-          "--chip-fz": "var(--mantine-font-size-md)",
+          "--chip-fz": "var(--sweco-text-base)",
         },
       }),
     }),
     Tooltip: Tooltip.extend({
       styles: () => ({
-        tooltip: { "box-shadow": "var(--mantine-shadow-lg)" },
-        arrow: { "box-shadow": "var(--mantine-shadow-lg)" },
+        tooltip: { boxShadow: "var(--mantine-shadow-lg)" },
+        arrow: { boxShadow: "var(--mantine-shadow-lg)" },
       }),
       defaultProps: {
         color: "white",
@@ -317,22 +405,38 @@ export const theme = createTheme({
       classNames: (_theme, props) => {
         if (props.variant === "quaternary") return { root: "btn-quaternary" };
         if (props.variant === "warning") return { root: "btn-warning" };
+        if (props.variant === "caution") return { root: "btn-caution" };
         return { root: "" };
       },
       styles: (_theme, props) => ({
-        label: { fontWeight: 500 },
+        label: { fontWeight: "var(--sweco-font-weight-medium)" },
         root: {
           transition:
-            "background-color var(--default-sweco-transition), color var(--default-sweco-transition), border-color var(--default-sweco-transition), outline-color var(--default-sweco-transition)",
+            "background-color var(--sweco-transition), color var(--sweco-transition), border-color var(--sweco-transition), outline-color var(--sweco-transition)",
           ...(props.variant === "outline" ? { borderWidth: "2px" } : {}),
         },
       }),
-      vars: () => ({
-        root: {
-          "--button-hover": "var(--mantine-color-green-2)",
-          "--button-color": "var(--mantine-color-text)",
-        },
-      }),
+      vars: (_theme, props) => {
+        // Only override hover/color for buttons using the default (gray) color.
+        // Buttons with an explicit color (e.g. "alert", "green") or custom
+        // variants (caution, warning) should use their own colors.
+        const isDefault = !props.color || props.color === "gray";
+        const isCustomVariant =
+          props.variant === "caution" ||
+          props.variant === "warning" ||
+          props.variant === "quaternary";
+        return {
+          root: {
+            ...(isDefault && !isCustomVariant
+              ? {
+                  "--button-hover":
+                    "var(--mantine-secondary-color-filled-hover)",
+                  "--button-color": "var(--mantine-color-text)",
+                }
+              : {}),
+          },
+        };
+      },
       defaultProps: {
         radius: "xl",
         // Mantine's built-in default is "sm" (36px). Sweco design system
@@ -351,12 +455,41 @@ export const theme = createTheme({
     secondaryColor: "green",
   },
   variantColorResolver: (input) => {
+    // Default outline button (no explicit color, or color="gray") gets the
+    // brand-green border per Sweco design system, while keeping the text
+    // in the default text color.
     if (input.variant === "outline" && input.color === "gray") {
       return {
-        border: "1px solid var(--mantine-color-text)",
+        border: "2px solid var(--mantine-color-green-filled)",
         color: "var(--mantine-color-text)",
         background: "transparent",
-        hover: "var(--mantine-primary-color-light-hover)",
+        hover: "var(--mantine-secondary-color-light)",
+      };
+    }
+    // Custom variants — base colors set here, detailed styling (underline,
+    // hover effects) handled by CSS class names applied via classNames above.
+    if (input.variant === "quaternary") {
+      return {
+        background: "transparent",
+        hover: "transparent",
+        border: "none",
+        color: "var(--mantine-color-text)",
+      };
+    }
+    if (input.variant === "warning") {
+      return {
+        background: "var(--mantine-color-peach-0)",
+        hover: "var(--mantine-color-error)",
+        border: "2px solid var(--mantine-color-error)",
+        color: "var(--mantine-color-error)",
+      };
+    }
+    if (input.variant === "caution") {
+      return {
+        background: "transparent",
+        hover: "transparent",
+        border: "none",
+        color: "var(--mantine-color-error)",
       };
     }
     return defaultVariantColorsResolver(input);
@@ -453,8 +586,14 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       ...clearColors(default_.light),
       ...SHADOW_VARS("light"),
       "--mantine-color-anchor": anchorColor,
+      "--mantine-color-text": "var(--mantine-color-gray-8)",
       "--mantine-color-error": "var(--mantine-color-alert-4)",
       "--table-border-color": "var(--mantine-color-gray-2)",
+      // Override Mantine's auto-computed light/hover for the secondary palette
+      // so they point at actual Sweco shade indices instead of rgba().
+      [`--mantine-color-${secondary}-light`]: `var(--mantine-color-${secondary}-0)`,
+      [`--mantine-color-${secondary}-light-hover`]: `var(--mantine-color-${secondary}-1)`,
+      [`--mantine-color-${secondary}-filled-hover`]: `var(--mantine-color-${secondary}-2)`,
     },
     dark: {
       ...clearColors(default_.dark),

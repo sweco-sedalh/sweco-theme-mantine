@@ -1,0 +1,90 @@
+@layer sweco {
+  /* ════════════════════════════════════════════════════════════════════════
+   * Animated underline (shared) ── Anchor + anchor Breadcrumb
+   * No line initially; on hover a 2px line grows in from the left, sitting
+   * just below the text baseline. The negative margin cancels the reserved
+   * padding so the box height stays equal to surrounding inline text.
+   * NOTE: must explicitly null the box-shadow underline that
+   * .mantine-Anchor-root paints by default.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Anchor-root,
+  a.mantine-Breadcrumbs-breadcrumb {
+    color: currentColor;
+    text-decoration: none;
+    box-shadow: none;
+    padding-bottom: 0.25rem;
+    margin-bottom: -0.25rem;
+    background-image: linear-gradient(
+      to right,
+      var(--stroke-color, var(--sweco-underline-color)),
+      var(--stroke-color, var(--sweco-underline-color))
+    );
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 0;
+    transition:
+      var(--sweco-underline-transition),
+      color var(--sweco-transition);
+  }
+
+  .mantine-Anchor-root:hover,
+  a.mantine-Breadcrumbs-breadcrumb:hover {
+    text-decoration: none;
+    box-shadow: none;
+    background-size: 100% 2px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+    * Breadcrumbs
+    * Plain 1rem text in normal weight. Anchor breadcrumbs share the
+    * animated-underline rule above with .mantine-Anchor-root. Current
+    * page (non-anchor span) is medium weight, no hover effect.
+    * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Breadcrumbs-breadcrumb {
+    color: var(--mantine-color-text);
+    font-size: var(--mantine-font-size-md);
+    font-weight: var(--sweco-font-weight-normal);
+    text-decoration: none;
+    transition: color var(--sweco-transition);
+  }
+
+  .mantine-Breadcrumbs-breadcrumb:not(a) {
+    font-weight: var(--sweco-font-weight-medium) !important;
+    cursor: default;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+    * Inline links (inside paragraphs)
+    * Green underline by default, on hover: light bg + green ring.
+    * Excludes .mantine-Anchor-root which has its own animated-underline.
+    * ──────────────────────────────────────────────────────────────────────── */
+  :is(p a:not(.mantine-Anchor-root), .link) {
+    text-decoration-line: underline !important;
+    text-decoration-color: var(--mantine-secondary-color-4) !important;
+    text-underline-offset: 4px !important;
+    text-decoration-thickness: 2px !important;
+    outline-style: none !important;
+    position: relative;
+    border-radius: var(--sweco-radius-sm);
+    transition-property: all;
+    transition-timing-function: var(--sweco-transition-timing-function-long);
+    transition-duration: 0.3s;
+  }
+
+  :is(p a:not(.mantine-Anchor-root), .link):focus {
+    text-decoration-line: none !important;
+  }
+
+  @media (hover: hover) {
+    :is(p a:not(.mantine-Anchor-root), .link):hover {
+      color: var(--mantine-color-dark-5) !important;
+      background-color: var(--mantine-secondary-color-light) !important;
+      box-shadow: var(--sweco-focus-ring) !important;
+      text-decoration-line: none !important;
+      text-decoration-color: transparent !important;
+      background-image: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+  }
+}

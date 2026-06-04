@@ -1,0 +1,76 @@
+@layer sweco {
+  /* ════════════════════════════════════════════════════════════════════════
+   * Global element overrides
+   * ──────────────────────────────────────────────────────────────────────── */
+
+  /* ── Prose spacing — consistent bottom margin for block elements ──
+   * Scoped to `.prose` so Mantine components (Text → <p>, Title → <h*>)
+   * are NOT affected. Wrap long-form / editorial content in a <div class="prose">. */
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose .h1,
+  .prose .h2,
+  .prose .h3,
+  .prose p,
+  .prose ul,
+  .prose ol,
+  .prose dl,
+  .prose pre {
+    margin-bottom: var(--mantine-spacing-lg);
+  }
+
+  button,
+  th {
+    font-weight: var(--sweco-font-weight-medium) !important;
+  }
+
+  /* Reserve a transparent outline slot on every focusable element so the
+   * themed (green) outline can fade in without a flash of the browser-
+   * default black ring. */
+  *:focus,
+  *:focus-visible {
+    outline-color: transparent;
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [tabindex],
+  [role="button"],
+  [role="link"],
+  [role="tab"],
+  [role="option"],
+  [role="menuitem"] {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+
+  /* ── Shared label/control font ── */
+  .mantine-NavLink-label,
+  .mantine-Tabs-tab,
+  .mantine-Breadcrumbs-root,
+  .mantine-Pagination-control,
+  .mantine-Accordion-control,
+  .mantine-InputWrapper-label,
+  .mantine-Radio-label,
+  .mantine-Checkbox-label,
+  .mantine-Switch-label,
+  .mantine-SegmentedControl-label {
+    font-size: var(--mantine-font-size-md);
+    font-weight: var(--sweco-font-weight-normal);
+  }
+
+  /* Remove default stroke on FontAwesome SVG icons (fill-only). Scoped to
+   * .svg-inline--fa so stroke-based icons (e.g. Mantine's eye-dropper) are
+   * left untouched. */
+  .svg-inline--fa,
+  .svg-inline--fa path,
+  .svg-inline--fa circle,
+  .svg-inline--fa rect {
+    stroke: none !important;
+  }
+}

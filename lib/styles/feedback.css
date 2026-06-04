@@ -1,0 +1,250 @@
+@layer sweco {
+  /* ════════════════════════════════════════════════════════════════════════
+   * Stepper
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Stepper-stepIcon {
+    --stepper-icon-size: calc(var(--sweco-spacing) * 10); /* 40px */
+    width: var(--stepper-icon-size) !important;
+    height: var(--stepper-icon-size) !important;
+    min-width: var(--stepper-icon-size) !important;
+    min-height: var(--stepper-icon-size) !important;
+    border-width: 2px !important;
+    border-color: var(--mantine-secondary-color-filled) !important;
+    background-color: var(--mantine-color-white) !important;
+    font-size: var(--mantine-font-size-md) !important;
+    font-weight: var(--sweco-font-weight-medium);
+    transition:
+      background-color 0.3s var(--sweco-transition-timing-function),
+      border-color 0.3s var(--sweco-transition-timing-function);
+  }
+
+  /* Active step — secondary filled-hover fill */
+  .mantine-Stepper-stepIcon[data-progress] {
+    background-color: var(--mantine-secondary-color-filled-hover);
+  }
+
+  /* Completed step — white bg, checkmark drawn via ::after below */
+  .mantine-Stepper-stepIcon[data-completed] {
+    background-color: var(--mantine-color-white);
+    color: transparent;
+  }
+
+  .mantine-Stepper-stepIcon[data-completed] .mantine-Stepper-stepCompletedIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mantine-Stepper-stepIcon[data-completed]
+    .mantine-Stepper-stepCompletedIcon
+    svg {
+    display: none;
+  }
+
+  /* Check mark — uses mask-image so `currentColor` adapts to light/dark mode */
+  .mantine-Stepper-stepIcon[data-completed]
+    .mantine-Stepper-stepCompletedIcon::after {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-color: currentColor;
+    mask-image: url("../assets/checkmark.svg");
+    mask-size: 24px;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-image: url("../assets/checkmark.svg");
+    -webkit-mask-size: 24px;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+  }
+
+  /* Hover on clickable steps */
+  .mantine-Stepper-step:hover .mantine-Stepper-stepIcon {
+    background-color: var(--mantine-secondary-color-filled-hover) !important;
+  }
+
+  .mantine-Stepper-stepLabel {
+    font-weight: var(--sweco-font-weight-medium);
+  }
+
+  .mantine-Stepper-stepDescription {
+    font-size: var(--mantine-font-size-xs);
+    font-weight: var(--sweco-font-weight-normal);
+  }
+
+  /* Step-to-step separator */
+  .mantine-Stepper-verticalSeparator,
+  .mantine-Stepper-separator[data-active],
+  .mantine-Stepper-separator {
+    background-color: var(--mantine-secondary-color-filled);
+    border-color: var(--mantine-secondary-color-filled);
+  }
+
+  .mantine-Stepper-separator {
+    width: calc(var(--sweco-spacing) * 8);
+    margin-inline: calc(var(--sweco-spacing) * 3);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+ * Accordion
+ * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Accordion-chevron {
+    width: 2.5rem;
+    height: 2.5rem;
+    min-width: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--mantine-radius-sm);
+  }
+
+  /* Round green halo when expanded */
+  .mantine-Accordion-chevron[data-rotate] {
+    background: var(--mantine-secondary-color-filled-hover);
+    border-radius: 50%;
+  }
+
+  /* ── Separated-variant items (used by AccordionSection helper) ── */
+  .mantine-Accordion-item {
+    background: transparent;
+    border: 1px solid var(--mantine-color-gray-2);
+    border-radius: 0;
+  }
+
+  .mantine-Accordion-item[data-active] {
+    border: 2px solid var(--mantine-secondary-color-filled);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+ * Badge + removable "chip" variant
+ * ──────────────────────────────────────────────────────────────────────── */
+
+  /* Removable "chip" badge (className="badge-chip-x"). Dimensions scale
+ * with Mantine's Badge `size` prop via local CSS vars overridden per
+ * [data-size]. Default (no size) = sm = 32px. */
+  .badge-chip-x {
+    --chip-x-height: 2rem;
+    --chip-x-fz: 0.875rem;
+    --chip-x-lh: 1.25rem;
+    --chip-x-px: 0.75rem;
+    --chip-x-py: 0.5rem;
+    --chip-x-pr: 2.5rem;
+    --chip-x-icon: 20px;
+
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box !important;
+    height: var(--chip-x-height) !important;
+    min-height: var(--chip-x-height) !important;
+    padding-inline: var(--chip-x-px) !important;
+    padding-block: var(--chip-x-py) !important;
+    padding-right: var(--chip-x-pr) !important;
+    font-size: var(--chip-x-fz) !important;
+    line-height: var(--chip-x-lh) !important;
+    font-weight: var(--sweco-font-weight-medium) !important;
+    border-radius: var(--mantine-radius-md) !important;
+    background-color: var(--mantine-secondary-color-light) !important;
+    color: var(--mantine-color-text) !important;
+    transition:
+      background-color var(--sweco-transition),
+      color var(--sweco-transition);
+  }
+
+  /* White circle backdrop — ::before is painted UNDER ::after */
+  .badge-chip-x::before {
+    content: "";
+    position: absolute;
+    right: var(--chip-x-px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--chip-x-icon);
+    height: var(--chip-x-icon);
+    border-radius: 50%;
+    background-color: var(--mantine-color-white);
+  }
+
+  /* Close X icon — uses mask-image with currentColor so it adapts to light/dark mode.
+     ::after paints on top of ::before, giving the X over the white circle. */
+  .badge-chip-x::after {
+    content: "";
+    position: absolute;
+    right: var(--chip-x-px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--chip-x-icon);
+    height: var(--chip-x-icon);
+    background-color: currentColor;
+    mask-image: url("../assets/close.svg");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-image: url("../assets/close.svg");
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+  }
+
+  /* Size variants — same 8px step as buttons: xs=32, sm=40, md=48, lg=56 */
+  .badge-chip-x[data-size="xs"] {
+    --chip-x-height: 2rem;
+    --chip-x-pr: 2.25rem;
+    --chip-x-icon: 18px;
+  }
+
+  .badge-chip-x[data-size="sm"] {
+    --chip-x-height: 2.5rem;
+    --chip-x-pr: 2.5rem;
+    --chip-x-icon: 20px;
+  }
+
+  .badge-chip-x[data-size="md"] {
+    --chip-x-height: 3rem;
+    --chip-x-fz: 1rem;
+    --chip-x-lh: 1.5rem;
+    --chip-x-pr: 2.75rem;
+    --chip-x-icon: 22px;
+  }
+
+  .badge-chip-x[data-size="lg"] {
+    --chip-x-height: 3.5rem;
+    --chip-x-fz: 1rem;
+    --chip-x-lh: 1.5rem;
+    --chip-x-px: 1rem;
+    --chip-x-py: 0.75rem;
+    --chip-x-pr: 3rem;
+    --chip-x-icon: 24px;
+  }
+
+  .badge-chip-x .mantine-Badge-label {
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .badge-chip-x:hover {
+    background-color: var(--mantine-secondary-color-light-hover) !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+ * Blockquote
+ * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Blockquote-root {
+    font-size: var(--mantine-font-size-xl);
+    font-style: italic;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+ * Table
+ * ──────────────────────────────────────────────────────────────────────── */
+  :where([data-sticky]) .mantine-Table-th {
+    background-color: transparent;
+  }
+
+  /* Keep border-bottom on the last row inside filter dropdowns */
+  .filter-dropdown
+    .mantine-Table-tbody
+    .mantine-Table-tr:last-child:where([data-with-row-border]) {
+    border-bottom: calc(0.0625rem * var(--mantine-scale)) solid
+      var(--table-border-color);
+  }
+}

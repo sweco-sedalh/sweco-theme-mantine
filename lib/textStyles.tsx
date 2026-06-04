@@ -1,34 +1,34 @@
 export const textStyles = {
   blockquote: {
-    fontSize: "var(--text-lg)",
-    lineHeight: "var(--text-lg--line-height)",
-    fontWeight: "var(--font-weight-normal)",
+    fontSize: "var(--sweco-text-md)",
+    lineHeight: "var(--sweco-text-md-line-height)",
+    fontWeight: "var(--sweco-font-weight-normal)",
     fontStyle: "italic",
   },
   preamble: {
-    fontSize: "var(--text-lg)",
-    lineHeight: "var(--text-lg--line-height)",
-    fontWeight: "var(--font-weight-normal)",
+    fontSize: "var(--sweco-text-md)",
+    lineHeight: "var(--sweco-text-md-line-height)",
+    fontWeight: "var(--sweco-font-weight-normal)",
   },
   bodyDefault: {
-    fontSize: "var(--text-base)",
-    lineHeight: "var(--text-base--line-height)",
-    fontWeight: "var(--font-weight-normal)",
+    fontSize: "var(--sweco-text-base)",
+    lineHeight: "var(--sweco-text-base-line-height)",
+    fontWeight: "var(--sweco-font-weight-normal)",
   },
   bodySmall: {
-    fontSize: "var(--text-sm)",
-    lineHeight: "var(--text-sm--line-height)",
-    fontWeight: "var(--font-weight-normal)",
+    fontSize: "var(--sweco-text-sm)",
+    lineHeight: "var(--sweco-text-sm-line-height)",
+    fontWeight: "var(--sweco-font-weight-normal)",
   },
   bodyInfoText: {
-    fontSize: "var(--text-sm)",
-    lineHeight: "var(--text-base--line-height)",
-    fontWeight: "var(--font-weight-medium)",
+    fontSize: "var(--sweco-text-sm)",
+    lineHeight: "var(--sweco-text-base-line-height)",
+    fontWeight: "var(--sweco-font-weight-medium)",
   },
   bodyTiny: {
-    fontSize: "var(--text-xs)",
-    lineHeight: "var(--text-xs--line-height)",
-    fontWeight: "var(--font-weight-normal)",
+    fontSize: "var(--sweco-text-xs)",
+    lineHeight: "var(--sweco-text-xs-line-height)",
+    fontWeight: "var(--sweco-font-weight-normal)",
   },
 };
 

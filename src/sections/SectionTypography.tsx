@@ -48,8 +48,8 @@ export const SectionTypography: FC = () => (
           </Text>{" "}
           text
         </Text>
-        <Text fw={500}>Semibold</Text>
-        <Text fw={700}>Bold</Text>
+        <Text fw="var(--sweco-font-weight-medium)">Semibold</Text>
+        <Text fw="var(--sweco-font-weight-bold)">Bold</Text>
         <Text fs="italic">Italic</Text>
         <Text td="underline">Underlined</Text>
         <Text td="line-through">Strikethrough</Text>

@@ -1,0 +1,142 @@
+@layer sweco {
+  /* ════════════════════════════════════════════════════════════════════════
+   * Input
+   * Use box-shadow (GPU-composited, no lag) instead of outline for the
+   * focus ring. !important needed because Mantine's unlayered styles
+   * override @layer.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Input-input {
+    font-size: var(--mantine-font-size-md);
+    line-height: var(--sweco-leading-normal);
+    --input-padding-inline: 0.75rem;
+    height: auto;
+    min-height: calc(1.5em + 1.375rem + 2px);
+    padding-block: 0.6875rem;
+    outline: none !important;
+    box-shadow: var(--sweco-focus-ring-reset) !important;
+    transition:
+      box-shadow 0.15s var(--sweco-transition-timing-function-long),
+      border-color 0.15s var(--sweco-transition-timing-function-long) !important;
+  }
+
+  .mantine-Input-input:focus,
+  .mantine-Input-input:active {
+    border-color: var(--mantine-secondary-color-4);
+    box-shadow: var(--sweco-focus-ring) !important;
+  }
+
+  @media (hover: hover) {
+    .mantine-Input-input:hover {
+      border-color: var(--mantine-secondary-color-4);
+    }
+  }
+
+  .mantine-InputWrapper-root[data-error="true"] .mantine-InputWrapper-label {
+    color: var(--mantine-color-error);
+  }
+
+  /* Global override of Mantine's tiny 1px default section inset so any
+     input with a leading or trailing icon gets breathing room from the
+     border. Set --section-start / --section-end directly on the section
+     element — those are the actual variables consumed by inset-inline-*. */
+  .mantine-Input-section[data-position="left"] {
+    --section-start: calc(0.375rem * var(--mantine-scale));
+  }
+  .mantine-Input-section[data-position="right"] {
+    --section-end: calc(0.375rem * var(--mantine-scale));
+  }
+
+  /* When a section is present, Mantine sets --input-padding-inline-start/end
+     to exactly the section width (no gap between icon and text). Override
+     to add 0.5rem (8px) extra breathing room past the section. */
+  .mantine-Input-wrapper[data-with-left-section] {
+    --input-padding-inline-start: calc(var(--input-left-section-size) + 0.5rem);
+  }
+  .mantine-Input-wrapper[data-with-right-section] {
+    --input-padding-inline-end: calc(var(--input-right-section-size) + 0.5rem);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Combobox
+   * ──────────────────────────────────────────────────────────────────────── */
+  :where([data-mantine-color-scheme="light"])
+    .mantine-Combobox-option:hover:where(
+      :not([data-combobox-selected], [data-combobox-disabled])
+    ) {
+    background-color: var(--mantine-color-default-hover);
+    transition: all var(--sweco-transition);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Checkbox focus ring
+   * Green border + green-300 bg + green ring on focus, matching the Sweco
+   * design-system checkbox style.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Checkbox-input {
+    transition-property: all !important;
+    transition-duration: var(--sweco-transition-duration);
+    transition-timing-function: var(--sweco-transition-timing-function-long);
+  }
+
+  .mantine-Checkbox-input:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border-color: var(--mantine-secondary-color-4) !important;
+    background-color: var(--mantine-secondary-color-filled-hover) !important;
+    box-shadow: var(--sweco-focus-ring) !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Slider
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Slider-track,
+  .mantine-Slider-bar {
+    height: var(--slider-size-xs);
+  }
+
+  .mantine-Slider-thumb {
+    border-color: var(--slider-color);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Chip
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Chip-label {
+    padding: 6px 12px;
+    transition:
+      background-color var(--sweco-transition),
+      color var(--sweco-transition),
+      border-color var(--sweco-transition);
+  }
+
+  .mantine-Chip-label:not([data-checked="true"]) {
+    background-color: var(--mantine-secondary-color-light);
+  }
+
+  .mantine-Chip-label:hover {
+    background-color: var(--mantine-secondary-color-filled-hover);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Dropzone
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Dropzone-root {
+    border-style: dashed !important;
+    border-width: 1px !important;
+    border-color: var(--mantine-secondary-color-4) !important;
+    background-color: var(--mantine-color-white) !important;
+    cursor: pointer;
+    transition:
+      background-color var(--sweco-transition),
+      border-color var(--sweco-transition) !important;
+  }
+
+  @media (hover: hover) {
+    .mantine-Dropzone-root:hover:where(
+        [data-activate-on-click]:not([data-loading])
+      ) {
+      border-color: var(--mantine-secondary-color-4) !important;
+      background-color: var(--mantine-secondary-color-light) !important;
+    }
+  }
+}
