@@ -1,20 +1,20 @@
 import type { HTMLAttributes } from "react";
 
-import searchSvg from "../assets/search.svg";
+import closeSvg from "../assets/close.svg";
 import { iconMaskStyles } from "./iconMaskStyles";
 
 /**
- * Sweco magnifying-glass (search) icon — matches the Sweco design system.
+ * Sweco close (×) icon — matches the design system. Native size 20×20.
  * Rendered as a CSS mask so it inherits the surrounding text color via
- * `currentColor`. Native size 24×24, locked (no scaling tricks).
+ * `currentColor`. Locked size — no scaling tricks.
  */
-export const SearchIcon = ({
+export const CloseIcon = ({
   style,
   ...props
 }: HTMLAttributes<HTMLSpanElement>) => (
   <span
     aria-hidden
     {...props}
-    style={{ ...iconMaskStyles(searchSvg), ...style }}
+    style={{ ...iconMaskStyles(closeSvg, "1.25rem"), ...style }}
   />
 );

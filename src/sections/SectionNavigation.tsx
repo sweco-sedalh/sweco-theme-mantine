@@ -18,9 +18,7 @@ import {
   Tabs,
   Title,
 } from "@mantine/core";
-import { Header, SwecoLogo } from "../../lib";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { Header, SwecoLogo, SearchIcon, ChevronDownIcon } from "../../lib";
 
 export const SectionNavigation: FC = () => (
   <Section title="Navigation">
@@ -127,7 +125,7 @@ export const SectionNavigation: FC = () => (
                   visibleFrom="xs"
                 />
                 <ActionIcon variant="filled" color="green">
-                  <FontAwesomeIcon icon={faSearch} />
+                  <SearchIcon />
                 </ActionIcon>
               </Group>
               <Group gap="md" visibleFrom="sm">
@@ -143,7 +141,7 @@ export const SectionNavigation: FC = () => (
                     <Anchor href="#" onClick={(evt) => evt.preventDefault()}>
                       <Center>
                         <span style={{ marginRight: rem(5) }}>Dropdown</span>
-                        <FontAwesomeIcon icon={faChevronDown} />
+                        <ChevronDownIcon />
                       </Center>
                     </Anchor>
                   </Menu.Target>

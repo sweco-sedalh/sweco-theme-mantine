@@ -38,6 +38,10 @@ export {
 } from "./components/Button";
 export { SwecoLoader } from "./components/SwecoLoader.tsx";
 export { SearchIcon } from "./components/SearchIcon.tsx";
+export { CloseIcon } from "./components/CloseIcon.tsx";
+export { TrashIcon } from "./components/TrashIcon.tsx";
+export { ArrowLeftIcon, ArrowRightIcon } from "./components/ArrowIcons.tsx";
+export { ChevronDownIcon } from "./components/ChevronDownIcon.tsx";
 import { SwecoLoader } from "./components/SwecoLoader.tsx";
 import { textStyles } from "./textStyles.tsx";
 import type { TextStyle } from "./textStyles.tsx";
@@ -54,7 +58,6 @@ export type ExtendedColor =
   | "alert"
   | "warning"
   | "success"
-  | "error"
   | (string & {});
 
 declare module "@mantine/core" {
@@ -191,11 +194,9 @@ const warning: MantineColorsTuple = [
   darken("#735800", 0.1),
 ];
 
-// `error` is an alias for `alert` — same palette, same shades. Kept as a
-// separate key so call-sites using `color="error"` keep working without
-// mapping to "alert". The actual error color used by Mantine's error UI
-// comes from the `--mantine-color-error` override in cssVariablesResolver.
-const error = alert;
+// `error` is NOT a separate palette — use `color="alert"` at call-sites.
+// The CSS variable `--mantine-color-error` is still set in cssVariablesResolver
+// so Mantine's internal error UI (input error states, etc.) still works.
 
 // Components that all default to the brand green are declared individually
 // in the `components` map below (Checkbox, Radio, Switch, SegmentedControl,
@@ -262,7 +263,6 @@ export const theme = createTheme({
     alert,
     warning,
     success: green, // success palette is identical to green
-    error,
   },
   shadows: {
     sm: "0 .3px .9px var(--sweco-shadow-color-1a), 0 1.6px 3.6px var(--sweco-shadow-color-1b)",
@@ -373,7 +373,9 @@ export const theme = createTheme({
     }),
     Checkbox: Checkbox.extend({ defaultProps: { color: "green" } }),
     Radio: Radio.extend({ defaultProps: { color: "green" } }),
-    Switch: Switch.extend({ defaultProps: { color: "green" } }),
+    Switch: Switch.extend({
+      defaultProps: { color: "green" },
+    }),
     Slider: Slider.extend({ defaultProps: { color: "green" } }),
     Stepper: Stepper.extend({ defaultProps: { color: "green" } }),
     Timeline: Timeline.extend({ defaultProps: { color: "green" } }),
@@ -417,22 +419,20 @@ export const theme = createTheme({
         },
       }),
       vars: (_theme, props) => {
-        // Only override hover/color for buttons using the default (gray) color.
-        // Buttons with an explicit color (e.g. "alert", "green") or custom
-        // variants (caution, warning) should use their own colors.
-        const isDefault = !props.color || props.color === "gray";
-        const isCustomVariant =
-          props.variant === "caution" ||
-          props.variant === "warning" ||
-          props.variant === "quaternary";
+        // For the default-colored outline button we want to keep the label
+        // in the regular text color (the green is only on the border), so
+        // override --button-color here. All other cases use Mantine's
+        // computed colors from the palette / variantColorResolver.
+        const isDefaultColor = !props.color || props.color === "green";
+        const isDefaultOutline = props.variant === "outline" && isDefaultColor;
+        // Tertiary (variant="light") uses the light green background but
+        // the label must stay in the default text color (#111 / gray-8)
+        // per Sweco design system, not Mantine's auto green text.
+        const isDefaultLight = props.variant === "light" && isDefaultColor;
         return {
           root: {
-            ...(isDefault && !isCustomVariant
-              ? {
-                  "--button-hover":
-                    "var(--mantine-secondary-color-filled-hover)",
-                  "--button-color": "var(--mantine-color-text)",
-                }
+            ...(isDefaultOutline || isDefaultLight
+              ? { "--button-color": "var(--mantine-color-text)" }
               : {}),
           },
         };
@@ -443,6 +443,10 @@ export const theme = createTheme({
         // uses "md" (48px) as the default button height, so override here
         // for any <Button> without an explicit `size` prop.
         size: "md",
+        // Sweco design system: buttons are green by default (the brand
+        // primary action color). The theme's `primaryColor` stays "gray"
+        // for other components, but buttons opt into green explicitly.
+        color: "green",
       },
     }),
     Text: Text.extend({
@@ -455,10 +459,10 @@ export const theme = createTheme({
     secondaryColor: "green",
   },
   variantColorResolver: (input) => {
-    // Default outline button (no explicit color, or color="gray") gets the
-    // brand-green border per Sweco design system, while keeping the text
-    // in the default text color.
-    if (input.variant === "outline" && input.color === "gray") {
+    // Default outline button (no explicit color, or color="green") gets the
+    // brand-green 2px border per Sweco design system, while keeping the text
+    // in the default text color (applied via Button `vars` above).
+    if (input.variant === "outline" && input.color === "green") {
       return {
         border: "2px solid var(--mantine-color-green-filled)",
         color: "var(--mantine-color-text)",

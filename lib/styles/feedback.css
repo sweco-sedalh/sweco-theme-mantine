@@ -226,8 +226,18 @@
   }
 
   /* ════════════════════════════════════════════════════════════════════════
- * Blockquote
- * ──────────────────────────────────────────────────────────────────────── */
+   * Divider
+   * Mantine defaults the label to `color: var(--mantine-color-dimmed)` which
+   * fights any inline color set on a child <Text>. Inherit instead so the
+   * caller controls the color/weight via the label content.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Divider-label {
+    color: var(--mantine-color-text);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Blockquote
+   * ──────────────────────────────────────────────────────────────────────── */
   .mantine-Blockquote-root {
     font-size: var(--mantine-font-size-xl);
     font-style: italic;

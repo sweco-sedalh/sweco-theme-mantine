@@ -78,7 +78,11 @@
     --sweco-text-icon: 1.25rem;
     --sweco-text-icon-lg: 1.375rem;
 
-    /* ── Tracking / Leading ── */
+    /* ── Tracking / Leading ──
+     * Negative values tighten (kerning), positive values widen. */
+    --sweco-tracking-tighter: -0.05em;
+    --sweco-tracking-tight: -0.025em;
+    --sweco-tracking-normal: 0;
     --sweco-tracking-wide: 0.025em;
     --sweco-tracking-widest: 0.1em;
     --sweco-leading-normal: 1.5;

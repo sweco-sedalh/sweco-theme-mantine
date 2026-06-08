@@ -210,6 +210,23 @@
     justify-content: flex-start;
   }
 
+  /* Icon/text spacing for quaternary: tighter gap than default md buttons,
+   * and icons rendered at their native 24x24 size with NO scaling/aspect
+   * tricks — anything that resamples the SVG breaks rendering / antialiasing. */
+  .btn-quaternary .mantine-Button-inner {
+    gap: calc(var(--sweco-spacing) * 1.5) !important; /* 6px */
+  }
+
+  .btn-quaternary .mantine-Button-section svg {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    flex: none !important;
+  }
+
   /* Shared animated-underline labels (btn-quaternary + btn-caution)
     * 0.25rem padding reserves space for the hover underline below the text;
     * negative margin cancels the extra height so the box stays unchanged.
@@ -239,6 +256,42 @@
   .btn-quaternary:hover .mantine-Button-label,
   .btn-caution:hover .mantine-Button-label {
     background-size: 100% 2px;
+  }
+
+  /* Disabled state for transparent text-style buttons (quaternary & caution).
+   * Keep the background fully transparent — only the text greys out, and the
+   * hover underline animation is disabled.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .btn-quaternary:disabled,
+  .btn-quaternary[data-disabled],
+  .btn-quaternary[data-loading],
+  .btn-caution:disabled,
+  .btn-caution[data-disabled],
+  .btn-caution[data-loading] {
+    background-color: transparent !important;
+    color: var(--mantine-color-gray-5) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    cursor: not-allowed;
+  }
+
+  .btn-quaternary:disabled .mantine-Button-section,
+  .btn-quaternary[data-disabled] .mantine-Button-section,
+  .btn-quaternary[data-loading] .mantine-Button-section,
+  .btn-caution:disabled .mantine-Button-section,
+  .btn-caution[data-disabled] .mantine-Button-section,
+  .btn-caution[data-loading] .mantine-Button-section {
+    color: var(--mantine-color-gray-5) !important;
+  }
+
+  /* Kill the animated hover underline when disabled */
+  .btn-quaternary:disabled:hover .mantine-Button-label,
+  .btn-quaternary[data-disabled]:hover .mantine-Button-label,
+  .btn-quaternary[data-loading]:hover .mantine-Button-label,
+  .btn-caution:disabled:hover .mantine-Button-label,
+  .btn-caution[data-disabled]:hover .mantine-Button-label,
+  .btn-caution[data-loading]:hover .mantine-Button-label {
+    background-size: 0 2px !important;
   }
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -271,10 +324,7 @@
     gap: calc(var(--sweco-spacing) * 1.5);
   }
 
-  /* Let FontAwesome's defaults render btn-caution sm icons too. */
-  .btn-caution[data-size="sm"] .mantine-Button-section svg {
-    /* (no overrides) */
-  }
+  /* Let FontAwesome's defaults render btn-caution sm icons too — no overrides needed. */
 
   /* ════════════════════════════════════════════════════════════════════════
     * CircularLink — destructive/colored ActionIcon
@@ -304,11 +354,25 @@
   }
 
   /* ════════════════════════════════════════════════════════════════════════
+    * Icon sizes inside buttons
+    * Design-system icons (CSS-mask <span>) are locked at 24×24 by their
+    * inline styles. For sm/xs buttons the design spec calls for 20×20.
+    * The !important is required to beat the inline style.
+    * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Button-root[data-size="sm"] .mantine-Button-section > span,
+  .mantine-Button-root[data-size="xs"] .mantine-Button-section > span {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+  }
+  /* ════════════════════════════════════════════════════════════════════════
     * Icon size utilities
     * Use className="icon-lg" on an SVG to force 24px, overriding even the
     * per-size button rules.
     * ──────────────────────────────────────────────────────────────────────── */
-  .mantine-Button-root .mantine-Button-section svg.icon-lg,
   svg.icon-lg {
     width: auto !important; /* keep aspect ratio */
     height: 1.5rem !important; /* 24px */

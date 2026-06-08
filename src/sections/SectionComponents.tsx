@@ -34,8 +34,8 @@ import {
   faImages,
   faMagnifyingGlass,
   faRightLeft,
-  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 const StandardModal: FC = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -102,7 +102,7 @@ export const SectionComponents: FC = () => {
                 >
                   <Text c="dimmed" size="sm">
                     You&apos;ve created new branch{" "}
-                    <Text variant="link" component="span" inherit>
+                    <Text className="link" component="span" inherit>
                       fix-notifications
                     </Text>{" "}
                     from master
@@ -123,7 +123,7 @@ export const SectionComponents: FC = () => {
                 >
                   <Text c="dimmed" size="sm">
                     You&apos;ve pushed 23 commits to
-                    <Text variant="link" component="span" inherit>
+                    <Text className="link" component="span" inherit>
                       fix-notifications branch
                     </Text>
                   </Text>
@@ -144,7 +144,7 @@ export const SectionComponents: FC = () => {
                 >
                   <Text c="dimmed" size="sm">
                     You&apos;ve submitted a pull request
-                    <Text variant="link" component="span" inherit>
+                    <Text className="link" component="span" inherit>
                       Fix incorrect notification message (#187)
                     </Text>
                   </Text>
@@ -163,7 +163,7 @@ export const SectionComponents: FC = () => {
                   }
                 >
                   <Text c="dimmed" size="sm">
-                    <Text variant="link" component="span" inherit>
+                    <Text className="link" component="span" inherit>
                       Robert Gluesticker
                     </Text>{" "}
                     left a code review on your pull request
@@ -292,7 +292,7 @@ export const SectionComponents: FC = () => {
                     color="red"
                     leftSection={
                       <FontAwesomeIcon
-                        icon={faTrash}
+                        icon={faTrashCan}
                         style={{ width: rem(14), height: rem(14) }}
                       />
                     }

@@ -21,7 +21,7 @@
     );
     background-position: 0 100%;
     background-repeat: no-repeat;
-    background-size: 0 0;
+    background-size: 0 2px;
     transition:
       var(--sweco-underline-transition),
       color var(--sweco-transition);
@@ -59,6 +59,7 @@
     * Excludes .mantine-Anchor-root which has its own animated-underline.
     * ──────────────────────────────────────────────────────────────────────── */
   :is(p a:not(.mantine-Anchor-root), .link) {
+    color: inherit;
     text-decoration-line: underline !important;
     text-decoration-color: var(--mantine-secondary-color-4) !important;
     text-underline-offset: 4px !important;

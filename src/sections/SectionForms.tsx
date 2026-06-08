@@ -38,15 +38,40 @@ export const SectionForms: FC = () => {
               <SegmentedControl data={["React", "Angular", "Vue"]} />
               <Slider label="Slider" />
               <Switch label="Switch" />
-              <Radio.Group label="Radio">
+              <Radio.Group label="Radio — default (green)">
                 <Stack>
-                  <Radio value="react" label="React" />
-                  <Radio value="angular" label="Angular" />
-                  <Radio value="vue" label="Vue" />
+                  <Radio value="react" label="Option 1" defaultChecked />
+                  <Radio value="angular" label="Option 2" />
+                  <Radio value="vue" label="Option 3 (disabled)" disabled />
                 </Stack>
               </Radio.Group>
-              <Checkbox label="Checkbox" />
+              <Radio.Group
+                label="Radio — caution (alert)"
+                error="Helper text that explains how to resolve the issue."
+              >
+                <Stack>
+                  <Radio value="a" label="Option A" color="alert" />
+                  <Radio value="b" label="Option B (disabled)" color="alert" disabled />
+                </Stack>
+              </Radio.Group>
+              <Radio.Group
+                label="Radio — warning state"
+                error="Helper text that explains how to resolve the issue."
+              >
+                <Stack>
+                  <Radio value="x" label="Option (warning state)" />
+                </Stack>
+              </Radio.Group>
+              <Checkbox label="Checkbox — default (green)" />
+              <Checkbox label="Checkbox — caution (alert)" color="alert" />
               <Checkbox label="Checkbox disabled" disabled />
+              <Checkbox label="Checkbox caution disabled" color="alert" disabled />
+              <Checkbox label="Option (indeterminate)" indeterminate />
+              <Checkbox label="Option (indeterminate disabled)" indeterminate disabled />
+              <Checkbox
+                label="Option (warning state)"
+                error="Helper text that explains how to resolve the issue."
+              />
               <PinInput />
               <Group>
                 <Chip defaultChecked>Chip 1</Chip>

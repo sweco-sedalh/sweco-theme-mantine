@@ -87,6 +87,52 @@
   }
 
   /* ════════════════════════════════════════════════════════════════════════
+   * Radio — border, hover, focus
+   * Mantine fills the checked circle via --radio-color (set by `color` prop).
+   * We only override border color and add hover/focus rings so both the
+   * default (green) and caution (alert) variants work automatically.
+   * ──────────────────────────────────────────────────────────────────────── */
+
+  /* Default border: gray.5 (#858484) */
+  .mantine-Radio-radio {
+    border-color: var(--mantine-color-gray-5) !important;
+    transition:
+      box-shadow var(--sweco-transition),
+      border-color var(--sweco-transition),
+      background-color var(--sweco-transition) !important;
+  }
+
+  /* Unchecked hover → green border (same as input hover) */
+  @media (hover: hover) {
+    /* Checked hover → colored border from --radio-color */
+    .mantine-Radio-radio:checked:not(:disabled):hover {
+      border-color: var(--radio-color, var(--mantine-secondary-color-4)) !important;
+      opacity: 0.85;
+    }
+  }
+
+  /* Focus ring */
+  .mantine-Radio-radio:focus,
+  .mantine-Radio-radio:focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border-color: var(--mantine-secondary-color-4) !important;
+    box-shadow: var(--sweco-focus-ring) !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Checkbox + Radio — alert color label text (inside @layer, lower priority)
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Checkbox-root[style*="alert"] .mantine-Checkbox-label,
+  .mantine-Checkbox-root[style*="alert"] .mantine-Checkbox-description,
+  .mantine-Radio-root[style*="alert"] .mantine-Radio-label,
+  .mantine-Radio-root[style*="alert"] .mantine-Radio-description,
+  [data-error="true"] .mantine-Radio-label,
+  [data-error="true"] .mantine-Checkbox-label {
+    color: var(--mantine-color-alert-4);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
    * Slider
    * ──────────────────────────────────────────────────────────────────────── */
   .mantine-Slider-track,
@@ -96,6 +142,29 @@
 
   .mantine-Slider-thumb {
     border-color: var(--slider-color);
+    transform-origin: center center;
+    transition:
+      box-shadow var(--sweco-transition),
+      border-color var(--sweco-transition),
+      transform var(--sweco-transition) !important;
+  }
+
+  /* Hover — scale thumb + green ring */
+  @media (hover: hover) {
+    .mantine-Slider-thumb:hover {
+      box-shadow: var(--sweco-focus-ring) !important;
+      transform: translateX(-50%) translateY(-50%) scale(1.15) !important;
+    }
+  }
+
+  /* Focus / active / dragging — same as hover */
+  .mantine-Slider-thumb:focus,
+  .mantine-Slider-thumb:focus-visible,
+  .mantine-Slider-thumb:active,
+  .mantine-Slider-thumb[data-dragging] {
+    outline: none !important;
+    box-shadow: var(--sweco-focus-ring) !important;
+    transform: translateX(-50%) translateY(-50%) scale(1.15) !important;
   }
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -139,4 +208,56 @@
       background-color: var(--mantine-secondary-color-light) !important;
     }
   }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Switch — unchecked default + disabled
+   * Mantine light default: --switch-bg: gray-3. Override to gray-4 (#b2b2b2).
+   * ──────────────────────────────────────────────────────────────────────── */
+
+  /* Unchecked → gray-4 (#b2b2b2) */
+  [data-mantine-color-scheme="light"]
+    input:not(:checked)
+    + .mantine-Switch-track {
+    --switch-bg: var(--mantine-color-gray-4) !important;
+    --switch-bd: 2px solid var(--mantine-color-gray-4) !important;
+  }
+
+  /* Disabled */
+  .mantine-Switch-root[data-disabled] .mantine-Switch-track {
+    --switch-bg: var(--mantine-color-gray-4);
+    --switch-bd: 2px solid var(--mantine-color-gray-4);
+    opacity: 0.5;
+  }
 }
+
+/* Switch checked + hover — outside @layer so it beats Mantine's unlayered rule. */
+@media (hover: hover) {
+  .mantine-Switch-root:not([data-disabled]):hover
+    input:checked
+    + .mantine-Switch-track {
+    --switch-bg: var(--mantine-color-gray-6);
+    --switch-bd: 2px solid var(--mantine-color-gray-6);
+  }
+}
+
+/* Radio unchecked hover — outside @layer to beat Mantine's unlayered styles.
+ * green.4 border + green.2 bg on hover (mirrors input hover style). */
+@media (hover: hover) {
+  .mantine-Radio-radio:not(:disabled):not(:checked):hover {
+    border-color: var(--mantine-color-green-4) !important; /* #87BE73 */
+    background-color: var(--mantine-color-green-2) !important; /* #bde3af */
+  }
+}
+
+/* Checkbox + Radio alert label colors — outside @layer to beat Mantine defaults.
+ * 1. color="alert" → Mantine sets --checkbox/radio-color inline on root.
+ * 2. error prop on Radio.Group / Checkbox → data-error="true" on InputWrapper. */
+.mantine-Checkbox-root[style*="alert"] .mantine-Checkbox-label,
+.mantine-Checkbox-root[style*="alert"] .mantine-Checkbox-description,
+.mantine-Radio-root[style*="alert"] .mantine-Radio-label,
+.mantine-Radio-root[style*="alert"] .mantine-Radio-description,
+[data-error="true"] .mantine-Radio-label,
+[data-error="true"] .mantine-Checkbox-label {
+  color: var(--mantine-color-alert-4);
+}
+
