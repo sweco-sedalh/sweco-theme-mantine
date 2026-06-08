@@ -2,12 +2,12 @@ import { FC } from "react";
 import Section from "../Section.tsx";
 import {
   Accordion,
-  ActionIcon,
   Anchor,
   AppShell,
   Autocomplete,
   Breadcrumbs,
   Burger,
+  Button,
   Center,
   Grid,
   Group,
@@ -25,7 +25,7 @@ export const SectionNavigation: FC = () => (
     <Grid>
       <Grid.Col span={6}>
         <Stack>
-          <Title order={2}>Nav tabs small</Title>
+          <Title order={4}>Nav tabs small</Title>
           <Tabs defaultValue="2" color="green">
             <Tabs.List>
               <Tabs.Tab value="1">1</Tabs.Tab>
@@ -36,7 +36,7 @@ export const SectionNavigation: FC = () => (
               </Tabs.Tab>
             </Tabs.List>
           </Tabs>
-          <Title order={2}>Nav tabs</Title>
+          <Title order={4}>Nav tabs</Title>
           <Tabs defaultValue="2" variant="outline">
             <Tabs.List>
               <Tabs.Tab value="1">Link</Tabs.Tab>
@@ -47,7 +47,7 @@ export const SectionNavigation: FC = () => (
               </Tabs.Tab>
             </Tabs.List>
           </Tabs>
-          <Title order={2}>Nav pills</Title>
+          <Title order={4}>Nav pills</Title>
           <Tabs defaultValue="2" variant="pills">
             <Tabs.List>
               <Tabs.Tab value="1">Link</Tabs.Tab>
@@ -58,21 +58,21 @@ export const SectionNavigation: FC = () => (
               </Tabs.Tab>
             </Tabs.List>
           </Tabs>
-          <Title order={2}>Nav pills stacked</Title>
+          <Title order={4}>Nav pills stacked</Title>
         </Stack>
       </Grid.Col>
       <Grid.Col span={6}>
         <Stack>
-          <Title order={2}>Breadcrumb</Title>
+          <Title order={4}>Breadcrumb</Title>
           <Breadcrumbs>
             <Anchor href="#">Start</Anchor>
             <Anchor href="#">Library</Anchor>
             <Anchor href="#">Data</Anchor>
             <Anchor href="#">Lorem ipsum</Anchor>
           </Breadcrumbs>
-          <Title order={2}>Pagination</Title>
+          <Title order={4}>Pagination</Title>
           <Pagination total={10} />
-          <Title order={2}>Accordion</Title>
+          <Title order={4}>Accordion</Title>
           <Accordion defaultValue="1">
             <Accordion.Item value="1">
               <Accordion.Control>Collapsible item 1</Accordion.Control>
@@ -96,7 +96,7 @@ export const SectionNavigation: FC = () => (
         </Stack>
       </Grid.Col>
       <Grid.Col span={12}>
-        <Title order={2}>Navbar</Title>
+        <Title order={4}>Navbar</Title>
         {[false, true].map((light, idx) => (
           <AppShell
             key={idx}
@@ -109,10 +109,10 @@ export const SectionNavigation: FC = () => (
                 <Burger size="sm" hiddenFrom="sm" color="white" />
                 <SwecoLogo size={28} black={light || undefined} />
               </Group>
-              <Group visibleFrom="sm" gap={0}>
+              <Group visibleFrom="sm" gap="xs">
                 <Autocomplete
-                  style={{}}
                   placeholder="Search"
+                  radius="xl"
                   data={[
                     "React",
                     "Angular",
@@ -124,9 +124,9 @@ export const SectionNavigation: FC = () => (
                   ]}
                   visibleFrom="xs"
                 />
-                <ActionIcon variant="filled" color="green">
+                <Button aria-label="Sök" px={0} style={{ aspectRatio: 1 }}>
                   <SearchIcon />
-                </ActionIcon>
+                </Button>
               </Group>
               <Group gap="md" visibleFrom="sm">
                 <Anchor href="#">Start</Anchor>

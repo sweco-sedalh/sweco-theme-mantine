@@ -82,7 +82,7 @@ export const SectionComponents: FC = () => {
             <Stack>
               <Title order={2}>Toast message</Title>
               <Notification title="Message">See? Just like this.</Notification>
-              <Notification title="This went well" color="success">
+              <Notification title="This went well" color="green">
                 Yay, successful execution!
               </Notification>
             </Stack>

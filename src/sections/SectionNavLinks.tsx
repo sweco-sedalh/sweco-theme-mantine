@@ -56,7 +56,7 @@ export const SectionNavLinks: FC = () => (
           <NavLink
             href="#"
             label="Warnings"
-            rightSection={<Badge color="warning">5</Badge>}
+            rightSection={<Badge color="sand">5</Badge>}
           />
           <NavLink
             href="#"
@@ -109,14 +109,14 @@ export const SectionNavLinks: FC = () => (
 
       {/* ── Color variants ─────────────────────────────────────────────── */}
       <Grid.Col span={12}>
-        <Title order={2} mt="sm">
+        <Title order={4} mt="sm">
           Color variants
         </Title>
         <Text size="xs" c="dimmed" mb="sm">
           Active state with different <Code>color</Code> values.
         </Text>
         <Group gap="sm" align="flex-start" wrap="wrap">
-          {(["green", "blue", "alert", "warning"] as const).map((color) => (
+          {(["green", "blue", "alert", "sand"] as const).map((color) => (
             <NavLink
               key={color}
               href="#"

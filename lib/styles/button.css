@@ -105,10 +105,8 @@
 
   [data-mantine-color-scheme="dark"]
     .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"] {
-    background-color: var(--mantine-color-gray-8);
-    --button-color: var(
-      --mantine-secondary-color-8
-    ) !important; /* NOTE: does not take into account assigned color */
+    background-color: var(--mantine-color-dark-6);
+    --button-color: var(--mantine-color-white) !important;
   }
 
   .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
@@ -176,18 +174,38 @@
     color: var(--mantine-color-white) !important;
   }
 
-  /* Muted look when disabled — no red, no hover effect */
+  /* Dark mode: alert-2 (#ee9a9a) gives ~5.4:1 contrast on dark bg for text/border.
+   * Hover uses alert-5 (deep red) + white text for strong contrast. */
+  [data-mantine-color-scheme="dark"] .btn-warning {
+    color: var(--mantine-color-alert-2) !important;
+    border-color: var(--mantine-color-alert-2) !important;
+  }
+
+  [data-mantine-color-scheme="dark"] .btn-warning:hover {
+    background-color: var(--mantine-color-alert-4) !important;
+    border-color: var(--mantine-color-alert-4) !important;
+    color: var(--mantine-color-white) !important;
+  }
+
+  /* Muted look when disabled — use Mantine's default disabled tokens so it
+   * matches all other variants in both light and dark mode. */
   .btn-warning:disabled,
   .btn-warning[data-disabled],
   .btn-warning[data-loading],
   .btn-warning:disabled:hover,
   .btn-warning[data-disabled]:hover,
   .btn-warning[data-loading]:hover {
-    background-color: var(--mantine-color-gray-1) !important;
-    color: var(--mantine-color-gray-5) !important;
+    background-color: var(
+      --mantine-color-disabled,
+      var(--mantine-color-gray-1)
+    ) !important;
+    color: var(
+      --mantine-color-disabled-color,
+      var(--mantine-color-gray-5)
+    ) !important;
+    border-color: transparent !important;
     cursor: not-allowed;
     box-shadow: none !important;
-    border-color: transparent !important;
   }
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -337,6 +355,17 @@
       border-color var(--sweco-transition);
   }
 
+  /* Design-system CSS-mask icons (span) inside CircularLink must be 20×20,
+   * matching the FontAwesome icon size. The !important beats their inline style. */
+  .circular-link .mantine-ActionIcon-icon span {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+  }
+
   .circular-link[data-variant="outline"]:not(:disabled, [data-disabled]):hover {
     background-color: var(--ai-color);
     color: var(--mantine-color-white);
@@ -392,3 +421,34 @@
     justify-content: center !important;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+ * Button hover — Primary (filled), Secondary (outline), Tertiary (light)
+ * Outside @layer: Mantine sets --button-hover as inline rgba() which
+ * beats any @layer rule, so we override background-color directly.
+ * Custom variants (quaternary, warning, caution) have their own CSS.
+ * ──────────────────────────────────────────────────────────────────────── */
+@media (hover: hover) {
+  /* Light mode: hover to green.2 = #bde3af (matches Sweco design system). */
+  [data-mantine-color-scheme="light"]
+    .mantine-Button-root:is(
+      [data-variant="filled"],
+      [data-variant="outline"],
+      [data-variant="light"]
+    ):hover:where(:not([data-disabled], [data-loading], :disabled)) {
+    background-color: var(--mantine-color-green-2) !important; /* #bde3af */
+  }
+
+  /* Dark mode: hover to green.8 (#3f6730) so light-colored text on
+   * Tertiary (light variant) stays readable. */
+  [data-mantine-color-scheme="dark"]
+    .mantine-Button-root:is(
+      [data-variant="filled"],
+      [data-variant="outline"],
+      [data-variant="light"]
+    ):hover:where(:not([data-disabled], [data-loading], :disabled)) {
+    background-color: var(--mantine-color-green-8) !important;
+    color: var(--mantine-color-white) !important;
+  }
+}
+

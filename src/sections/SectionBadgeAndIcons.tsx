@@ -34,8 +34,7 @@ const ICONS = [
 ] as const;
 
 const BADGE_COLORS = [
-  "gray", "green", "blue", "peach", "sand",
-  "alert", "warning", "success",
+  "gray", "green", "blue", "peach", "sand", "alert",
 ] as const;
 
 const BADGE_SIZES = ["xs", "sm", "md", "lg", "xl"] as const;
@@ -125,7 +124,7 @@ export const SectionBadgeAndIcons: FC = () => (
     <Grid>
       {/* ── Badges ────────────────────────────────────────────────────── */}
       <Grid.Col span={12}>
-        <Title order={2}>Badge — variants</Title>
+        <Title order={4}>Badge — variants</Title>
         <Text size="xs" c="dimmed" mb="sm">
           All available colors in <Code>filled</Code> (default),{" "}
           <Code>light</Code> and <Code>outline</Code> variants.
@@ -148,7 +147,7 @@ export const SectionBadgeAndIcons: FC = () => (
       ))}
 
       <Grid.Col span={12}>
-        <Title order={2} mt="md">Badge — sizes</Title>
+        <Title order={4} mt="md">Badge — sizes</Title>
         <Group gap="sm" align="center" wrap="wrap">
           {BADGE_SIZES.map((size) => (
             <Stack key={size} gap={2} align="center">
@@ -161,7 +160,7 @@ export const SectionBadgeAndIcons: FC = () => (
 
       {/* ── Chips ─────────────────────────────────────────────────────── */}
       <Grid.Col span={12}>
-        <Title order={2} mt="md">Chip — toggle (single select)</Title>
+        <Title order={4} mt="md">Chip — toggle (single select)</Title>
         <Text size="xs" c="dimmed" mb="sm">
           <Code>{"<Chip>"}</Code> — one active at a time. Pair with a{" "}
           <Code>variant="caution"</Code> Clear-filters button.
@@ -175,7 +174,7 @@ export const SectionBadgeAndIcons: FC = () => (
       </Grid.Col>
 
       <Grid.Col span={12}>
-        <Title order={2} mt="md">Chip.Group — multi select</Title>
+        <Title order={4} mt="md">Chip.Group — multi select</Title>
         <Text size="xs" c="dimmed" mb="sm">
           <Code>{"<Chip.Group multiple>"}</Code> — multiple chips active simultaneously.
         </Text>
@@ -188,7 +187,7 @@ export const SectionBadgeAndIcons: FC = () => (
       </Grid.Col>
 
       <Grid.Col span={12}>
-        <Title order={2} mt="md">Chip with close (badge-chip-x)</Title>
+        <Title order={4} mt="md">Chip with close (badge-chip-x)</Title>
         <Text size="xs" c="dimmed" mb="sm">
           Dismissible filter tag. Uses{" "}
           <Code>{"<Badge className=\"badge-chip-x\" component=\"button\">"}</Code>{" "}
@@ -206,7 +205,7 @@ export const SectionBadgeAndIcons: FC = () => (
 
       {/* ── Icons ─────────────────────────────────────────────────────── */}
       <Grid.Col span={12}>
-        <Title order={2} mt="md">Icons</Title>
+        <Title order={4} mt="md">Icons</Title>
         <Text size="xs" c="dimmed" mb="sm">
           Design-system icons exported from{" "}
           <Code>@sweco/theme-mantine</Code>. Rendered via CSS mask so they

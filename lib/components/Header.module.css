@@ -12,8 +12,13 @@
   }
   .header-light {
     background-color: var(--mantine-color-white);
-    --text-color: var(--mantine-color-black);
+    /* Always dark text on white bg — override Mantine's dark-mode text tokens
+     * so links, buttons and plain text stay #111 regardless of color scheme. */
+    --text-color: var(--mantine-color-gray-8);
     --stroke-color: var(--mantine-color-black);
+    --mantine-color-text: var(--mantine-color-gray-8);
+    --button-color: var(--mantine-color-gray-8);
+    color: var(--mantine-color-gray-8);
     box-shadow: var(--mantine-shadow-md);
   }
 
@@ -22,51 +27,33 @@
     color: var(--text-color) !important;
     --stroke-color: var(--stroke-color);
     box-shadow: none;
-    position: relative;
   }
   /* need to set this also with :hover state because of specificity rules */
   .header :global(.mantine-Anchor-root:hover) {
     box-shadow: none;
   }
 
-  .header :global(.mantine-Anchor-root):before {
-    background-color: var(--mantine-color-white);
-    bottom: 0;
-    content: "";
-    height: 1px;
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    transform: translateY(-5px);
-    transition:
-      height 0.2s,
-      opacity 0.2s,
-      transform 0.2s;
-    width: 100%;
-  }
-  .header-light :global(.mantine-Anchor-root):before {
-    background-color: var(--mantine-color-black);
-  }
-  .header :global(.mantine-Anchor-root):hover:before,
-  .header :global(.mantine-Anchor-root.active):before {
-    height: 2px;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
+  /* Inputs in the dark header: white border so the box is visible against the
+   * dark background. Background stays white (Mantine default) so dark text
+   * remains readable — no text-color override needed.
+   * --input-bd is COLOR only; Mantine renders: border: 1px solid var(--input-bd) */
   .header :global(.mantine-Input-wrapper) {
-    --input-bd: none;
-    --_input-bd: none;
-    --_input-bd-focus: none;
+    --input-bd: rgba(255, 255, 255, 0.6);
+    --input-bd-focus: var(--mantine-color-white);
   }
   .header :global(.mantine-Input-wrapper) input:focus {
     box-shadow: inset 0 0 0 0.125rem var(--mantine-secondary-color-filled);
   }
 
-  .header :global(.mantine-ActionIcon-root) {
-    border: none;
-    --ai-size: 40px !important;
+  /* Light header: restore Mantine defaults (gray border) */
+  .header-light :global(.mantine-Input-wrapper) {
+    --input-bd: var(--mantine-color-gray-4);
+    --input-bd-focus: var(--mantine-primary-color-filled);
   }
+  .header-light :global(.mantine-Input-wrapper) input:focus {
+    box-shadow: inset 0 0 0 0.125rem var(--mantine-secondary-color-filled);
+  }
+
   .header :global(.mantine-ActionIcon-root[data-variant="filled"]) {
     --_ai-color: var(--mantine-primary-color-filled);
   }

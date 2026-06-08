@@ -148,7 +148,7 @@ export const SectionTypography: FC = () => (
 
       {/* ── GROUP 1: Headings + Font sizes — stacked, full width ──────── */}
       <Stack gap="md">
-        <Title order={2}>Headings</Title>
+        <Title order={4}>Headings</Title>
         {HEADINGS.map(({ order, size, lh, weight }) => (
           <Stack key={order} gap={2}>
             <Title order={order as TitleOrder}>Heading h{order}</Title>
@@ -161,7 +161,7 @@ export const SectionTypography: FC = () => (
           </Stack>
         ))}
 
-        <Title order={2} mt="md">Font sizes</Title>
+        <Title order={4} mt="md">Font sizes</Title>
         {FONT_SIZES.map(({ size, token, value, lh, mantineSize }) => (
           <Stack key={size} gap={2}>
             <Text
@@ -187,7 +187,7 @@ export const SectionTypography: FC = () => (
         {/* Left */}
         <Grid.Col span={6}>
           <Stack gap="md">
-            <Title order={2}>Semantic text variants</Title>
+            <Title order={4}>Semantic text variants</Title>
             <Text size="xs" c="dimmed">
               Pre-composed text styles (size + line-height + weight + style).
               All weights/styles are <strong>loaded font files</strong> except{" "}
@@ -211,7 +211,7 @@ export const SectionTypography: FC = () => (
               ),
             )}
 
-            <Title order={2} mt="md">Font weights</Title>
+            <Title order={4} mt="md">Font weights</Title>
             <Text size="xs" c="dimmed">
               Only <strong>three</strong> Sweco Sans font files are loaded:{" "}
               <Code>400</Code>, <Code>500</Code> and <Code>700</Code>. Any
@@ -237,7 +237,7 @@ export const SectionTypography: FC = () => (
               </Stack>
             ))}
 
-            <Title order={2} mt="md">Font style</Title>
+            <Title order={4} mt="md">Font style</Title>
             <Text size="xs" c="dimmed">
               Only <strong>one</strong> Sweco Sans font style is loaded:{" "}
               <Code>normal</Code>. <Code>italic</Code> / <Code>oblique</Code>{" "}
@@ -250,7 +250,7 @@ export const SectionTypography: FC = () => (
               </Meta>
             </Stack>
 
-            <Title order={2} mt="md">Tracking (letter-spacing)</Title>
+            <Title order={4} mt="md">Tracking (letter-spacing)</Title>
             <Text size="xs" c="dimmed">
               Negative values tighten (kerning), positive widen. Shown on{" "}
               <Code>{`<Title order={3}>`}</Code>.
@@ -274,7 +274,7 @@ export const SectionTypography: FC = () => (
         {/* Right */}
         <Grid.Col span={6}>
           <Stack gap="md">
-            <Title order={2}>Inline & emphasis</Title>
+            <Title order={4}>Inline & emphasis</Title>
             <Stack gap={2}>
               <Text>
                 Standalone <Anchor href="#">Anchor link</Anchor> — inherits
@@ -332,7 +332,7 @@ export const SectionTypography: FC = () => (
               &lt;pre&gt; &lt;code&gt;code block&lt;/code&gt; &lt;/pre&gt;
             </Code>
 
-            <Title order={2} mt="md">Lists</Title>
+            <Title order={4} mt="md">Lists</Title>
             <List>
               <List.Item>Unordered list item 1</List.Item>
               <List.Item>Unordered list item 2</List.Item>
@@ -344,7 +344,7 @@ export const SectionTypography: FC = () => (
               <List.Item>Ordered list item 3</List.Item>
             </List>
 
-            <Title order={2} mt="md">Quick reference</Title>
+            <Title order={4} mt="md">Quick reference</Title>
             <Group gap="xs" wrap="wrap">
               <Code>font-family: "Sweco Sans"</Code>
               <Code>--sweco-leading-normal: 1.5</Code>

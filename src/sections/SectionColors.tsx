@@ -2,7 +2,6 @@ import { FC } from "react";
 import {
   Box,
   Code,
-  getContrastColor,
   Grid,
   Group,
   Stack,
@@ -13,32 +12,24 @@ import {
 import Section from "../Section.tsx";
 
 const BRAND_PALETTES = ["green", "blue", "peach", "sand"] as const;
-const VALIDATION_PALETTES = ["alert", "warning", "success"] as const;
+const VALIDATION_PALETTES = ["alert"] as const;
 
 const PaletteStrip: FC<{ name: string; colors: readonly string[] }> = ({
   name,
   colors,
 }) => {
-  const theme = useMantineTheme();
   return (
     <Stack gap={0}>
       <Text size="sm" fw={500} mb={4}>
         {name}
       </Text>
       {colors.map((_, idx) => (
-        <Box
-          key={idx}
-          bg={`${name}.${idx}`}
-          p="xs"
-          c={getContrastColor({ color: `${name}.${idx}`, theme })}
-        >
+        <Box key={idx} bg={`${name}.${idx}`} p="xs">
           <Group justify="space-between">
             <span>
               {name}.{idx}
             </span>
-            <Code fz="xs" c={getContrastColor({ color: `${name}.${idx}`, theme })}>
-              {colors[idx]}
-            </Code>
+            <Code fz="xs">{colors[idx]}</Code>
           </Group>
         </Box>
       ))}
@@ -53,7 +44,7 @@ export const SectionColors: FC = () => {
       <Grid>
         {/* Grayscale — full width */}
         <Grid.Col span={12}>
-          <Title order={2} mb="sm">
+          <Title order={4} mb="sm">
             Grayscale
           </Title>
           <PaletteStrip name="gray" colors={theme.colors.gray} />
@@ -61,7 +52,7 @@ export const SectionColors: FC = () => {
 
         {/* Brand colors — 4 equal columns */}
         <Grid.Col span={12}>
-          <Title order={2} mb="sm">
+          <Title order={4} mb="sm">
             Brand colors
           </Title>
         </Grid.Col>
@@ -73,7 +64,7 @@ export const SectionColors: FC = () => {
 
         {/* Validation colors — full palettes */}
         <Grid.Col span={12}>
-          <Title order={2} mb="sm">
+          <Title order={4} mb="sm">
             Validation colors
           </Title>
         </Grid.Col>

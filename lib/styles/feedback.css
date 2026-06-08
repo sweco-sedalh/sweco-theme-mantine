@@ -108,12 +108,23 @@
   /* ── Separated-variant items (used by AccordionSection helper) ── */
   .mantine-Accordion-item {
     background: transparent;
-    border: 1px solid var(--mantine-color-gray-2);
+    border: 1px solid var(--table-border-color);
     border-radius: 0;
   }
 
   .mantine-Accordion-item[data-active] {
     border: 2px solid var(--mantine-secondary-color-filled);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Table — consistent border color across all contexts
+   * Mantine's Table sets --table-border-color locally (overriding :root).
+   * `unset` on an inherited custom property = `inherit`, so every table
+   * picks up our :root value — same token used by Accordion, so borders
+   * always match regardless of where the table is placed.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Table-table {
+    --table-border-color: unset;
   }
 
   /* ════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,36 @@
 @layer sweco {
   /* ════════════════════════════════════════════════════════════════════════
+   * General label — shared style for Input, Checkbox, Radio, Select etc.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-InputWrapper-label,
+  .mantine-Checkbox-label,
+  .mantine-Radio-label,
+  .mantine-Switch-label {
+    font-size: var(--mantine-font-size-sm);
+    font-weight: 500;
+    line-height: var(--sweco-leading-normal);
+    color: var(--mantine-color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .mantine-InputWrapper-description,
+  .mantine-Checkbox-description,
+  .mantine-Radio-description,
+  .mantine-Switch-description {
+    font-size: var(--mantine-font-size-xs);
+    color: var(--mantine-color-dimmed);
+    margin-top: 0.125rem;
+  }
+
+  .mantine-InputWrapper-error,
+  .mantine-Checkbox-error,
+  .mantine-Radio-error {
+    font-size: var(--mantine-font-size-xs);
+    color: var(--mantine-color-error);
+    margin-top: 0.25rem;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
    * Input
    * Use box-shadow (GPU-composited, no lag) instead of outline for the
    * focus ring. !important needed because Mantine's unlayered styles
@@ -129,7 +160,7 @@
   .mantine-Radio-root[style*="alert"] .mantine-Radio-description,
   [data-error="true"] .mantine-Radio-label,
   [data-error="true"] .mantine-Checkbox-label {
-    color: var(--mantine-color-alert-4);
+    color: var(--mantine-color-alert-3);
   }
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -210,33 +241,64 @@
   }
 
   /* ════════════════════════════════════════════════════════════════════════
-   * Switch — unchecked default + disabled
-   * Mantine light default: --switch-bg: gray-3. Override to gray-4 (#b2b2b2).
+   * Switch — unchecked default + disabled + thumb
+   * Mantine light default: --switch-bg: gray-3. Override to gray-5 (#858484).
+   * Thumb: 20×20 solid white circle — no inner indicator.
    * ──────────────────────────────────────────────────────────────────────── */
 
-  /* Unchecked → gray-4 (#b2b2b2) */
+  /* Unchecked → gray-5 (#858484) per design system --color-gray-500 */
   [data-mantine-color-scheme="light"]
     input:not(:checked)
     + .mantine-Switch-track {
-    --switch-bg: var(--mantine-color-gray-4) !important;
-    --switch-bd: 2px solid var(--mantine-color-gray-4) !important;
+    --switch-bg: var(--mantine-color-gray-5) !important;
+    --switch-bd: 2px solid var(--mantine-color-gray-5) !important;
   }
 
   /* Disabled */
   .mantine-Switch-root[data-disabled] .mantine-Switch-track {
-    --switch-bg: var(--mantine-color-gray-4);
-    --switch-bd: 2px solid var(--mantine-color-gray-4);
+    --switch-bg: var(--mantine-color-gray-5);
+    --switch-bd: 2px solid var(--mantine-color-gray-5);
     opacity: 0.5;
+  }
+
+  /* Thumb — 20×20 solid white circle, shadow from design system.
+   * Track: 24px tall × 44px wide (6×11 spacing units).
+   * Thumb offset = (24 - 20) / 2 = 2px — Mantine calculates from --switch-height/thumb-size.
+   * Do NOT set left/top — Mantine's translate system handles on/off movement + transition. */
+  .mantine-Switch-root {
+    --switch-height: 24px !important;
+    --switch-width: 44px !important;
+    --switch-thumb-size: 20px !important;
+    /* Thumb offset = (track-height - thumb-size) / 2 = (24-20)/2 = 2px */
+    --switch-track-label-padding: 2px !important;
+    --switch-track-label-padding-sm: 2px !important;
+    --switch-thumb-offset: 2px !important;
+  }
+
+  .mantine-Switch-thumb {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    border: none !important;
+    box-shadow: var(--mantine-shadow-sm) !important;
+  }
+
+  /* Hide inner indicator (the small dot/circle inside the thumb) */
+  .mantine-Switch-thumb svg,
+  .mantine-Switch-thumb [data-checked],
+  .mantine-Switch-thumbIcon,
+  .mantine-Switch-thumb::after,
+  .mantine-Switch-thumb::before {
+    display: none !important;
   }
 }
 
-/* Switch checked + hover — outside @layer so it beats Mantine's unlayered rule. */
+/* Switch hover (checked + unchecked) — outside @layer, background-color
+ * directly on the track to beat Mantine's inline CSS variable assignment. */
 @media (hover: hover) {
-  .mantine-Switch-root:not([data-disabled]):hover
-    input:checked
-    + .mantine-Switch-track {
-    --switch-bg: var(--mantine-color-gray-6);
-    --switch-bd: 2px solid var(--mantine-color-gray-6);
+  .mantine-Switch-root:not([data-disabled]):hover .mantine-Switch-track {
+    background-color: var(--mantine-color-gray-6) !important; /* #575656 */
+    border-color: var(--mantine-color-gray-6) !important;
   }
 }
 
@@ -258,6 +320,6 @@
 .mantine-Radio-root[style*="alert"] .mantine-Radio-description,
 [data-error="true"] .mantine-Radio-label,
 [data-error="true"] .mantine-Checkbox-label {
-  color: var(--mantine-color-alert-4);
+  color: var(--mantine-color-alert-3);
 }
 
