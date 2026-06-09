@@ -685,7 +685,9 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       "--table-border-color": "var(--mantine-color-gray-2)",
       // Table header: one clear shade darker than striped rows so header is
       // always distinguishable. gray-1 (#eaeaea) vs striped near-transparent.
-      "--table-header-bg": "var(--mantine-color-gray-2)",
+      "--table-header-bg": "var(--mantine-color-gray-1)",
+      // Spinner track: subtle light gray matching design (same as gray-2)
+      "--loader-track-color": "var(--mantine-color-gray-2)",
       // Override Mantine's auto-computed rgba() light/hover values for all
       // Sweco brand palettes so NavLink, Badge light, etc. use real shade indices
       // and have proper contrast instead of near-transparent rgba backgrounds.
@@ -731,7 +733,11 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       "--mantine-color-error": "var(--mantine-color-alert-2)",
       "--table-border-color": "var(--mantine-color-dark-4)",
       // Table header: dark-6 gives clear separation from striped rows on dark bg.
-      "--table-header-bg": "var(--mantine-color-dark-5)",
+      "--table-header-bg": "var(--mantine-color-dark-6)",
+      // Spinner track: blend into dark body — mostly background with a hint of
+      // the loader color so the track is barely visible, not harsh light gray.
+      "--loader-track-color":
+        "color-mix(in srgb, var(--mantine-color-body) 70%, var(--mantine-primary-color-filled) 30%)",
       // ── Themed "light" tokens for dark mode ──
       // Each color gets a translucent dark-tinted bg + bright text/border so
       // light-variant surfaces (Alert, NavLink, Badge, etc.) read clearly.

@@ -113,11 +113,15 @@
       var(--sweco-transition-timing-function-long);
 
     /* ── Reusable composite tokens ──
-     * Single source of truth for the patterns repeated across components. */
+     * Single source of truth for the patterns repeated across components.
+     * Inner ring uses --mantine-color-body (white in light, dark bg in dark)
+     * so the gap ring always matches the page background in both modes. */
     --sweco-focus-ring:
-      0 0 0 2px var(--mantine-color-white),
+      0 0 0 2px var(--mantine-color-body),
       0 0 0 4px var(--mantine-secondary-color-4);
     --sweco-focus-ring-reset: 0 0 0 0 transparent, 0 0 0 0 transparent;
+    /* Outer ring only — used for hover states (no inner gap ring) */
+    --sweco-hover-ring: 0 0 0 2px var(--mantine-secondary-color-4);
 
     /* Animated underline (used by Anchor, anchor Breadcrumb, btn-quaternary, btn-caution)
      * Uses the full 0.3s sweco transition to match the Tailwind reference. */

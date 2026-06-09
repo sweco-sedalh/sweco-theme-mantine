@@ -217,6 +217,13 @@
     background-color: var(--mantine-secondary-color-filled-hover);
   }
 
+  /* Dark mode: chip-color is statically white in Mantine — too light against
+   * light-ish chip backgrounds (gray-filled, green-6) in dark mode.
+   * Override to gray-9 so both text AND the checkmark icon are dark. */
+  [data-mantine-color-scheme="dark"] .mantine-Chip-label[data-checked] {
+    --chip-color: var(--mantine-color-gray-9);
+  }
+
   /* ════════════════════════════════════════════════════════════════════════
    * Dropzone
    * ──────────────────────────────────────────────────────────────────────── */

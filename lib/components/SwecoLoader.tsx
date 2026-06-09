@@ -44,7 +44,7 @@ export const SwecoLoader: MantineLoaderComponent = forwardRef((props, ref) => (
       fillRule="evenodd"
       clipRule="evenodd"
       d="M12 21.1667C17.0626 21.1667 21.1667 17.0626 21.1667 12C21.1667 6.93739 17.0626 2.83333 12 2.83333C6.93739 2.83333 2.83333 6.93739 2.83333 12C2.83333 17.0626 6.93739 21.1667 12 21.1667ZM12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1C5.92487 1 1 5.92487 1 12C1 18.0751 5.92487 23 12 23Z"
-      fill="#E1E1E1"
+      fill="var(--loader-track-color, #E1E1E1)"
     />
     {/* Animated spinner stroke */}
     <g className="sweco-spinner">
