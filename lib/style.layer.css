@@ -1,3 +1,20 @@
+/*
+ * Sweco theme stylesheet entry.
+ *
+ * Layer order (lowest priority first):
+ *   tokens     – design-system custom properties (colors, spacing, blur, …)
+ *   base       – global element resets / prose typography
+ *   components – every per-Mantine-component override
+ *   overrides  – escape hatch for the few rules that must beat Mantine's
+ *                unlayered styles (kept small and explicitly named).
+ *
+ * NOTE FOR CONSUMERS:
+ *   Import THIS file AFTER `@mantine/core/styles.css`. The Mantine stylesheet
+ *   declares its own `mantine` layer; placing ours after it guarantees the
+ *   correct cascade order even when bundlers re-order @import statements.
+ */
+@layer sweco.tokens, sweco.base, sweco.components, sweco.overrides;
+
 @import "./fonts.css";
 @import "./styles/tokens.css";
 @import "./styles/global.css";

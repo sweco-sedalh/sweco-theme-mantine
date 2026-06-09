@@ -1,24 +1,38 @@
-@layer sweco {
-  /* ════════════════════════════════════════════════════════════════════════
-   * Animated underline (shared) ── Anchor + anchor Breadcrumb
-   * No line initially; on hover a 2px line grows in from the left, sitting
-   * just below the text baseline. The negative margin cancels the reserved
-   * padding so the box height stays equal to surrounding inline text.
-   * NOTE: must explicitly null the box-shadow underline that
-   * .mantine-Anchor-root paints by default.
-   * ──────────────────────────────────────────────────────────────────────── */
+@layer sweco.components {
+  /* === Shared animated underline — Anchor + anchor Breadcrumb ============
+     No line initially; on hover a 2px line grows in from the left, sitting
+     just below the text baseline. The negative margin cancels the reserved
+     padding so the box height stays equal to surrounding inline text.
+     Must explicitly null the box-shadow underline that
+     .mantine-Anchor-root paints by default.
+
+     `--sweco-anchor-offset` controls how far below the text the line sits.
+     Default 0.25rem is tuned for md/lg font-size; small fonts (sm/xs) need
+     a much tighter offset or the line floats far below the glyphs — those
+     overrides are applied automatically below by matching Mantine's inline
+     `font-size: var(--mantine-font-size-…)` style. Consumers can also set
+     `--sweco-anchor-offset` directly on/above an Anchor to force any value. */
   .mantine-Anchor-root,
   a.mantine-Breadcrumbs-breadcrumb {
+    --sweco-anchor-offset: 0.25rem;
     color: currentColor;
     text-decoration: none;
     box-shadow: none;
     white-space: nowrap;
-    padding-bottom: 0.25rem;
-    margin-bottom: -0.25rem;
+    padding-bottom: var(--sweco-anchor-offset);
+    margin-bottom: calc(-1 * var(--sweco-anchor-offset));
+    /* The underline is always the Sweco secondary-color accent. Earlier this
+       rule also accepted `--stroke-color` as a fallback (so an ancestor could
+       recolor the line via the same token used to recolor icon strokes), but
+       that meant the Header — which sets `--stroke-color: currentColor` so
+       its icons follow the header text color — accidentally turned the
+       Anchor underlines black. Keep the two concerns separate: icons use
+       `--stroke-color`, anchor underline always uses
+       `--sweco-underline-color`. */
     background-image: linear-gradient(
       to right,
-      var(--stroke-color, var(--sweco-underline-color)),
-      var(--stroke-color, var(--sweco-underline-color))
+      var(--sweco-underline-color),
+      var(--sweco-underline-color)
     );
     background-position: 0 100%;
     background-repeat: no-repeat;
@@ -27,20 +41,23 @@
       var(--sweco-underline-transition),
       color var(--sweco-transition);
   }
-
+  /* Small Anchors render via Mantine's inline `font-size:
+     var(--mantine-font-size-sm)`. Detect that and tighten the offset so the
+     underline sits flush under the baseline instead of floating ~4 px below. */
+  .mantine-Anchor-root[style*="--mantine-font-size-sm"],
+  .mantine-Anchor-root[style*="--mantine-font-size-xs"] {
+    --sweco-anchor-offset: 0.05rem;
+  }
   .mantine-Anchor-root:hover,
   a.mantine-Breadcrumbs-breadcrumb:hover {
     text-decoration: none;
     box-shadow: none;
     background-size: 100% 2px;
   }
-
-  /* ════════════════════════════════════════════════════════════════════════
-    * Breadcrumbs
-    * Plain 1rem text in normal weight. Anchor breadcrumbs share the
-    * animated-underline rule above with .mantine-Anchor-root. Current
-    * page (non-anchor span) is medium weight, no hover effect.
-    * ──────────────────────────────────────────────────────────────────────── */
+  /* === Breadcrumbs =======================================================
+     Plain 1rem normal-weight text. Anchor breadcrumbs share the animated
+     underline above. The current-page non-anchor span is medium weight
+     with no hover effect. */
   .mantine-Breadcrumbs-breadcrumb {
     color: var(--mantine-color-text);
     font-size: var(--mantine-font-size-md);
@@ -48,17 +65,13 @@
     text-decoration: none;
     transition: color var(--sweco-transition);
   }
-
   .mantine-Breadcrumbs-breadcrumb:not(a) {
     font-weight: var(--sweco-font-weight-medium) !important;
     cursor: default;
   }
-
-  /* ════════════════════════════════════════════════════════════════════════
-    * Inline links (inside paragraphs)
-    * Green underline by default, on hover: light bg + green ring.
-    * Excludes .mantine-Anchor-root which has its own animated-underline.
-    * ──────────────────────────────────────────────────────────────────────── */
+  /* === Inline links inside paragraphs ====================================
+     Green underline by default. On hover: light bg + green ring. Excludes
+     .mantine-Anchor-root which has its own animated underline above. */
   :is(p a:not(.mantine-Anchor-root), .link) {
     color: inherit;
     text-decoration-line: underline !important;
@@ -72,14 +85,15 @@
     transition-timing-function: var(--sweco-transition-timing-function-long);
     transition-duration: 0.3s;
   }
-
   :is(p a:not(.mantine-Anchor-root), .link):focus {
     text-decoration-line: none !important;
   }
-
   @media (hover: hover) {
     :is(p a:not(.mantine-Anchor-root), .link):hover {
-      color: var(--mantine-color-dark-5) !important;
+      /* color tracks --mantine-color-text so it stays readable in both
+       * light mode (dark text on light-green tint) and dark mode (light
+       * text on dark-green tint). Hard-coding dark-5 here broke dark mode. */
+      color: var(--mantine-color-text) !important;
       background-color: var(--mantine-secondary-color-light) !important;
       box-shadow: var(--sweco-focus-ring) !important;
       text-decoration-line: none !important;

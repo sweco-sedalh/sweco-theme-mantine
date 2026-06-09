@@ -1,58 +1,84 @@
-@layer sweco {
+@layer sweco.components {
+  /*
+   * Sweco glass <Header />.
+   *
+   * Mobile (< 64rem): solid fallback surface (--sweco-header-fallback-bg) to
+   *   avoid spending GPU on backdrop-filter where the effect adds little value.
+   *
+   * Desktop (>= 64rem): semi-transparent --sweco-header-bg with a backdrop
+   *   blur, gated by an @supports query for `backdrop-filter` + `color-mix`.
+   *
+   * Color tokens (--sweco-header-bg, --sweco-header-border,
+   * --sweco-header-fallback-bg) are written per color-scheme by
+   * cssVariablesResolver in `index.ts`. --sweco-header-border is a
+   * translucent variant of the system hairline so the line blends with
+   * whatever scrolls under the glass surface; opaque borders elsewhere
+   * (Cards, Inputs, Divider, Table) use --mantine-color-default-border
+   * directly.
+   */
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: var(--mantine-spacing-md);
+    height: var(--sweco-header-height);
     padding-right: var(--mantine-spacing-md);
-    background-color: var(--mantine-primary-color-7);
-    --text-color: var(--mantine-color-white);
-    color: var(--text-color);
-    --stroke-color: var(--mantine-color-white);
+    background-color: var(--sweco-header-fallback-bg);
+    border-bottom: 1px solid var(--sweco-header-border);
+    color: var(--mantine-color-text);
+    --text-color: var(--mantine-color-text);
+    --stroke-color: currentColor;
+    transition: transform var(--sweco-transition);
+    will-change: transform;
   }
-  .header-light {
-    background-color: var(--mantine-color-white);
-    /* Always dark text on white bg — override Mantine's dark-mode text tokens
-     * so links, buttons and plain text stay #111 regardless of color scheme. */
-    --text-color: var(--mantine-color-gray-8);
-    --stroke-color: var(--mantine-color-black);
-    --mantine-color-text: var(--mantine-color-gray-8);
-    --button-color: var(--mantine-color-gray-8);
-    color: var(--mantine-color-gray-8);
-    box-shadow: var(--mantine-shadow-md);
+
+  /* Smart-sticky: slide the header out of view when the consumer scrolls
+     down past the threshold (toggled from React via the `hideOnScroll` prop). */
+  .header[data-hidden="true"] {
+    transform: translateY(-100%);
   }
+
+  @media (min-width: 64rem) {
+    @supports (
+      (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+    ) and (color: color-mix(in oklab, red, red)) {
+      .header {
+        background-color: var(--sweco-header-bg);
+        -webkit-backdrop-filter: blur(var(--sweco-header-blur));
+        backdrop-filter: blur(var(--sweco-header-blur));
+      }
+    }
+  }
+
+  /* Respect users who prefer reduced transparency: opaque fallback, no blur. */
+  @media (prefers-reduced-transparency: reduce) {
+    .header {
+      background-color: var(--sweco-header-fallback-bg);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header {
+      transition: none;
+    }
+  }
+
+  /*
+   * Deprecated `light` variant — the new default IS the light/glass surface.
+   * The prop is accepted as a no-op for backwards compatibility (see
+   * Header.tsx). No CSS rule is needed; this comment is the only trace.
+   */
 
   .header :global(.mantine-Anchor-root) {
     font-weight: 400;
-    color: var(--text-color) !important;
-    --stroke-color: var(--stroke-color);
+    color: var(--text-color);
     box-shadow: none;
   }
-  /* need to set this also with :hover state because of specificity rules */
   .header :global(.mantine-Anchor-root:hover) {
     box-shadow: none;
   }
 
-  /* Inputs in the dark header: white border so the box is visible against the
-   * dark background. Background stays white (Mantine default) so dark text
-   * remains readable — no text-color override needed.
-   * --input-bd is COLOR only; Mantine renders: border: 1px solid var(--input-bd) */
-  .header :global(.mantine-Input-wrapper) {
-    --input-bd: rgba(255, 255, 255, 0.6);
-    --input-bd-focus: var(--mantine-color-white);
-  }
-  .header :global(.mantine-Input-wrapper) input:focus {
-    box-shadow: inset 0 0 0 0.125rem var(--mantine-secondary-color-filled);
-  }
-
-  /* Light header: restore Mantine defaults (gray border) */
-  .header-light :global(.mantine-Input-wrapper) {
-    --input-bd: var(--mantine-color-gray-4);
-    --input-bd-focus: var(--mantine-primary-color-filled);
-  }
-  .header-light :global(.mantine-Input-wrapper) input:focus {
-    box-shadow: inset 0 0 0 0.125rem var(--mantine-secondary-color-filled);
-  }
 
   .header :global(.mantine-ActionIcon-root[data-variant="filled"]) {
     --_ai-color: var(--mantine-primary-color-filled);

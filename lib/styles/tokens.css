@@ -1,32 +1,29 @@
-@layer sweco {
-  /* ════════════════════════════════════════════════════════════════════════
-   * Sweco design-system tokens
+@layer sweco.tokens {
+  /*
+   * Sweco design-system tokens.
    *
-   * NOTE: Typography (font-family, font-size, line-height, heading sizes)
-   * is owned by the Mantine theme in `index.ts`. Reference Mantine's
-   * auto-generated variables instead of duplicating values here:
+   * Typography (font-family, font-size, line-height, heading sizes) is owned
+   * by the Mantine theme in `index.ts`. Reference Mantine's auto-generated
+   * variables instead of duplicating values here:
    *
    *   font-family       → var(--mantine-font-family)
    *   font-size  xs..xl → var(--mantine-font-size-{xs,sm,md,lg,xl})
    *   heading sizes     → var(--mantine-h{1..6}-font-size / -line-height)
    *
-   * This file only declares tokens that have NO Mantine equivalent
-   * (font-weight numerics, icon sizes, transition timing, focus rings,
-   * color aliases used by raw CSS rules below).
-   * ════════════════════════════════════════════════════════════════════════
+   * This file declares tokens that have no Mantine equivalent (font-weight
+   * numerics, icon sizes, transition timing, focus rings, blur, header glass).
+   *
    * Typographic rules:
-   * https://cdn.swecogroup.com/sweco-design-system/design-system/sweco-typography.html
-   * ──────────────────────────────────────────────────────────────────────── */
+   *   https://cdn.swecogroup.com/sweco-design-system/design-system/sweco-typography.html
+   */
   :root {
-    /* ── Font weights ──
-     * Only 400/500/700 are loaded as actual font files (see fonts.css).
-     * Do NOT add 600/300/etc — browsers would synthesize them ("faux bold")
-     * which renders inconsistently across platforms. */
+    /* Font weights — only 400/500/700 are loaded (fonts.css). Adding
+       300/600/… would let the browser synthesize ("faux bold"), which
+       renders inconsistently across platforms. */
     --sweco-font-weight-normal: 400;
     --sweco-font-weight-medium: 500;
     --sweco-font-weight-bold: 700;
-
-    /* ── Text sizes ── */
+    /* Text sizes */
     --sweco-text-xs: 0.75rem;
     --sweco-text-xs-line-height: 1rem;
     --sweco-text-sm: 0.875rem;
@@ -47,84 +44,73 @@
     --sweco-text-4xl-line-height: 4rem;
     --sweco-text-5xl: 4rem;
     --sweco-text-5xl-line-height: 4.5rem;
-
-    /* ── Heading sizes (mapped from text scale) ── */
+    /* Heading sizes (mapped from text scale) */
     --sweco-h1-font-size: 3.5rem;
     --sweco-h1-line-height: 4rem;
     --sweco-h1-font-weight: var(--sweco-font-weight-normal);
-
     --sweco-h2-font-size: 2.5rem;
     --sweco-h2-line-height: 3rem;
     --sweco-h2-font-weight: var(--sweco-font-weight-normal);
-
     --sweco-h3-font-size: 2rem;
     --sweco-h3-line-height: 2.5rem;
     --sweco-h3-font-weight: var(--sweco-font-weight-normal);
-
     --sweco-h4-font-size: 1.5rem;
     --sweco-h4-line-height: 2rem;
     --sweco-h4-font-weight: var(--sweco-font-weight-normal);
-
     --sweco-h5-font-size: 1.125rem;
     --sweco-h5-line-height: 1.5rem;
     --sweco-h5-font-weight: var(--sweco-font-weight-medium);
-
     --sweco-h6-font-size: 1rem;
     --sweco-h6-line-height: 1.5rem;
     --sweco-h6-font-weight: var(--sweco-font-weight-medium);
-
-    /* ── Icon sizes (Mantine has no icon-size tokens) ── */
+    /* Icon sizes (Mantine has no icon-size tokens) */
     --sweco-text-icon-sm: 1rem;
     --sweco-text-icon: 1.25rem;
     --sweco-text-icon-lg: 1.375rem;
-
-    /* ── Tracking / Leading ──
-     * Negative values tighten (kerning), positive values widen. */
+    /* Tracking / leading (negative = tighter, positive = wider) */
     --sweco-tracking-tighter: -0.05em;
     --sweco-tracking-tight: -0.025em;
     --sweco-tracking-normal: 0;
     --sweco-tracking-wide: 0.025em;
     --sweco-tracking-widest: 0.1em;
     --sweco-leading-normal: 1.5;
-
-    /* ── Spacing / Containers / Radius / Easing / Blur ── */
+    /* Spacing / radius / easing */
     --sweco-spacing: 0.25rem;
-
-    --sweco-container-sm: 24rem;
-    --sweco-container-md: 28rem;
-    --sweco-container-lg: 32rem;
-    --sweco-container-2xl: 42rem;
-    --sweco-container-3xl: 48rem;
-    --sweco-container-7xl: 80rem;
-
     --sweco-radius-sm: 0.125rem;
     --sweco-radius-md: 0.25rem;
-
     --sweco-ease-out: cubic-bezier(0, 0, 0.2, 1);
     --sweco-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    /* Blur scale — used by the glass <Header /> and any other surface
+       that needs backdrop-filter. */
+    --sweco-blur-xs: 4px;
     --sweco-blur-sm: 8px;
-
-    /* ── Transitions (Mantine has no transition tokens) ── */
+    --sweco-blur-md: 12px;
+    --sweco-blur-lg: 16px;
+    /* Header glass — color values are written by cssVariablesResolver
+       (per light/dark mode). The breakpoint, blur strength and the canonical
+       header height live here. The height token is consumed by the Header
+       CSS and is also exported as the `HEADER_HEIGHT` JS constant so
+       consumers can pass the same value to `AppShell header={{ height }}`. */
+    --sweco-header-blur: var(--sweco-blur-sm);
+    --sweco-header-blur-breakpoint: 64rem;
+    --sweco-header-height: 56px;
+    /* Transitions (Mantine has no transition tokens) */
     --sweco-transition-duration: 0.15s;
     --sweco-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --sweco-transition-duration-long: 0.3s;
     --sweco-transition-timing-function-long: cubic-bezier(0.4, 0, 0.2, 1);
     --sweco-transition: var(--sweco-transition-duration-long)
       var(--sweco-transition-timing-function-long);
-
-    /* ── Reusable composite tokens ──
-     * Single source of truth for the patterns repeated across components.
-     * Inner ring uses --mantine-color-body (white in light, dark bg in dark)
-     * so the gap ring always matches the page background in both modes. */
+    /* Reusable composite tokens — inner ring uses --mantine-color-body so the
+       gap matches the page background in light/dark. Override
+       --sweco-focus-ring-color on any ancestor to recolour the ring. */
+    --sweco-focus-ring-color: var(--mantine-secondary-color-4);
     --sweco-focus-ring:
       0 0 0 2px var(--mantine-color-body),
-      0 0 0 4px var(--mantine-secondary-color-4);
+      0 0 0 4px var(--sweco-focus-ring-color);
     --sweco-focus-ring-reset: 0 0 0 0 transparent, 0 0 0 0 transparent;
-    /* Outer ring only — used for hover states (no inner gap ring) */
-    --sweco-hover-ring: 0 0 0 2px var(--mantine-secondary-color-4);
-
-    /* Animated underline (used by Anchor, anchor Breadcrumb, btn-quaternary, btn-caution)
-     * Uses the full 0.3s sweco transition to match the Tailwind reference. */
+    --sweco-hover-ring: 0 0 0 2px var(--sweco-focus-ring-color);
+    /* Animated underline used by Anchor, Breadcrumb, btn-quaternary, btn-caution. */
     --sweco-underline-color: var(--mantine-secondary-color-4);
     --sweco-underline-transition: background-size var(--sweco-transition);
   }

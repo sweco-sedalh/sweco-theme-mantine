@@ -1,7 +1,5 @@
-@layer sweco {
-  /* ════════════════════════════════════════════════════════════════════════
-   * NavLink
-   * ──────────────────────────────────────────────────────────────────────── */
+@layer sweco.components {
+  /* === NavLink ========================================================== */
   .mantine-NavLink-root {
     --nl-bg: var(--mantine-secondary-color-1);
     --nl-color: var(--mantine-color-black);
@@ -10,59 +8,45 @@
       background-color var(--sweco-transition),
       color var(--sweco-transition);
   }
-
   [data-mantine-color-scheme="dark"] .mantine-NavLink-root {
     --nl-bg: var(--mantine-secondary-color-9);
     --nl-color: var(--mantine-color-white);
     --nl-hover: var(--mantine-secondary-color-9);
   }
-
   .mantine-NavLink-root:hover {
     background-color: var(--nl-hover);
   }
-
-  /* ════════════════════════════════════════════════════════════════════════
-   * Tabs
-   * ──────────────────────────────────────────────────────────────────────── */
+  /* === Tabs ============================================================= */
   .mantine-Tabs-root {
     --tab-hover-color: var(--mantine-secondary-color-light-hover);
   }
-
   button.mantine-Tabs-tab:hover:not(:disabled, [data-active="true"]) {
     background-color: var(--tab-hover-color);
   }
-
   button.mantine-Tabs-tab:hover[data-active="true"][data-variant="pills"] {
     background-color: var(--mantine-color-gray-0);
   }
-
   :where([data-mantine-color-scheme="light"]) .mantine-Tabs-tab {
-    /* Reserve 2px bottom border at all times so state changes don't shift layout */
+    /* Reserve a 2px bottom border at all times so state changes don't shift layout. */
     border-bottom: 2px solid transparent;
     transition:
       background-color 0.2s var(--sweco-transition-timing-function-long),
       color 0.2s var(--sweco-transition-timing-function-long),
       border-color 0.2s var(--sweco-transition-timing-function-long);
   }
-
   :where([data-mantine-color-scheme="light"])
     .mantine-Tabs-tab[data-active="true"] {
     border-bottom-color: var(--mantine-secondary-color-filled);
     background-color: var(--mantine-secondary-color-light);
   }
-
   :where([data-mantine-color-scheme="light"]) .mantine-Tabs-tab:hover {
     border-bottom-color: var(--mantine-secondary-color-3);
   }
-
   :where([data-mantine-color-scheme="light"])
     .mantine-Tabs-tab:hover:not([data-active="true"]) {
     background-color: var(--mantine-secondary-color-light-hover);
   }
-
-  /* ════════════════════════════════════════════════════════════════════════
-   * Pagination
-   * ──────────────────────────────────────────────────────────────────────── */
+  /* === Pagination ======================================================= */
   .mantine-Pagination-control {
     border: none;
     font-weight: var(--sweco-font-weight-medium);
@@ -72,26 +56,29 @@
       color var(--sweco-transition),
       border-color var(--sweco-transition);
   }
-
   [data-mantine-color-scheme="light"] .mantine-Pagination-control {
     background-color: var(--mantine-secondary-color-0);
   }
-
   [data-mantine-color-scheme="light"] .mantine-Pagination-control:hover,
   [data-mantine-color-scheme="light"]
     .mantine-Pagination-control[data-active="true"] {
     background-color: var(--mantine-secondary-color-3);
   }
-
   [data-mantine-color-scheme="dark"] .mantine-Pagination-control {
     background-color: var(--mantine-secondary-color-9);
     color: var(--mantine-color-white);
   }
-
   [data-mantine-color-scheme="dark"] .mantine-Pagination-control:hover,
   [data-mantine-color-scheme="dark"]
     .mantine-Pagination-control[data-active="true"] {
     background-color: var(--mantine-secondary-color-4);
     color: var(--mantine-color-black);
+  }
+  /* === Menu =============================================================
+     Lock icon size in dropdown items to match the label's icon size so the
+     icons don't scale with the larger item font-size and look oversized. */
+  .mantine-Menu-itemSection .svg-inline--fa,
+  .mantine-Menu-label .svg-inline--fa {
+    font-size: var(--sweco-text-icon-sm);
   }
 }

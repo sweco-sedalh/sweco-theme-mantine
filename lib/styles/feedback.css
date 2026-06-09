@@ -1,4 +1,4 @@
-@layer sweco {
+@layer sweco.components {
   /* ════════════════════════════════════════════════════════════════════════
    * Stepper
    * ──────────────────────────────────────────────────────────────────────── */
@@ -41,14 +41,14 @@
     display: none;
   }
 
-  /* Check mark — uses mask-image so `currentColor` adapts to light/dark mode */
+  /* Check mark — black on light, white on dark */
   .mantine-Stepper-stepIcon[data-completed]
     .mantine-Stepper-stepCompletedIcon::after {
     content: "";
     display: block;
     width: 24px;
     height: 24px;
-    background-color: var(--mantine-secondary-color-filled);
+    background-color: var(--mantine-color-black);
     mask-image: url("../assets/checkmark.svg");
     mask-size: 24px;
     mask-repeat: no-repeat;
@@ -101,8 +101,8 @@
   }
 
   /* ════════════════════════════════════════════════════════════════════════
- * Accordion
- * ──────────────────────────────────────────────────────────────────────── */
+   * Accordion
+   * ──────────────────────────────────────────────────────────────────────── */
   .mantine-Accordion-chevron {
     width: 2.5rem;
     height: 2.5rem;
@@ -119,7 +119,7 @@
     border-radius: 50%;
   }
 
-  /* ── Separated-variant items (used by AccordionSection helper) ── */
+  /* ── Separated-variant items ── */
   .mantine-Accordion-item {
     background: transparent;
     border: 1px solid var(--table-border-color);
@@ -142,113 +142,92 @@
   }
 
   /* ════════════════════════════════════════════════════════════════════════
- * Badge + removable "chip" variant
- * ──────────────────────────────────────────────────────────────────────── */
+   * Badge
+   * ──────────────────────────────────────────────────────────────────────── */
 
-  /* Removable "chip" badge (className="badge-chip-x"). Dimensions scale
- * with Mantine's Badge `size` prop via local CSS vars overridden per
- * [data-size]. Default (no size) = sm = 32px. */
-  .badge-chip-x {
-    --chip-x-height: 2rem;
-    --chip-x-fz: 0.875rem;
-    --chip-x-lh: 1.25rem;
-    --chip-x-px: 0.75rem;
-    --chip-x-py: 0.5rem;
-    --chip-x-pr: 2.5rem;
-    --chip-x-icon: 20px;
+  /* ════════════════════════════════════════════════════════════════════════
+   * ChipWithClose — removable pill component (lib/components/ChipWithClose.tsx)
+   * ──────────────────────────────────────────────────────────────────────── */
+  .chip-with-close {
+    --cwc-height: calc(var(--sweco-spacing) * 10);       /* 40px (md) */
+    --cwc-fz: var(--sweco-text-base);                    /* 1rem */
+    --cwc-lh: var(--sweco-text-base-line-height);        /* 1.5rem */
+    --cwc-px: calc(var(--sweco-spacing) * 3);            /* 12px */
+    --cwc-py: calc(var(--sweco-spacing) * 2);            /* 8px */
+    --cwc-gap: var(--cwc-px);                            /* same as side padding */
 
-    position: relative;
-    cursor: pointer;
-    box-sizing: border-box !important;
-    height: var(--chip-x-height) !important;
-    min-height: var(--chip-x-height) !important;
-    padding-inline: var(--chip-x-px) !important;
-    padding-block: var(--chip-x-py) !important;
-    padding-right: var(--chip-x-pr) !important;
-    font-size: var(--chip-x-fz) !important;
-    line-height: var(--chip-x-lh) !important;
-    font-weight: var(--sweco-font-weight-medium) !important;
-    border-radius: var(--mantine-radius-md) !important;
-    background-color: var(--mantine-secondary-color-light) !important;
-    color: var(--mantine-color-text) !important;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--cwc-gap);
+    box-sizing: border-box;
+    height: var(--cwc-height);
+    padding-inline-start: var(--cwc-px);
+    padding-inline-end: calc(var(--sweco-spacing) * 2);  /* 8px — tight against circle edge */
+    padding-block: var(--cwc-py);
+    border-radius: var(--mantine-radius-md);
+    background-color: var(--mantine-secondary-color-light);
+    color: var(--mantine-color-text);
+    font-weight: var(--sweco-font-weight-medium);
+    cursor: default;
     transition:
       background-color var(--sweco-transition),
       color var(--sweco-transition);
   }
 
-  /* Body-colour circle backdrop — matches page bg in both light and dark mode.
-     ::before is painted UNDER ::after */
-  .badge-chip-x::before {
-    content: "";
-    position: absolute;
-    right: var(--chip-x-px);
-    top: 50%;
-    transform: translateY(-50%);
-    width: var(--chip-x-icon);
-    height: var(--chip-x-icon);
-    border-radius: 50%;
-    background-color: var(--mantine-color-body);
+  .chip-with-close:hover {
+    background-color: var(--mantine-secondary-color-light-hover);
   }
 
-  /* Close X icon — uses mask-image with currentColor so it adapts to light/dark mode.
-     ::after paints on top of ::before, giving the X over the white circle. */
-  .badge-chip-x::after {
-    content: "";
-    position: absolute;
-    right: var(--chip-x-px);
-    top: 50%;
-    transform: translateY(-50%);
-    width: var(--chip-x-icon);
-    height: var(--chip-x-icon);
-    background-color: currentColor;
-    mask-image: url("../assets/close.svg");
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    mask-position: center;
-    -webkit-mask-image: url("../assets/close.svg");
-    -webkit-mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
+  .chip-with-close-label {
+    font-size: var(--cwc-fz);
+    line-height: var(--cwc-lh);
+    white-space: nowrap;
   }
 
-  /* Size variants — same 8px step as buttons: xs=32, sm=40, md=48, lg=56 */
-  .badge-chip-x[data-size="xs"] {
-    --chip-x-height: 2rem;
-    --chip-x-pr: 2.25rem;
-    --chip-x-icon: 18px;
+  .chip-with-close-btn {
+    flex: none;
+    border-radius: 50% !important;
+    background-color: var(--mantine-color-body) !important;
+    color: var(--mantine-color-text) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: calc(var(--sweco-spacing) * 5) !important;   /* 20px */
+    height: calc(var(--sweco-spacing) * 5) !important;  /* 20px */
+    min-width: calc(var(--sweco-spacing) * 5) !important;
+    min-height: calc(var(--sweco-spacing) * 5) !important;
+    padding: 0 !important;
+    transition:
+      background-color var(--sweco-transition),
+      color var(--sweco-transition) !important;
   }
 
-  .badge-chip-x[data-size="sm"] {
-    --chip-x-height: 2.5rem;
-    --chip-x-pr: 2.5rem;
-    --chip-x-icon: 20px;
+  .chip-with-close-btn svg {
+    width: 12px !important;
+    height: 12px !important;
   }
 
-  .badge-chip-x[data-size="md"] {
-    --chip-x-height: 3rem;
-    --chip-x-fz: 1rem;
-    --chip-x-lh: 1.5rem;
-    --chip-x-pr: 2.75rem;
-    --chip-x-icon: 22px;
+  .chip-with-close-btn:hover {
+    background-color: var(--mantine-color-body) !important;
+    opacity: 0.8;
   }
 
-  .badge-chip-x[data-size="lg"] {
-    --chip-x-height: 3.5rem;
-    --chip-x-fz: 1rem;
-    --chip-x-lh: 1.5rem;
-    --chip-x-px: 1rem;
-    --chip-x-py: 0.75rem;
-    --chip-x-pr: 3rem;
-    --chip-x-icon: 24px;
+  /* sm: 32px */
+  .chip-with-close[data-size="sm"] {
+    --cwc-height: calc(var(--sweco-spacing) * 8);        /* 32px */
+    --cwc-fz: var(--sweco-text-sm);                      /* 0.875rem */
+    --cwc-lh: var(--sweco-text-sm-line-height);          /* 1.25rem */
+    --cwc-px: calc(var(--sweco-spacing) * 3);            /* 12px */
+    --cwc-py: calc(var(--sweco-spacing) * 2);            /* 8px */
   }
 
-  .badge-chip-x .mantine-Badge-label {
-    font-size: inherit;
-    line-height: inherit;
+  /* variant="secondary" — sand palette */
+  .chip-with-close[data-variant="secondary"] {
+    background-color: var(--mantine-color-sand-2);
   }
 
-  .badge-chip-x:hover {
-    background-color: var(--mantine-secondary-color-light-hover) !important;
+  .chip-with-close[data-variant="secondary"]:hover {
+    background-color: var(--mantine-color-sand-4);
   }
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -270,8 +249,8 @@
   }
 
   /* ════════════════════════════════════════════════════════════════════════
- * Table
- * ──────────────────────────────────────────────────────────────────────── */
+   * Table
+   * ──────────────────────────────────────────────────────────────────────── */
   :where([data-sticky]) .mantine-Table-th {
     background-color: transparent;
   }
@@ -300,7 +279,10 @@
     outline: none;
     text-decoration: none;
     box-shadow: var(--sweco-focus-ring-reset);
-    transition: box-shadow 0.15s var(--sweco-transition-timing-function-long);
+    transform: translateY(0);
+    transition:
+      box-shadow var(--sweco-transition),
+      transform var(--sweco-transition);
   }
 
   a.mantine-Card-root:focus-visible,
@@ -314,6 +296,7 @@
     .mantine-Card-root[href]:hover,
     .card-link:hover {
       box-shadow: var(--sweco-focus-ring);
+      transform: translateY(-2px);
     }
   }
 }

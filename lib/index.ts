@@ -17,8 +17,6 @@ import {
   Mark,
   MenuItem,
   Modal,
-  ModalBody,
-  ModalHeader,
   ModalTitle,
   Pagination,
   Radio,
@@ -31,25 +29,12 @@ import {
   Tooltip,
 } from "@mantine/core";
 
-export { SwecoLogo } from "./components/SwecoLogo.tsx";
-export { Header } from "./components/Header.tsx";
-export {
-  PrimaryButton,
-  SecondaryButton,
-  TertiaryButton,
-} from "./components/Button";
-export { SwecoLoader } from "./components/SwecoLoader.tsx";
-export { SearchIcon } from "./components/SearchIcon.tsx";
-export { CloseIcon } from "./components/CloseIcon.tsx";
-export { TrashIcon } from "./components/TrashIcon.tsx";
-export { ArrowLeftIcon, ArrowRightIcon } from "./components/ArrowIcons.tsx";
-export { ChevronDownIcon } from "./components/ChevronDownIcon.tsx";
 import { SwecoLoader } from "./components/SwecoLoader.tsx";
 import { textStyles } from "./textStyles.tsx";
 import type { TextStyle } from "./textStyles.tsx";
-
 import "./style.layer.css";
 
+/** Color identifiers exposed by this theme (plus any string for forwards-compat). */
 export type ExtendedColor =
   | "white"
   | "gray"
@@ -60,35 +45,40 @@ export type ExtendedColor =
   | "alert"
   | (string & {});
 
+/** Custom `<Button>` variants added on top of Mantine's built-ins. */
+export type ButtonVariant =
+  | "filled"
+  | "outline"
+  | "light"
+  | "subtle"
+  | "default"
+  | "transparent"
+  | "quaternary"
+  | "warning"
+  | "caution"
+  | (string & {});
+
 declare module "@mantine/core" {
   export interface MantineThemeColorsOverride {
     colors: Record<ExtendedColor, MantineColorsTuple>;
   }
   export interface MantineThemeOther {
+    /** Configurable second accent color, mirrored via `--mantine-secondary-color-*`. */
     secondaryColor: "green" | "blue" | "peach" | "sand";
   }
   export interface TextProps {
     variant?: TextStyle;
   }
   export interface ButtonProps {
-    variant?:
-      | "filled"
-      | "outline"
-      | "light"
-      | "subtle"
-      | "default"
-      | "transparent"
-      | "quaternary"
-      | "warning"
-      | "caution"
-      | (string & {});
+    variant?: ButtonVariant;
   }
 }
 
-// ── Color palettes ─────────────────────────────────────────────────────────
-// One explicit tuple per palette. Indices 0/2/4/6/8 are the official Sweco
-// shades; the in-between odd indices keep the visual ramp smooth, and index 9
-// is a darker shade for dark-mode `filled-hover`/`outline-hover`.
+/* === Color palettes ======================================================
+ * Each tuple has 10 stops. Indices 0/2/4/6/8 are the official Sweco shades;
+ * the odd in-between stops keep the visual ramp smooth, and index 9 is a
+ * darker shade used for `filled-hover` / `outline-hover` in dark mode.
+ * ========================================================================= */
 
 const solidWhite: MantineColorsTuple = [
   "#FFFFFF",
@@ -173,7 +163,7 @@ const alert: MantineColorsTuple = [
   "#f5c2c2",
   "#ee9a9a",
   "#e66e6e",
-  "#b32f2f", // filled — darker red per design
+  "#b32f2f",
   "#871c1c",
   "#770f0f",
   "#660707",
@@ -181,28 +171,29 @@ const alert: MantineColorsTuple = [
   darken("#4d0303", 0.1),
 ];
 
-// `warning` palette removed — use `sand` for neutral-warm tones.
-// `success` palette removed — use `green` directly.
-
-// so Mantine's internal error UI (input error states, etc.) still works.
-
-// Components that all default to the brand green are declared individually
-// in the `components` map below (Checkbox, Radio, Switch, SegmentedControl,
-// Slider, Stepper, Timeline). Keeping the extends inline makes it obvious
-// where to add per-component overrides later.
-
 const FONT_FAMILY =
   '"Sweco Sans", Arial, ui-sans-serif, system-ui, sans-serif, ' +
   '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"';
 
+/**
+ * Sweco design-system Mantine theme.
+ *
+ * Use together with {@link cssVariablesResolver} on the `MantineProvider`:
+ *
+ * ```tsx
+ * <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+ *   {children}
+ * </MantineProvider>
+ * ```
+ */
 export const theme = createTheme({
   primaryColor: "gray",
   primaryShade: 4,
   defaultRadius: 4,
   radius: {
-    pill: "9999px", // Usage: Button, Search field
-    md: "4px", // Forms, Input, Select, Choice chip, Checkbox, Tooltip, Dropdowns, Toast
-    sm: "2px", // Modal dialogs, Link body text hover, focus-visible
+    pill: "9999px",
+    md: "4px",
+    sm: "2px",
   },
   autoContrast: true,
   fontFamily: FONT_FAMILY,
@@ -282,9 +273,8 @@ export const theme = createTheme({
     xl: "var(--sweco-text-lg-line-height)",
   },
   components: {
-    // ActionIcon xs = 1.875rem (30 px) — matches Button size="xs" height so
-    // CircularLink and xs buttons sit on the same baseline.
     ActionIcon: ActionIcon.extend({
+      // Match `<Button size="xs">` (30px) so icon + button line up on a row.
       vars: (_theme, props) => {
         if (props.size === "xs") {
           return { root: { "--ai-size": "1.875rem" } };
@@ -294,31 +284,50 @@ export const theme = createTheme({
     }),
     Alert: Alert.extend({
       defaultProps: { variant: "light", radius: "md" },
-      // Use the themed `-light` / `-light-color` / `-outline` tokens so the
-      // Alert adapts automatically in dark mode (translucent bg + bright text)
-      // instead of hardcoding opaque `-0` / `-7` shades that look bad on dark.
+      // Sweco spec — every themed Alert color uses the official `-100`
+      // surface tint with the `-500` outline (the `alert` color is the
+      // destructive variant and pairs a peach-100 surface with the alert
+      // warning red as border). Mantine's 0-9 palette stores the official
+      // Sweco shades at the EVEN indices (0/2/4/6/8 → 100/300/500/700/900),
+      // so `-100` = index 0 and `-500` = index 4.
+      // The `-0` shades are auto-translucent in dark mode via
+      // `buildDarkLightShades`, so the same rule renders correctly on both
+      // light and dark surfaces.
+      // Text color tracks `--mantine-color-text` everywhere — only the
+      // title carries medium weight to keep the visual hierarchy.
       styles: (_theme, props) => {
         const c = props.color;
-        if (
-          c === "alert" ||
-          c === "green" ||
-          c === "blue" ||
-          c === "peach" ||
-          c === "sand"
-        ) {
-          return {
-            root: {
-              backgroundColor: `var(--mantine-color-${c}-light)`,
-              borderColor: `var(--mantine-color-${c}-outline)`,
-              borderWidth: 1,
-              borderStyle: "solid",
-            },
-            title: { color: `var(--mantine-color-${c}-light-color)` },
-            message: { color: `var(--mantine-color-${c}-light-color)` },
-            closeButton: { color: `var(--mantine-color-${c}-light-color)` },
-          };
-        }
-        return {};
+        const surface: Record<string, { bg: string; border: string }> = {
+          alert: { bg: "peach-0", border: "alert-4" },
+          green: { bg: "green-0", border: "green-4" },
+          blue: { bg: "blue-0", border: "blue-4" },
+          peach: { bg: "peach-0", border: "peach-4" },
+          sand: { bg: "sand-0", border: "sand-4" },
+        };
+        const tokens = c && surface[c];
+        return {
+          ...(tokens
+            ? {
+                root: {
+                  backgroundColor: `var(--mantine-color-${tokens.bg})`,
+                  borderColor: `var(--mantine-color-${tokens.border})`,
+                  borderWidth: 1,
+                  borderStyle: "solid",
+                },
+              }
+            : {}),
+          title: {
+            color: "var(--mantine-color-text)",
+            fontWeight: "var(--sweco-font-weight-medium)",
+          },
+          message: {
+            color: "var(--mantine-color-text)",
+            fontWeight: "var(--sweco-font-weight-normal)",
+          },
+          closeButton: {
+            color: "var(--mantine-color-text)",
+          },
+        };
       },
     }),
     Loader: Loader.extend({
@@ -340,9 +349,9 @@ export const theme = createTheme({
       defaultProps: { closeButtonProps: { size: "lg" } },
       styles: () => ({
         header: {
-          backgroundColor: "var(--mantine-primary-color-7)",
+          backgroundColor: "var(--mantine-secondary-color-filled)",
+          color: "var(--mantine-color-green-contrast)",
           marginBottom: "var(--mantine-spacing-md)",
-          color: "var(--mantine-color-white)",
         },
       }),
     }),
@@ -367,24 +376,16 @@ export const theme = createTheme({
     Modal: Modal.extend({
       defaultProps: { closeButtonProps: { size: "lg" }, radius: "sm" },
       styles: () => ({
-        content: {
-          padding: "var(--mantine-spacing-xl)",
-        },
+        content: { padding: "var(--mantine-spacing-xl)" },
         header: {
           padding: 0,
           minHeight: "unset",
           marginBottom: "var(--mantine-spacing-md)",
         },
-        body: {
-          padding: 0,
-        },
-        close: {
-          color: "var(--mantine-color-text)",
-        },
+        body: { padding: 0 },
+        close: { color: "var(--mantine-color-text)" },
       }),
     }),
-    ModalHeader: ModalHeader.extend({}),
-    ModalBody: ModalBody.extend({}),
     ModalTitle: ModalTitle.extend({
       defaultProps: {
         fw: "var(--sweco-h3-font-weight)",
@@ -397,23 +398,59 @@ export const theme = createTheme({
       defaultProps: { fz: "var(--sweco-text-base)" },
     }),
     Checkbox: Checkbox.extend({ defaultProps: { color: "green" } }),
-    Radio: Radio.extend({ defaultProps: { color: "green" } }),
-    Switch: Switch.extend({
+    Radio: Radio.extend({
       defaultProps: { color: "green" },
+      vars: (_theme, props) => {
+        const c = props.color ?? "green";
+        const shadeMap: Record<string, number> = {
+          green: 4,
+          alert: 3,
+          blue: 4,
+          peach: 4,
+          sand: 4,
+        };
+        const shade = shadeMap[c as string] ?? 4;
+        return {
+          root: {
+            "--radio-color": `var(--mantine-color-${c}-${shade})`,
+            "--radio-size": "1.5rem",
+          },
+        };
+      },
     }),
+    Switch: Switch.extend({ defaultProps: { color: "green" } }),
     Slider: Slider.extend({ defaultProps: { color: "green" } }),
     Stepper: Stepper.extend({ defaultProps: { color: "green" } }),
     Timeline: Timeline.extend({ defaultProps: { color: "green" } }),
     Chip: Chip.extend({
-      vars: () => ({
-        root: {
-          "--chip-bg": "var(--mantine-color-green-2)",
-          "--chip-color": "var(--mantine-color-text)",
-          "--chip-hover": "var(--mantine-secondary-color-filled-hover)",
-          "--chip-radius": "var(--mantine-radius-md)",
-          "--chip-fz": "var(--sweco-text-base)",
-        },
-      }),
+      defaultProps: { size: "md" },
+      vars: (_theme, props) => {
+        const isSecondary = props.variant === "secondary";
+        return {
+          root: {
+            "--chip-bg": isSecondary
+              ? "var(--mantine-color-sand-2)"
+              : "var(--mantine-color-green-2)",
+            "--chip-color": "var(--mantine-color-text)",
+            "--chip-hover": isSecondary
+              ? "var(--mantine-color-sand-4)"
+              : "var(--mantine-secondary-color-filled-hover)",
+            "--chip-radius": "var(--mantine-radius-md)",
+            "--chip-fz":
+              props.size === "sm"
+                ? "var(--sweco-text-sm)"
+                : "var(--sweco-text-base)",
+            "--chip-size":
+              props.size === "sm"
+                ? "calc(var(--sweco-spacing) * 8)"
+                : "calc(var(--sweco-spacing) * 10)",
+            "--chip-padding":
+              props.size === "sm"
+                ? "calc(var(--sweco-spacing) * 2) calc(var(--sweco-spacing) * 3)"
+                : undefined,
+          },
+        };
+      },
     }),
     Tooltip: Tooltip.extend({
       styles: () => ({
@@ -444,15 +481,11 @@ export const theme = createTheme({
         },
       }),
       vars: (_theme, props) => {
-        // For the default-colored outline button we want to keep the label
-        // in the regular text color (the green is only on the border), so
-        // override --button-color here. All other cases use Mantine's
-        // computed colors from the palette / variantColorResolver.
+        // Keep the label in the regular text color for outline/light variants
+        // on the default (green) color — only the border / background tint is
+        // green per Sweco spec, not the text.
         const isDefaultColor = !props.color || props.color === "green";
         const isDefaultOutline = props.variant === "outline" && isDefaultColor;
-        // Tertiary (variant="light") uses the light green background but
-        // the label must stay in the default text color (#111 / gray-8)
-        // per Sweco design system, not Mantine's auto green text.
         const isDefaultLight = props.variant === "light" && isDefaultColor;
         return {
           root: {
@@ -464,14 +497,12 @@ export const theme = createTheme({
       },
       defaultProps: {
         radius: "xl",
-        // Mantine's built-in default is "sm" (36px). Sweco design system
-        // uses "md" (48px) as the default button height, so override here
-        // for any <Button> without an explicit `size` prop.
+        // Sweco buttons default to 48px (md) — Mantine's built-in default is
+        // 36px (sm). Buttons default to the brand `green` accent rather than
+        // the theme's `primaryColor` ("gray"), which is reserved for chrome.
         size: "md",
-        // Sweco design system: buttons are green by default (the brand
-        // primary action color). The theme's `primaryColor` stays "gray"
-        // for other components, but buttons opt into green explicitly.
         color: "green",
+        variant: "filled",
       },
     }),
     Text: Text.extend({
@@ -485,18 +516,15 @@ export const theme = createTheme({
   },
   variantColorResolver: (input) => {
     // Default outline button (no explicit color, or color="green") gets the
-    // brand-green 2px border per Sweco design system, while keeping the text
-    // in the default text color (applied via Button `vars` above).
+    // brand-green 2px border with text in the default text color.
     if (input.variant === "outline" && input.color === "gray") {
       return {
         border: "2px solid var(--mantine-color-green-filled)",
         color: "var(--mantine-color-text)",
         background: "transparent",
-        hover: "var(--mantine-secondary-color-filled-hover)", // green.2 = #bde3af
+        hover: "var(--mantine-secondary-color-filled-hover)",
       };
     }
-    // Custom variants — base colors set here, detailed styling (underline,
-    // hover effects) handled by CSS class names applied via classNames above.
     if (input.variant === "quaternary") {
       return {
         background: "transparent",
@@ -525,6 +553,7 @@ export const theme = createTheme({
   },
 });
 
+/** Mantine's built-in palettes that this theme intentionally hides. */
 const BUILTIN_COLORS = [
   "red",
   "pink",
@@ -538,9 +567,6 @@ const BUILTIN_COLORS = [
   "orange",
 ];
 
-/**
- * Remove variables for the built-in colors - they are not available in this theme
- */
 function clearColors(input: Record<string, string>): Record<string, string> {
   return Object.fromEntries(
     Object.entries(input).filter(
@@ -550,9 +576,10 @@ function clearColors(input: Record<string, string>): Record<string, string> {
   );
 }
 
-// ── Secondary-color aliases ────────────────────────────────────────────────
-// Mantine exposes `--mantine-primary-color-*` aliases for the primary palette;
-// we mirror the same set for the configurable `theme.other.secondaryColor`.
+/* === Secondary-color aliases =============================================
+ * Mantine exposes `--mantine-primary-color-*` aliases for the primary palette;
+ * we mirror the same set for the configurable `theme.other.secondaryColor`.
+ * ========================================================================= */
 const SECONDARY_ALIAS_SUFFIXES = [
   "filled",
   "filled-hover",
@@ -576,35 +603,22 @@ const buildSecondaryAliases = (secondary: string, shadeCount: number) => ({
   ),
 });
 
-// ── Dark-mode color overrides ──────────────────────────────────────────────
-// For each themed color, override Mantine's `filled` / `filled-hover` and
-// `outline` / `outline-hover` aliases to fit the darker scheme.
-// `alert` is included so red destructive UI also gets lighter shades on dark.
+/* === Dark-mode color overrides ============================================
+ * Re-tone the themed palettes for dark surfaces. `alert` is included so red
+ * destructive UI gets a slightly lighter shade that stays readable on dark.
+ * ========================================================================= */
 const DARK_THEMED_COLORS = ["green", "blue", "peach", "sand", "alert"] as const;
 
-// In dark mode every color's lightest shades (0-1) are near-white in the static
-// palette and look terrible on dark surfaces.  Replace them with semi-transparent
-// tints of the colour's vivid mid-point (shade 5) so they fade into the dark bg
-// gracefully instead of clashing with a white solid fill.
-// Only shades 0-1 are converted — shade 2+ stays as solid opaque values so they
-// remain usable as readable text / border colours (e.g. alert-2 for error text).
+// Shades 0-1 in every palette are near-white in the static palette and clash
+// with dark surfaces. Replace them with semi-transparent tints of the vivid
+// mid-shade so they fade gracefully into the dark background. Shade 2+ stays
+// solid so text/border use cases (e.g. alert-2 for error text) remain crisp.
 const DARK_SHADE_PERCENTS = [10, 20] as const;
 
-const buildDarkLightShades = (secondary: string): Record<string, string> => {
-  const colorNames = [
-    ...DARK_THEMED_COLORS,
-    secondary !== "green" &&
-    secondary !== "blue" &&
-    secondary !== "peach" &&
-    secondary !== "sand"
-      ? secondary
-      : null,
-  ].filter(Boolean) as string[];
-
+const buildDarkLightShades = (): Record<string, string> => {
   const entries: [string, string][] = [];
-
-  for (const color of colorNames) {
-    // Use shade 5 as the vivid anchor; alert's palette runs lighter so use 4.
+  for (const color of DARK_THEMED_COLORS) {
+    // Alert's palette runs lighter, so use shade-4 as anchor; others use 5.
     const anchor = color === "alert" ? 4 : 5;
     DARK_SHADE_PERCENTS.forEach((pct, idx) => {
       entries.push([
@@ -613,27 +627,20 @@ const buildDarkLightShades = (secondary: string): Record<string, string> => {
       ]);
     });
   }
-
-  // Gray: use white as the anchor so we get subtle white-tinted overlays
-  // that work as dividers / zebra-stripe highlights on dark surfaces.
+  // Gray: tint of white so the overlay reads as a subtle divider/zebra on dark.
   DARK_SHADE_PERCENTS.forEach((pct, idx) => {
     entries.push([
       `--mantine-color-gray-${idx}`,
       `color-mix(in srgb, var(--mantine-color-white) ${pct}%, transparent)`,
     ]);
   });
-
   return Object.fromEntries(entries);
 };
 
 const buildDarkFilledOutline = () =>
   Object.fromEntries(
     DARK_THEMED_COLORS.flatMap((c) => {
-      // Alert uses lighter shades so the colour reads on dark surfaces.
-      // filled=3 (#e66e6e): vivid red, reads clearly as "error/alert", white text ~5.2:1 ✓
-      // filled-hover=2 (#ee9a9a): lighter on hover, feedback, white text ~3:1 — swap bg/text on hover
-      // outline=2 (#ee9a9a): legible as text/border on dark bg ~5.4:1 ✓
-      // outline-hover=3: solid vivid red bg on hover ✓
+      // Alert uses lighter shades so the color reads on dark surfaces.
       const isAlert = c === "alert";
       return [
         [
@@ -656,8 +663,10 @@ const buildDarkFilledOutline = () =>
     }),
   );
 
-const SHADOW_VARS = (mode: "light" | "dark") => {
-  const c = mode === "light" ? "#000000" : "#ffffff";
+// Always use black-based shadows. In dark mode we keep the same tokens so
+// cards/dropdowns drop a real shadow instead of an inverted "halo" glow.
+const SHADOW_VARS = () => {
+  const c = "#000000";
   return {
     "--sweco-shadow-color-1a": `${c}1a`,
     "--sweco-shadow-color-1b": `${c}21`,
@@ -666,6 +675,92 @@ const SHADOW_VARS = (mode: "light" | "dark") => {
   };
 };
 
+/* === Per-color "light" tokens =============================================
+ * Mantine exposes 4 aliases per palette used by `variant="light"`, Badge.light,
+ * Alert and the themed CSS rules:
+ *   --{c}-light          → background
+ *   --{c}-light-hover    → hover for above
+ *   --{c}-light-color    → text/icon on top of `light`
+ *   --{c}-filled-hover   → hover for `variant="filled"`
+ * Tuple: [light, light-hover, light-color, filled-hover | null]
+ * (null = leave Mantine's computed `filled-hover` untouched.)
+ * ========================================================================= */
+type LightShades = readonly [number, number, number, number | null];
+
+const LIGHT_MODE_SHADES: Record<string, LightShades> = {
+  // Secondary (green) is slightly lighter than others per design.
+  green: [0, 1, 7, 2],
+  blue: [1, 2, 8, 2],
+  peach: [1, 2, 8, 2],
+  sand: [1, 2, 8, 2],
+  alert: [1, 2, 5, 5],
+  gray: [1, 2, 8, 6],
+};
+
+const buildLightModeLightTokens = (): Record<string, string> =>
+  Object.fromEntries(
+    Object.entries(LIGHT_MODE_SHADES).flatMap(
+      ([color, [light, lightHover, lightColor, filledHover]]) => {
+        const entries: [string, string][] = [
+          [
+            `--mantine-color-${color}-light`,
+            `var(--mantine-color-${color}-${light})`,
+          ],
+          [
+            `--mantine-color-${color}-light-hover`,
+            `var(--mantine-color-${color}-${lightHover})`,
+          ],
+          [
+            `--mantine-color-${color}-light-color`,
+            `var(--mantine-color-${color}-${lightColor})`,
+          ],
+        ];
+        if (filledHover !== null) {
+          entries.push([
+            `--mantine-color-${color}-filled-hover`,
+            `var(--mantine-color-${color}-${filledHover})`,
+          ]);
+        }
+        return entries;
+      },
+    ),
+  );
+
+// Dark-mode "light" tokens: translucent dark tint of the vivid shade (9; 8 for
+// alert which is darker). `light-color` picks shade-2 for bright legible text.
+const DARK_LIGHT_BG_ANCHOR: Record<string, number> = {
+  alert: 8,
+  green: 9,
+  blue: 9,
+  peach: 9,
+  sand: 9,
+};
+
+const buildDarkModeLightTokens = (): Record<string, string> =>
+  Object.fromEntries(
+    Object.entries(DARK_LIGHT_BG_ANCHOR).flatMap(([color, anchor]) => [
+      [
+        `--mantine-color-${color}-light`,
+        `color-mix(in srgb, var(--mantine-color-${color}-${anchor}) 35%, transparent)`,
+      ],
+      [
+        `--mantine-color-${color}-light-hover`,
+        `color-mix(in srgb, var(--mantine-color-${color}-${anchor}) 50%, transparent)`,
+      ],
+      [
+        `--mantine-color-${color}-light-color`,
+        `var(--mantine-color-${color}-2)`,
+      ],
+    ]),
+  );
+
+/**
+ * CSS variables resolver that wires the Sweco palettes, the configurable
+ * secondary-color aliases, the dark-mode color re-toning and the per-mode
+ * surface tokens (text, error, table border, header glass, …) into Mantine.
+ *
+ * Pass it to `MantineProvider` together with {@link theme}.
+ */
 export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
   const default_ = defaultCssVariablesResolver(theme);
   const secondary = theme.other.secondaryColor;
@@ -675,100 +770,118 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     variables: {
       ...clearColors(default_.variables),
       ...buildSecondaryAliases(secondary, theme.colors[secondary].length),
+      // AppShell.Main padding — Sweco layouts use `lg` (1.5rem) as the
+      // canonical gutter between the chrome (header/navbar/aside) and the
+      // page content. Mantine's default is `md`, which produces a too-tight
+      // layout under our typography scale.
+      "--app-shell-padding": "var(--mantine-spacing-lg)",
+      // Default header offset matches the canonical Sweco header height
+      // (--sweco-header-height = 3.5rem / 56 px). Mantine still overrides
+      // this per-instance when AppShell receives `header={{ height }}`.
+      "--app-shell-header-offset": "var(--sweco-header-height)",
     },
     light: {
       ...clearColors(default_.light),
-      ...SHADOW_VARS("light"),
+      ...SHADOW_VARS(),
+      ...buildLightModeLightTokens(),
       "--mantine-color-anchor": anchorColor,
       "--mantine-color-text": "var(--mantine-color-gray-8)",
       "--mantine-color-error": "var(--mantine-color-alert-4)",
-      "--table-border-color": "var(--mantine-color-gray-2)",
-      // Table header: one clear shade darker than striped rows so header is
-      // always distinguishable. gray-1 (#eaeaea) vs striped near-transparent.
-      "--table-header-bg": "var(--mantine-color-gray-1)",
-      // Spinner track: subtle light gray matching design (same as gray-2)
+      "--table-border-color": "var(--mantine-color-default-border)",
+      "--table-header-bg": "var(--mantine-color-gray-2)",
       "--loader-track-color": "var(--mantine-color-gray-2)",
-      // Override Mantine's auto-computed rgba() light/hover values for all
-      // Sweco brand palettes so NavLink, Badge light, etc. use real shade indices
-      // and have proper contrast instead of near-transparent rgba backgrounds.
-      // ── green (secondary) ──
-      [`--mantine-color-${secondary}-light`]: `var(--mantine-color-${secondary}-0)`,
-      [`--mantine-color-${secondary}-light-hover`]: `var(--mantine-color-${secondary}-1)`,
-      [`--mantine-color-${secondary}-light-color`]: `var(--mantine-color-${secondary}-7)`,
-      [`--mantine-color-${secondary}-filled-hover`]: `var(--mantine-color-${secondary}-2)`,
-      // ── blue ──
-      "--mantine-color-blue-light": "var(--mantine-color-blue-1)",
-      "--mantine-color-blue-light-hover": "var(--mantine-color-blue-2)",
-      "--mantine-color-blue-light-color": "var(--mantine-color-blue-8)",
-      "--mantine-color-blue-filled-hover": "var(--mantine-color-blue-2)",
-      // ── peach ──
-      "--mantine-color-peach-light": "var(--mantine-color-peach-1)",
-      "--mantine-color-peach-light-hover": "var(--mantine-color-peach-2)",
-      "--mantine-color-peach-light-color": "var(--mantine-color-peach-8)",
-      "--mantine-color-peach-filled-hover": "var(--mantine-color-peach-2)",
-      // ── sand ──
-      "--mantine-color-sand-light": "var(--mantine-color-sand-1)",
-      "--mantine-color-sand-light-hover": "var(--mantine-color-sand-2)",
-      "--mantine-color-sand-light-color": "var(--mantine-color-sand-8)",
-      "--mantine-color-sand-filled-hover": "var(--mantine-color-sand-2)",
-      // ── alert ──
-      "--mantine-color-alert-light": "var(--mantine-color-alert-1)",
-      "--mantine-color-alert-light-hover": "var(--mantine-color-alert-2)",
-      "--mantine-color-alert-light-color": "var(--mantine-color-alert-5)",
-      "--mantine-color-alert-filled-hover": "var(--mantine-color-alert-5)",
-      // ── gray ──
-      "--mantine-color-gray-light": "var(--mantine-color-gray-1)",
-      "--mantine-color-gray-light-hover": "var(--mantine-color-gray-2)",
-      "--mantine-color-gray-light-color": "var(--mantine-color-gray-8)",
-      "--mantine-color-gray-filled-hover": "var(--mantine-color-gray-6)",
+      "--mantine-color-disabled": "var(--mantine-color-gray-1)",
+      "--mantine-color-disabled-color": "var(--mantine-color-gray-5)",
+      // Standard hairline border for the whole app (Cards, Inputs, Divider,
+      // Select, Table, Section). Solid #e1e1e1 (gray-2). Translucent surfaces
+      // that need to blend with what's behind them (the glass <Header />)
+      // use --sweco-header-border instead.
+      "--mantine-color-default-border": "var(--mantine-color-gray-2)",
+      // Mantine's Paper uses its own --paper-border-color (defaults to
+      // gray-3). Align it with the rest of the design system so Cards and
+      // any other Paper-based surface render the canonical #e1e1e1 hairline.
+      "--paper-border-color": "var(--mantine-color-default-border)",
+      // Glass header (light): semi-transparent white surface + translucent
+      // hairline so the bottom border blends with whatever scrolls behind
+      // the glass. Base color = gray-2 so the perceived hue still matches
+      // the rest of the design system.
+      "--sweco-header-bg":
+        "color-mix(in oklab, var(--mantine-color-white) 50%, transparent)",
+      "--sweco-header-border":
+        "color-mix(in oklab, var(--mantine-color-gray-4) 40%, transparent)",
+      "--sweco-header-fallback-bg": "var(--mantine-color-white)",
+      "--app-shell-header-offset": "var(--sweco-header-height)",
     },
     dark: {
       ...clearColors(default_.dark),
-      ...SHADOW_VARS("dark"),
+      ...SHADOW_VARS(),
       ...buildDarkFilledOutline(),
-      ...buildDarkLightShades(secondary),
+      ...buildDarkLightShades(),
+      ...buildDarkModeLightTokens(),
       "--mantine-color-anchor": anchorColor,
+      // Dimmed text (placeholders, input section icons) must be readable on
+      // dark surfaces — Mantine's default `dark-2` is too dark.
+      "--mantine-color-dimmed": "var(--mantine-color-gray-4)",
+      // Gray light-color in dark mode must be bright enough for icons inside
+      // inputs (e.g. ColorInput eye-dropper, Select chevron). Mantine
+      // defaults to a translucent white-tint from the shade override which
+      // is nearly invisible on dark surfaces.
+      "--mantine-color-gray-light-color": "var(--mantine-color-gray-3)",
       // Error text/border must be light enough to read on dark surfaces.
-      // alert-2 (#ee9a9a) gives ~5.4:1 contrast vs dark bg — better than alert-3.
+      // alert-2 (#ee9a9a) gives ~5.4:1 contrast vs dark bg.
       "--mantine-color-error": "var(--mantine-color-alert-2)",
-      "--table-border-color": "var(--mantine-color-dark-4)",
-      // Table header: dark-6 gives clear separation from striped rows on dark bg.
-      "--table-header-bg": "var(--mantine-color-dark-6)",
-      // Spinner track: blend into dark body — mostly background with a hint of
-      // the loader color so the track is barely visible, not harsh light gray.
+      // Auto-contrast text for filled variants: in dark mode we shifted
+      // filled bg shades lighter (alert→3, sand→6) — the default white
+      // contrast text becomes unreadable, so override per-color.
+      "--mantine-color-alert-contrast": "var(--mantine-color-gray-9)",
+      "--mantine-color-sand-contrast": "var(--mantine-color-gray-9)",
+      "--table-border-color": "var(--mantine-color-default-border)",
+      "--table-header-bg": "var(--mantine-color-dark-4)",
+      // Spinner track blends into the body with a hint of loader color so the
+      // track is barely visible, not a harsh light-gray ring.
       "--loader-track-color":
         "color-mix(in srgb, var(--mantine-color-body) 70%, var(--mantine-primary-color-filled) 30%)",
-      // ── Themed "light" tokens for dark mode ──
-      // Each color gets a translucent dark-tinted bg + bright text/border so
-      // light-variant surfaces (Alert, NavLink, Badge, etc.) read clearly.
-      // ── alert ──
-      "--mantine-color-alert-light":
-        "color-mix(in srgb, var(--mantine-color-alert-8) 35%, transparent)",
-      "--mantine-color-alert-light-hover":
-        "color-mix(in srgb, var(--mantine-color-alert-8) 50%, transparent)",
-      "--mantine-color-alert-light-color": "var(--mantine-color-alert-2)",
-      // ── green (secondary) ──
-      [`--mantine-color-${secondary}-light`]: `color-mix(in srgb, var(--mantine-color-${secondary}-9) 35%, transparent)`,
-      [`--mantine-color-${secondary}-light-hover`]: `color-mix(in srgb, var(--mantine-color-${secondary}-9) 50%, transparent)`,
-      [`--mantine-color-${secondary}-light-color`]: `var(--mantine-color-${secondary}-2)`,
-      // ── blue ──
-      "--mantine-color-blue-light":
-        "color-mix(in srgb, var(--mantine-color-blue-9) 35%, transparent)",
-      "--mantine-color-blue-light-hover":
-        "color-mix(in srgb, var(--mantine-color-blue-9) 50%, transparent)",
-      "--mantine-color-blue-light-color": "var(--mantine-color-blue-2)",
-      // ── peach ──
-      "--mantine-color-peach-light":
-        "color-mix(in srgb, var(--mantine-color-peach-9) 35%, transparent)",
-      "--mantine-color-peach-light-hover":
-        "color-mix(in srgb, var(--mantine-color-peach-9) 50%, transparent)",
-      "--mantine-color-peach-light-color": "var(--mantine-color-peach-2)",
-      // ── sand ──
-      "--mantine-color-sand-light":
-        "color-mix(in srgb, var(--mantine-color-sand-9) 35%, transparent)",
-      "--mantine-color-sand-light-hover":
-        "color-mix(in srgb, var(--mantine-color-sand-9) 50%, transparent)",
-      "--mantine-color-sand-light-color": "var(--mantine-color-sand-2)",
+      "--mantine-color-disabled": "var(--mantine-color-dark-4)",
+      "--mantine-color-disabled-color": "var(--mantine-color-gray-7)",
+      // Standard hairline border (dark mode): solid dark-4.
+      "--mantine-color-default-border": "var(--mantine-color-dark-4)",
+      // Paper border aligned with --mantine-color-default-border (dark mode).
+      "--paper-border-color": "var(--mantine-color-default-border)",
+      // Glass header (dark): translucent dark surface + translucent border.
+      "--sweco-header-bg":
+        "color-mix(in oklab, var(--mantine-color-dark-7) 60%, transparent)",
+      "--sweco-header-border":
+        "color-mix(in oklab, var(--mantine-color-dark-3) 40%, transparent)",
+      "--sweco-header-fallback-bg": "var(--mantine-color-dark-7)",
     },
   };
 };
+
+// ── Public components & assets ────────────────────────────────────────────
+export { SwecoLogo } from "./components/SwecoLogo.tsx";
+export type { SwecoLogoProps } from "./components/SwecoLogo.tsx";
+export { Header, HEADER_HEIGHT } from "./components/Header.tsx";
+export type { HeaderProps } from "./components/Header.tsx";
+export {
+  PrimaryButton,
+  SecondaryButton,
+  TertiaryButton,
+  QuaternaryButton,
+  WarningButton,
+  CautionButton,
+} from "./components/Button";
+export { SwecoLoader } from "./components/SwecoLoader.tsx";
+export { SearchIcon } from "./components/SearchIcon.tsx";
+export { CloseIcon } from "./components/CloseIcon.tsx";
+export { TrashIcon } from "./components/TrashIcon.tsx";
+export { ArrowLeftIcon, ArrowRightIcon } from "./components/ArrowIcons.tsx";
+export { ChevronDownIcon } from "./components/ChevronDownIcon.tsx";
+export { ChipWithClose } from "./components/ChipWithClose.tsx";
+export type { ChipWithCloseProps } from "./components/ChipWithClose.tsx";
+export type { TextStyle } from "./textStyles.tsx";
+
+// Radio SVG assets — both inherit color via `currentColor` (checked uses
+// `fill`, unchecked uses `stroke`) so they pick up --radio-color / the
+// surrounding text color from CSS.
+export { default as radioCheckedSvg } from "./assets/radio-checked.svg";
+export { default as radioUncheckedSvg } from "./assets/radio-unchecked.svg";

@@ -1,4 +1,4 @@
-@layer sweco {
+@layer sweco.components {
   /* ════════════════════════════════════════════════════════════════════════
    * Button: size system
    * A single --btn-scale var drives height, padding-x, padding-y and gap.
@@ -103,10 +103,19 @@
     box-shadow: var(--sweco-focus-ring) !important;
   }
 
+  /* ── Dark mode: dark body that stays dark-6 (no hover change), and lock
+   *    Mantine's default green-light-* tokens so they don't leak through. */
   [data-mantine-color-scheme="dark"]
     .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"] {
     background-color: var(--mantine-color-dark-6);
+    --button-bg: var(--mantine-color-dark-6) !important;
+    --button-hover: var(--mantine-color-dark-6) !important;
     --button-color: var(--mantine-color-white) !important;
+  }
+
+  [data-mantine-color-scheme="dark"]
+    .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]:hover {
+    background-color: var(--mantine-color-dark-6) !important;
   }
 
   .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
@@ -115,6 +124,7 @@
     height: 100%;
   }
 
+  /* ── Light mode: original circular section colors. */
   .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
     .mantine-Button-section {
     transition: background-color var(--sweco-transition);
@@ -141,10 +151,23 @@
     background-color: var(--mantine-secondary-color-3);
   }
 
+  /* ── Dark mode section: green-filled default, green-filled-hover on hover.
+   *    Icon black by default, white on hover. */
+  [data-mantine-color-scheme="dark"]
+    .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
+    .mantine-Button-section {
+    background-color: var(--mantine-color-green-filled);
+    color: var(--mantine-color-black);
+    transition:
+      background-color var(--sweco-transition),
+      color var(--sweco-transition);
+  }
+
   [data-mantine-color-scheme="dark"]
     .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]:hover
     .mantine-Button-section {
-    background-color: var(--mantine-secondary-color-9);
+    background-color: var(--mantine-color-green-4);
+    color: var(--mantine-color-white);
   }
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -329,7 +352,7 @@
     background-color: transparent;
   }
 
-  /* At xs, btn-caution matches badge-chip-x font (14px) instead of default xs (12px) */
+  /* At xs, btn-caution uses sm font (14px) instead of default xs (12px). */
   .btn-caution[data-size="xs"] {
     --button-fz: 0.875rem !important;
   }
@@ -339,7 +362,7 @@
   }
 
   .btn-caution .mantine-Button-inner {
-    gap: calc(var(--sweco-spacing) * 1.5);
+    gap: calc(var(--sweco-spacing) * 2);
   }
 
   /* Let FontAwesome's defaults render btn-caution sm icons too — no overrides needed. */
@@ -369,6 +392,17 @@
   .circular-link[data-variant="outline"]:not(:disabled, [data-disabled]):hover {
     background-color: var(--ai-color);
     color: var(--mantine-color-white);
+  }
+
+  /* Dark mode: only alert/warning-colored circular links get the alert-4
+   * hover treatment. Other colors keep the default --ai-color hover. */
+  [data-mantine-color-scheme="dark"]
+    .circular-link[data-variant="outline"][style*="alert"]:not(:disabled, [data-disabled]):hover,
+  [data-mantine-color-scheme="dark"]
+    .circular-link[data-variant="outline"][style*="red"]:not(:disabled, [data-disabled]):hover {
+    background-color: var(--mantine-color-alert-4) !important;
+    border-color: var(--mantine-color-alert-4) !important;
+    color: var(--mantine-color-white) !important;
   }
 
   /* `iconColor` on FontAwesomeIcon emits an inline `style="color:..."` on
@@ -422,33 +456,35 @@
   }
 }
 
-/* ════════════════════════════════════════════════════════════════════════
- * Button hover — Primary (filled), Secondary (outline), Tertiary (light)
- * Outside @layer: Mantine sets --button-hover as inline rgba() which
- * beats any @layer rule, so we override background-color directly.
- * Custom variants (quaternary, warning, caution) have their own CSS.
- * ──────────────────────────────────────────────────────────────────────── */
-@media (hover: hover) {
-  /* Light mode: hover to green.2 = #bde3af (matches Sweco design system). */
-  [data-mantine-color-scheme="light"]
-    .mantine-Button-root:is(
-      [data-variant="filled"],
-      [data-variant="outline"],
-      [data-variant="light"]
-    ):hover:where(:not([data-disabled], [data-loading], :disabled)) {
-    background-color: var(--mantine-color-green-2) !important; /* #bde3af */
-  }
+/* Rules that must beat Mantine's unlayered styles live in @layer
+ * sweco.overrides — declared last in style.layer.css. */
+@layer sweco.overrides {
+  /* Button hover — Primary (filled), Secondary (outline), Tertiary (light).
+   * Mantine sets --button-hover as inline rgba() which beats any @layer
+   * rule, so we override background-color directly.
+   * Custom variants (quaternary, warning, caution) have their own CSS. */
+  @media (hover: hover) {
+    /* Light mode: hover to green.2 = #bde3af (matches Sweco design system). */
+    [data-mantine-color-scheme="light"]
+      .mantine-Button-root:is(
+        [data-variant="filled"],
+        [data-variant="outline"],
+        [data-variant="light"]
+      ):hover:where(:not([data-disabled], [data-loading], :disabled)) {
+      background-color: var(--mantine-color-green-2) !important; /* #bde3af */
+    }
 
-  /* Dark mode: hover to green.8 (#3f6730) so light-colored text on
-   * Tertiary (light variant) stays readable. */
-  [data-mantine-color-scheme="dark"]
-    .mantine-Button-root:is(
-      [data-variant="filled"],
-      [data-variant="outline"],
-      [data-variant="light"]
-    ):hover:where(:not([data-disabled], [data-loading], :disabled)) {
-    background-color: var(--mantine-color-green-8) !important;
-    color: var(--mantine-color-white) !important;
+    /* Dark mode: hover to green.8 (#3f6730) so light-colored text on
+     * Tertiary (light variant) stays readable. */
+    [data-mantine-color-scheme="dark"]
+      .mantine-Button-root:is(
+        [data-variant="filled"],
+        [data-variant="outline"],
+        [data-variant="light"]
+      ):hover:where(:not([data-disabled], [data-loading], :disabled)) {
+      background-color: var(--mantine-color-green-8) !important;
+      color: var(--mantine-color-white) !important;
+    }
   }
 }
 

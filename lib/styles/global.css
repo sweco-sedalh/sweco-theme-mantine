@@ -1,11 +1,7 @@
-@layer sweco {
-  /* ════════════════════════════════════════════════════════════════════════
-   * Global element overrides
-   * ──────────────────────────────────────────────────────────────────────── */
-
-  /* ── Prose spacing — consistent bottom margin for block elements ──
-   * Scoped to `.prose` so Mantine components (Text → <p>, Title → <h*>)
-   * are NOT affected. Wrap long-form / editorial content in a <div class="prose">. */
+@layer sweco.base {
+  /* Global element overrides */
+  /* Long-form/editorial content gets consistent bottom-margin on block
+     elements. Scoped to `.prose` so Mantine's <Text>/<Title> are untouched. */
   .prose h1,
   .prose h2,
   .prose h3,
@@ -19,20 +15,17 @@
   .prose pre {
     margin-bottom: var(--mantine-spacing-lg);
   }
-
   button,
   th {
     font-weight: var(--sweco-font-weight-medium) !important;
   }
-
   /* Reserve a transparent outline slot on every focusable element so the
-   * themed (green) outline can fade in without a flash of the browser-
-   * default black ring. */
+     themed (green) outline can fade in without a flash of the browser-default
+     black ring. */
   *:focus,
   *:focus-visible {
     outline-color: transparent;
   }
-
   a,
   button,
   input,
@@ -48,8 +41,7 @@
     outline: 2px solid transparent;
     outline-offset: 2px;
   }
-
-  /* ── Shared label/control font ── */
+  /* Shared label/control font */
   .mantine-NavLink-label,
   .mantine-Tabs-tab,
   .mantine-Breadcrumbs-root,
@@ -63,14 +55,27 @@
     font-size: var(--mantine-font-size-md);
     font-weight: var(--sweco-font-weight-normal);
   }
-
-  /* Remove default stroke on FontAwesome SVG icons (fill-only). Scoped to
-   * .svg-inline--fa so stroke-based icons (e.g. Mantine's eye-dropper) are
-   * left untouched. */
+  /* FontAwesome SVG icons are fill-only — remove the default stroke.
+     Scoped to .svg-inline--fa so stroke-based icons (e.g. Mantine's
+     eye-dropper) are left untouched. */
   .svg-inline--fa,
   .svg-inline--fa path,
   .svg-inline--fa circle,
   .svg-inline--fa rect {
     stroke: none !important;
+  }
+  /* SwecoLogo renders as inline SVG. `display: block` so wrapping the logo
+     in an inline element (e.g. an `<a>` / `<Link>`) doesn't add baseline
+     padding below it. The explicit `color` binds the SVG's `currentColor`
+     to the design-system text token so it stays readable on light AND dark
+     surfaces — and isn't hijacked by anchor/visited-link colors when the
+     logo sits inside a `<Link>`. The `black` prop on the component sets
+     `fill="#111"` directly on the paths and still wins. */
+  .sweco-logo {
+    display: block;
+    color: var(--mantine-color-text);
+  }
+  [data-mantine-color-scheme="dark"] .sweco-logo {
+    color: var(--mantine-color-white);
   }
 }

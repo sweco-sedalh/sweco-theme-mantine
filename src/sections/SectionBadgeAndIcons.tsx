@@ -8,6 +8,7 @@ import {
   Code,
   Grid,
   Group,
+  type MantineSize,
   Paper,
   Stack,
   Text,
@@ -19,6 +20,7 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
   ChevronDownIcon,
+  ChipWithClose,
   CloseIcon,
   SearchIcon,
   TrashIcon,
@@ -43,13 +45,17 @@ const INITIAL_TOGGLE_CHIPS = ["Category A", "Category B", "Category C"];
 const INITIAL_REMOVABLE_CHIPS = ["Filter 1", "Filter 2", "Filter 3"];
 
 /** Chip toggle group with Clear filters */
-const ChipToggleDemo: FC = () => {
+const ChipToggleDemo: FC<{ size?: MantineSize; variant?: string }> = ({ size, variant }) => {
   const [active, setActive] = useState<string | null>("Category A");
+  const btnSize = size === "sm" ? "xs" : "sm";
+  const btnFz = size === "sm" ? "var(--sweco-text-sm)" : "var(--sweco-text-base)";
   return (
     <Group gap="sm" wrap="wrap" align="center">
       {INITIAL_TOGGLE_CHIPS.map((label) => (
         <Chip
           key={label}
+          size={size}
+          variant={variant}
           checked={active === label}
           onChange={() => setActive(active === label ? null : label)}
         >
@@ -58,7 +64,8 @@ const ChipToggleDemo: FC = () => {
       ))}
       <Button
         variant="caution"
-        size="xs"
+        size={btnSize}
+        fz={btnFz}
         leftSection={<FontAwesomeIcon icon={faTrashCan} />}
         onClick={() => setActive(null)}
       >
@@ -69,20 +76,23 @@ const ChipToggleDemo: FC = () => {
 };
 
 /** Chip group — multiple selection */
-const ChipGroupDemo: FC = () => {
+const ChipGroupDemo: FC<{ size?: MantineSize; variant?: string }> = ({ size, variant }) => {
   const [values, setValues] = useState<string[]>(["Filter 1"]);
+  const btnSize = size === "sm" ? "xs" : "sm";
+  const btnFz = size === "sm" ? "var(--sweco-text-sm)" : "var(--sweco-text-base)";
   return (
     <Group gap="sm" wrap="wrap" align="center">
       <MantineChip.Group multiple value={values} onChange={setValues}>
         {INITIAL_TOGGLE_CHIPS.map((label) => (
-          <Chip key={label} value={label}>
+          <Chip key={label} value={label} size={size} variant={variant}>
             {label}
           </Chip>
         ))}
       </MantineChip.Group>
       <Button
         variant="caution"
-        size="xs"
+        size={btnSize}
+        fz={btnFz}
         leftSection={<FontAwesomeIcon icon={faTrashCan} />}
         onClick={() => setValues([])}
       >
@@ -92,24 +102,27 @@ const ChipGroupDemo: FC = () => {
   );
 };
 
-/** Dismissible chip-x (badge-chip-x) */
-const ChipXDemo: FC = () => {
+/** Dismissible chip with close button */
+const ChipXDemo: FC<{ size?: MantineSize; variant?: "default" | "secondary" }> = ({ size, variant }) => {
   const [chips, setChips] = useState(INITIAL_REMOVABLE_CHIPS);
+  const btnSize = size === "sm" ? "xs" : "sm";
+  const btnFz = size === "sm" ? "var(--sweco-text-sm)" : "var(--sweco-text-base)";
   return (
     <Group gap="sm" wrap="wrap" align="center">
       {chips.map((label) => (
-        <Badge
+        <ChipWithClose
           key={label}
-          className="badge-chip-x"
-          component="button"
-          onClick={() => setChips((c) => c.filter((x) => x !== label))}
+          size={size}
+          variant={variant}
+          onRemove={() => setChips((c) => c.filter((x) => x !== label))}
         >
           {label}
-        </Badge>
+        </ChipWithClose>
       ))}
       <Button
         variant="caution"
-        size="xs"
+        size={btnSize}
+        fz={btnFz}
         leftSection={<FontAwesomeIcon icon={faTrashCan} />}
         onClick={() => setChips([])}
       >
@@ -166,9 +179,23 @@ export const SectionBadgeAndIcons: FC = () => (
           <Code>variant="caution"</Code> Clear-filters button.
         </Text>
         <Paper withBorder p="md" radius="md" shadow="none">
-          <Stack gap="xs">
-            <Code>{`<Chip checked={active === label} onChange={...}>`}</Code>
-            <ChipToggleDemo />
+          <Stack gap="md">
+            <Stack gap="xs">
+              <Code>{`size="md" (default — 40px)`}</Code>
+              <ChipToggleDemo />
+            </Stack>
+            <Stack gap="xs">
+              <Code>{`size="sm" (32px)`}</Code>
+              <ChipToggleDemo size="sm" />
+            </Stack>
+            <Stack gap="xs">
+              <Code>{`variant="secondary" (sand)`}</Code>
+              <ChipToggleDemo variant="secondary" />
+            </Stack>
+            <Stack gap="xs">
+              <Code>{`variant="secondary" size="sm"`}</Code>
+              <ChipToggleDemo variant="secondary" size="sm" />
+            </Stack>
           </Stack>
         </Paper>
       </Grid.Col>
@@ -179,26 +206,48 @@ export const SectionBadgeAndIcons: FC = () => (
           <Code>{"<Chip.Group multiple>"}</Code> — multiple chips active simultaneously.
         </Text>
         <Paper withBorder p="md" radius="md" shadow="none">
-          <Stack gap="xs">
-            <Code>{`<Chip.Group multiple value={values} onChange={setValues}>`}</Code>
-            <ChipGroupDemo />
+          <Stack gap="md">
+            <Stack gap="xs">
+              <Code>{`size="md" (default — 40px)`}</Code>
+              <ChipGroupDemo />
+            </Stack>
+            <Stack gap="xs">
+              <Code>{`size="sm" (32px)`}</Code>
+              <ChipGroupDemo size="sm" />
+            </Stack>
+            <Stack gap="xs">
+              <Code>{`variant="secondary" (sand)`}</Code>
+              <ChipGroupDemo variant="secondary" />
+            </Stack>
           </Stack>
         </Paper>
       </Grid.Col>
 
       <Grid.Col span={12}>
-        <Title order={4} mt="md">Chip with close (badge-chip-x)</Title>
+        <Title order={4} mt="md">Chip with close</Title>
         <Text size="xs" c="dimmed" mb="sm">
-          Dismissible filter tag. Uses{" "}
-          <Code>{"<Badge className=\"badge-chip-x\" component=\"button\">"}</Code>{" "}
-          — the close × is rendered via CSS{" "}
-          <Code>::after</Code> pseudo-element (close.svg mask). Click any chip
-          or "Clear filters" to remove.
+          Dismissible filter tag using{" "}
+          <Code>{"<ChipWithClose onRemove={…}>"}</Code>.
+          Click any chip or "Clear filters" to remove.
         </Text>
         <Paper withBorder p="md" radius="md" shadow="none">
-          <Stack gap="xs">
-            <Code>{`<Badge className="badge-chip-x" component="button" onClick={remove}>`}</Code>
-            <ChipXDemo />
+          <Stack gap="md">
+            <Stack gap="xs">
+              <Code>{`size="md" (default — 40px)`}</Code>
+              <ChipXDemo />
+            </Stack>
+            <Stack gap="xs">
+              <Code>{`size="sm" (32px)`}</Code>
+              <ChipXDemo size="sm" />
+            </Stack>
+            <Stack gap="xs">
+              <Code>{`variant="secondary" (sand)`}</Code>
+              <ChipXDemo variant="secondary" />
+            </Stack>
+            <Stack gap="xs">
+              <Code>{`variant="secondary" size="sm"`}</Code>
+              <ChipXDemo variant="secondary" size="sm" />
+            </Stack>
           </Stack>
         </Paper>
       </Grid.Col>

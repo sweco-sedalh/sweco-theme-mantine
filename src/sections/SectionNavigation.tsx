@@ -11,6 +11,7 @@ import {
   Center,
   Grid,
   Group,
+  MantineProvider,
   Menu,
   Pagination,
   rem,
@@ -18,7 +19,14 @@ import {
   Tabs,
   Title,
 } from "@mantine/core";
-import { Header, SwecoLogo, SearchIcon, ChevronDownIcon } from "../../lib";
+import {
+  Header,
+  SwecoLogo,
+  SearchIcon,
+  ChevronDownIcon,
+  theme,
+  cssVariablesResolver,
+} from "../../lib";
 
 export const SectionNavigation: FC = () => (
   <Section title="Navigation">
@@ -96,32 +104,70 @@ export const SectionNavigation: FC = () => (
         </Stack>
       </Grid.Col>
       <Grid.Col span={12}>
-        <Title order={4}>Navbar</Title>
-        {[false, true].map((light, idx) => (
-          <AppShell
-            key={idx}
-            header={{ height: rem(56) }}
-            padding="md"
-            mb={idx === 0 ? "xl" : 0}
-          >
-            <Header style={{ position: "relative" }} light={light}>
+        <Title order={4}>Navbar — mörk variant</Title>
+        <AppShell header={{ height: rem(56) }} padding="md" mb="xl">
+          <Header style={{ position: "relative" }}>
+            <Group>
+              <Burger size="sm" hiddenFrom="sm" />
+              <SwecoLogo size={28} />
+            </Group>
+            <Group visibleFrom="sm" gap="xs">
+              <Autocomplete
+                placeholder="Search"
+                radius="xl"
+                data={["React", "Angular", "Vue", "Next.js", "Svelte"]}
+                visibleFrom="xs"
+              />
+              <Button aria-label="Sök" px={0} style={{ aspectRatio: 1 }}>
+                <SearchIcon />
+              </Button>
+            </Group>
+            <Group gap="md" visibleFrom="sm">
+              <Anchor href="#">Start</Anchor>
+              <Menu
+                trigger="hover"
+                transitionProps={{ exitDuration: 0 }}
+                withinPortal
+                offset={11}
+                arrowOffset={0}
+              >
+                <Menu.Target>
+                  <Anchor href="#" onClick={(evt) => evt.preventDefault()}>
+                    <Center>
+                      <span style={{ marginRight: rem(5) }}>Dropdown</span>
+                      <ChevronDownIcon />
+                    </Center>
+                  </Anchor>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Item>Action</Menu.Item>
+                  <Menu.Item>Another action</Menu.Item>
+                  <Menu.Item>Something else here</Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+              <Anchor href="#">Link</Anchor>
+            </Group>
+          </Header>
+        </AppShell>
+
+        <Title order={4}>Navbar — ljus variant</Title>
+        <MantineProvider
+          theme={theme}
+          cssVariablesResolver={cssVariablesResolver}
+          forceColorScheme="light"
+          cssVariablesSelector=".sw-force-light"
+        >
+          <AppShell header={{ height: rem(56) }} padding="md">
+            <Header style={{ position: "relative" }}>
               <Group>
-                <Burger size="sm" hiddenFrom="sm" color="white" />
-                <SwecoLogo size={28} black={light || undefined} />
+                <Burger size="sm" hiddenFrom="sm" />
+                <SwecoLogo size={28} black />
               </Group>
               <Group visibleFrom="sm" gap="xs">
                 <Autocomplete
                   placeholder="Search"
                   radius="xl"
-                  data={[
-                    "React",
-                    "Angular",
-                    "Vue",
-                    "Next.js",
-                    "Riot.js",
-                    "Svelte",
-                    "Blitz.js",
-                  ]}
+                  data={["React", "Angular", "Vue", "Next.js", "Svelte"]}
                   visibleFrom="xs"
                 />
                 <Button aria-label="Sök" px={0} style={{ aspectRatio: 1 }}>
@@ -155,7 +201,7 @@ export const SectionNavigation: FC = () => (
               </Group>
             </Header>
           </AppShell>
-        ))}
+        </MantineProvider>
       </Grid.Col>
     </Grid>
   </Section>

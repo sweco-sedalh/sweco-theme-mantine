@@ -1,13 +1,11 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import Section from "../Section.tsx";
 import {
   Alert,
   Checkbox,
-  Chip,
   Code,
   ColorInput,
   Grid,
-  Group,
   MultiSelect,
   NumberInput,
   Paper,
@@ -74,7 +72,7 @@ export const SectionForms: FC = () => {
                     onChange={setRadioAlert}
                     error="Helper text that explains how to resolve the issue."
                   >
-                    <Stack mt={4}>
+                    <Stack mt={4} style={{ "--sweco-focus-ring-color": "var(--mantine-color-alert-outline)" } as React.CSSProperties}>
                       <Radio value="a" label="Option A (selected)" color="alert" />
                       <Radio value="b" label="Option B" color="alert" />
                       <Radio value="c" label="Option C (disabled)" color="alert" disabled />
@@ -150,10 +148,6 @@ export const SectionForms: FC = () => {
                 </Stack>
               </Paper>
               <PinInput />
-              <Group>
-                <Chip defaultChecked>Chip 1</Chip>
-                <Chip>Chip 2</Chip>
-              </Group>
               <Select
                 label="Your favorite library"
                 placeholder="Pick value"

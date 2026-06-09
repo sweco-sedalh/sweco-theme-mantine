@@ -1,0 +1,4 @@
+/* style.css is now empty — the "force light" navbar showcase uses
+ * <MantineProvider cssVariablesSelector=".sw-force-light"
+ *                  forceColorScheme="light"> in SectionNavigation.tsx
+ * which is the official Mantine way to scope a color scheme to a sub-tree. */
