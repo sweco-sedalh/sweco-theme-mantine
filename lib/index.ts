@@ -339,12 +339,22 @@ export const theme = createTheme({
     }),
     Mark: Mark.extend({ defaultProps: { color: "gray" } }),
     Badge: Badge.extend({
-      styles: () => ({
-        root: {
-          textTransform: "none",
-          fontWeight: "var(--sweco-font-weight-normal)",
-        },
-      }),
+      defaultProps: { variant: "light" },
+      styles: (_theme, props) => {
+        const c = props.color ?? "gray";
+        const isLight = !props.variant || props.variant === "light";
+        return {
+          root: {
+            textTransform: "none",
+            fontWeight: "var(--sweco-font-weight-normal)",
+            ...(isLight
+              ? {
+                  borderColor: `var(--mantine-color-${c}-4)`,
+                }
+              : {}),
+          },
+        };
+      },
     }),
     Drawer: Drawer.extend({
       defaultProps: { closeButtonProps: { size: "lg" } },

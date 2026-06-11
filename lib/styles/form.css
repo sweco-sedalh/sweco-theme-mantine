@@ -283,7 +283,6 @@
     border-style: dashed !important;
     border-width: 1px !important;
     border-color: var(--mantine-secondary-color-4) !important;
-    background-color: var(--mantine-color-white) !important;
     cursor: pointer;
     transition:
       background-color var(--sweco-transition),
@@ -313,11 +312,25 @@
     --switch-bd: 2px solid var(--mantine-color-gray-5) !important;
   }
 
-  /* Disabled */
-  .mantine-Switch-root[data-disabled] .mantine-Switch-track {
-    --switch-bg: var(--mantine-color-gray-5);
-    --switch-bd: 2px solid var(--mantine-color-gray-5);
-    opacity: 0.5;
+  /* Disabled — the `disabled` attr is on the <input>, not the root.
+     Must beat the unchecked selector above which uses
+     [data-mantine-color-scheme] input:not(:checked) + track. */
+  [data-mantine-color-scheme="light"]
+    input:disabled
+    + .mantine-Switch-track,
+  [data-mantine-color-scheme="dark"]
+    input:disabled
+    + .mantine-Switch-track,
+  input:disabled + .mantine-Switch-track {
+    --switch-bg: var(--mantine-color-disabled) !important;
+    --switch-bd: 2px solid var(--mantine-color-disabled-color) !important;
+    opacity: 1;
+    cursor: not-allowed;
+  }
+
+  input:disabled + .mantine-Switch-track .mantine-Switch-thumb {
+    background-color: var(--mantine-color-disabled-color) !important;
+    box-shadow: none !important;
   }
 
   /* Thumb — 20×20 solid white circle, shadow from design system.
@@ -410,6 +423,14 @@
     -webkit-text-fill-color: var(--mantine-color-disabled-color) !important;
   }
 
+  /* Dark mode: disabled inputs need a visible background to stand out */
+  [data-mantine-color-scheme="dark"] .mantine-Input-input:disabled,
+  [data-mantine-color-scheme="dark"] .mantine-Input-input[data-disabled] {
+    background-color: var(--mantine-color-dark-6) !important;
+    color: var(--mantine-color-dark-3) !important;
+    -webkit-text-fill-color: var(--mantine-color-dark-3) !important;
+  }
+
   /* Disabled buttons */
   .mantine-Button-root:disabled,
   .mantine-Button-root[data-disabled],
@@ -425,7 +446,8 @@
   .mantine-InputWrapper-root[data-disabled] .mantine-InputWrapper-label,
   .mantine-Checkbox-root[data-disabled] .mantine-Checkbox-label,
   .mantine-Radio-root[data-disabled] .mantine-Radio-label,
-  .mantine-Switch-root[data-disabled] .mantine-Switch-label {
+  .mantine-Switch-root[data-disabled] .mantine-Switch-label,
+  .mantine-Switch-label[data-disabled] {
     color: var(--mantine-color-disabled-color) !important;
   }
 

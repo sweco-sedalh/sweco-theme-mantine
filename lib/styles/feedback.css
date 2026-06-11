@@ -104,19 +104,25 @@
    * Accordion
    * ──────────────────────────────────────────────────────────────────────── */
   .mantine-Accordion-chevron {
-    width: 2.5rem;
-    height: 2.5rem;
-    min-width: 2.5rem;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--mantine-radius-sm);
+    border-radius: var(--mantine-radius-pill);
+    background-color: var(--mantine-color-green-0);
+    color: var(--mantine-color-text);
+    transition: box-shadow var(--sweco-transition),
+      background-color var(--sweco-transition),
+      transform var(--sweco-transition);
   }
 
   /* Round green halo when expanded */
   .mantine-Accordion-chevron[data-rotate] {
-    background: var(--mantine-secondary-color-filled-hover);
-    border-radius: 50%;
+    background-color: var(--mantine-secondary-color-filled-hover);
+    border-radius: var(--mantine-radius-pill);
   }
 
   /* ── Separated-variant items ── */

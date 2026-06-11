@@ -13,6 +13,10 @@
   .mantine-Anchor-root,
   a.mantine-Breadcrumbs-breadcrumb {
     --sweco-anchor-offset: 0.15rem;
+    /* inline-block so the underline's background-image positions reliably
+       against the element's own box rather than per-line-box (matters
+       for Anchors without href that browsers may treat differently). */
+    display: inline-block;
     color: currentColor;
     text-decoration: none;
     box-shadow: none;
