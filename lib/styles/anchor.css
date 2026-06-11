@@ -6,47 +6,34 @@
      Must explicitly null the box-shadow underline that
      .mantine-Anchor-root paints by default.
 
-     `--sweco-anchor-offset` controls how far below the text the line sits.
-     Default 0.25rem is tuned for md/lg font-size; small fonts (sm/xs) need
-     a much tighter offset or the line floats far below the glyphs — those
-     overrides are applied automatically below by matching Mantine's inline
-     `font-size: var(--mantine-font-size-…)` style. Consumers can also set
-     `--sweco-anchor-offset` directly on/above an Anchor to force any value. */
+     `--sweco-anchor-offset` controls how far below the baseline the line
+     sits. Position is calculated from the top of the padding box using
+     `1lh` so the underline stays glued to the baseline regardless of the
+     surrounding line-height (footer/breadcrumbs/inline text all work). */
   .mantine-Anchor-root,
   a.mantine-Breadcrumbs-breadcrumb {
-    --sweco-anchor-offset: 0.25rem;
+    --sweco-anchor-offset: 0.15rem;
     color: currentColor;
     text-decoration: none;
     box-shadow: none;
     white-space: nowrap;
     padding-bottom: var(--sweco-anchor-offset);
     margin-bottom: calc(-1 * var(--sweco-anchor-offset));
-    /* The underline is always the Sweco secondary-color accent. Earlier this
-       rule also accepted `--stroke-color` as a fallback (so an ancestor could
-       recolor the line via the same token used to recolor icon strokes), but
-       that meant the Header — which sets `--stroke-color: currentColor` so
-       its icons follow the header text color — accidentally turned the
-       Anchor underlines black. Keep the two concerns separate: icons use
-       `--stroke-color`, anchor underline always uses
-       `--sweco-underline-color`. */
     background-image: linear-gradient(
       to right,
       var(--sweco-underline-color),
       var(--sweco-underline-color)
     );
-    background-position: 0 100%;
+    background-position-x: 0;
+    /* y = top half-leading + 1em (glyph bottom incl. descenders) + offset */
+    background-position-y: calc(
+      (1lh - 1em) / 2 + 1em + var(--sweco-anchor-offset)
+    );
     background-repeat: no-repeat;
     background-size: 0 2px;
     transition:
       var(--sweco-underline-transition),
       color var(--sweco-transition);
-  }
-  /* Small Anchors render via Mantine's inline `font-size:
-     var(--mantine-font-size-sm)`. Detect that and tighten the offset so the
-     underline sits flush under the baseline instead of floating ~4 px below. */
-  .mantine-Anchor-root[style*="--mantine-font-size-sm"],
-  .mantine-Anchor-root[style*="--mantine-font-size-xs"] {
-    --sweco-anchor-offset: 0.05rem;
   }
   .mantine-Anchor-root:hover,
   a.mantine-Breadcrumbs-breadcrumb:hover {
@@ -60,11 +47,29 @@
      with no hover effect. */
   .mantine-Breadcrumbs-breadcrumb {
     color: var(--mantine-color-text);
-    font-size: var(--mantine-font-size-md);
+    font-size: var(--sweco-text-sm);
+    line-height: var(--sweco-text-sm-line-height);
     font-weight: var(--sweco-font-weight-normal);
     text-decoration: none;
     transition: color var(--sweco-transition);
   }
+  /* Anchor breadcrumbs use the inherited theme `line-height` so multi-row
+     breadcrumbs don't crowd vertically. But the inherited underline (pinned
+     to `100%` = bottom of the tall line-box) would float far below the
+     glyphs. Re-position the underline just below the baseline using `1lh`:
+       y = top half-leading + 1em (= glyph bottom incl. descenders) + offset. */
+  a.mantine-Breadcrumbs-breadcrumb {
+    --sweco-anchor-offset: 0.15rem;
+    /* Padding-bottom must be ≥ offset so the 2 px line has room to render
+       inside the padding box; negative margin keeps the visual box compact. */
+    padding-bottom: var(--sweco-anchor-offset);
+    margin-bottom: calc(-1 * var(--sweco-anchor-offset));
+    background-position-x: 0;
+    background-position-y: calc(
+      (1lh - 1em) / 2 + 1em + var(--sweco-anchor-offset)
+    );
+  }
+
   .mantine-Breadcrumbs-breadcrumb:not(a) {
     font-weight: var(--sweco-font-weight-medium) !important;
     cursor: default;

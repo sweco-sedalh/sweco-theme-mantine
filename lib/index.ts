@@ -28,6 +28,7 @@ import {
   Timeline,
   Tooltip,
 } from "@mantine/core";
+import { modals } from "@mantine/modals";
 
 import { SwecoLoader } from "./components/SwecoLoader.tsx";
 import { textStyles } from "./textStyles.tsx";
@@ -374,23 +375,54 @@ export const theme = createTheme({
       }),
     }),
     Modal: Modal.extend({
-      defaultProps: { closeButtonProps: { size: "lg" }, radius: "sm" },
+      defaultProps: {
+        closeButtonProps: { size: "lg", radius: "xl" },
+        radius: "sm",
+        size: "512px",
+      },
       styles: () => ({
-        content: { padding: "var(--mantine-spacing-xl)" },
+        content: {
+          padding: "var(--mantine-spacing-lg)",
+        },
         header: {
           padding: 0,
           minHeight: "unset",
-          marginBottom: "var(--mantine-spacing-md)",
+          marginBottom: "var(--mantine-spacing-lg)",
         },
         body: { padding: 0 },
-        close: { color: "var(--mantine-color-text)" },
+        // Sweco close button — 32×32 pill on green-100 surface with a 20×20
+        // X icon in text color. Mirrors the `.btn.btn-x` spec.
+        close: {
+          color: "var(--mantine-color-text)",
+          backgroundColor: "var(--mantine-color-green-0)",
+          borderRadius: "var(--mantine-radius-pill)",
+          border: "none",
+          width: "32px",
+          height: "32px",
+          minWidth: "32px",
+          minHeight: "32px",
+          padding: 0,
+          "--cb-icon-size": "20px",
+          transition: "box-shadow var(--sweco-transition)",
+        },
+        // Shift the modal down from the mathematical center so it reads
+        // closer to the "visual center" of the viewport (slightly above
+        // true center feels more natural on tall screens).
+        // Horizontal padding provides the `md` gutter on mobile so the modal
+        // never touches the screen edges.
+        inner: {
+          paddingTop: "20vh",
+          paddingBottom: "5vh",
+          paddingLeft: "var(--mantine-spacing-md)",
+          paddingRight: "var(--mantine-spacing-md)",
+        },
       }),
     }),
     ModalTitle: ModalTitle.extend({
       defaultProps: {
-        fw: "var(--sweco-h3-font-weight)",
-        fz: "var(--sweco-h3-font-size)",
-        lh: "var(--sweco-h3-line-height)",
+        fw: "var(--sweco-h4-font-weight)",
+        fz: "var(--sweco-h4-font-size)",
+        lh: "var(--sweco-h4-line-height)",
       },
     }),
     Pagination: Pagination.extend({ defaultProps: { radius: "xl" } }),
@@ -856,6 +888,43 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     },
   };
 };
+
+/**
+ * Sweco-styled confirm modal — wraps `@mantine/modals`' `openConfirmModal`
+ * and injects the canonical footer separator (edge-to-edge top border above
+ * the action buttons, right-aligned).
+ *
+ * Drop-in replacement:
+ * ```ts
+ * import { openConfirmModal } from "@sweco/theme-mantine";
+ * openConfirmModal({ title, children, labels, onConfirm });
+ * ```
+ */
+export const openConfirmModal = (
+  props: Parameters<typeof modals.openConfirmModal>[0],
+) =>
+  modals.openConfirmModal({
+    ...props,
+    groupProps: {
+      justify: "flex-end",
+      gap: "sm",
+      // `mt` needs to be a Mantine prop (not inline style) because
+      // ConfirmModal sets `mt={children ? 0 : "md"}` on the Group BEFORE
+      // spreading our `groupProps`, and that gets applied as inline style.
+      // Setting `mt` here overrides it cleanly.
+      mt: "lg",
+      ...props.groupProps,
+      style: {
+        borderTop: "1px solid var(--mantine-color-default-border)",
+        paddingTop: "var(--mantine-spacing-lg)",
+        marginLeft: "calc(-1 * var(--mantine-spacing-lg))",
+        marginRight: "calc(-1 * var(--mantine-spacing-lg))",
+        paddingLeft: "var(--mantine-spacing-lg)",
+        paddingRight: "var(--mantine-spacing-lg)",
+        ...(props.groupProps?.style as object | undefined),
+      },
+    },
+  });
 
 // ── Public components & assets ────────────────────────────────────────────
 export { SwecoLogo } from "./components/SwecoLogo.tsx";

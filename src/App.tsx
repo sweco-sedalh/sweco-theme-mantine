@@ -23,6 +23,7 @@ import { SectionButtons } from "./sections/SectionButtons.tsx";
 import { SectionGrid } from "./sections/SectionGrid.tsx";
 import { SectionTable } from "./sections/SectionTable.tsx";
 import { SectionTypography } from "./sections/SectionTypography.tsx";
+import { SectionModal } from "./sections/SectionModal.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleHalfStroke } from "@fortawesome/free-solid-svg-icons";
 
@@ -39,21 +40,23 @@ const App: FC = () => {
     <AppShell header={{ height: HEADER_HEIGHT }} padding="md">
       <Header>
         <Group>
-          <Burger size="sm" hiddenFrom="sm" />
           <SwecoLogo />
         </Group>
 
-        <Group gap="md" visibleFrom="sm">
-          <Anchor href="#">Start</Anchor>
-          <Anchor href="#">Projects</Anchor>
-          <Anchor href="#">Reports</Anchor>
-          <ActionIcon
-            onClick={toggleColorScheme}
-            title="Toggle color scheme"
-            variant="outline"
-          >
-            <FontAwesomeIcon icon={faCircleHalfStroke} />
-          </ActionIcon>
+        <Group gap="md">
+          <Group gap="md" visibleFrom="sm">
+            <Anchor href="#">Start</Anchor>
+            <Anchor href="#">Projects</Anchor>
+            <Anchor href="#">Reports</Anchor>
+            <ActionIcon
+              onClick={toggleColorScheme}
+              title="Toggle color scheme"
+              variant="outline"
+            >
+              <FontAwesomeIcon icon={faCircleHalfStroke} />
+            </ActionIcon>
+          </Group>
+          <Burger size="sm" hiddenFrom="sm" />
         </Group>
       </Header>
       <AppShell.Main>
@@ -71,6 +74,7 @@ const App: FC = () => {
             <SectionSpinner />
             <SectionWizardSteps />
             <SectionCard />
+            <SectionModal />
             <SectionComponents />
           </Stack>
         </Container>

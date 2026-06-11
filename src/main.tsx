@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "@mantine/core/styles.layer.css";
 import { MantineProvider } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
 
 import { theme, cssVariablesResolver } from "../lib";
 import "../lib/style.layer.css";
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       cssVariablesResolver={cssVariablesResolver}
       defaultColorScheme="auto"
     >
-      <App />
+      <ModalsProvider>
+        <App />
+      </ModalsProvider>
     </MantineProvider>
   </React.StrictMode>,
 );

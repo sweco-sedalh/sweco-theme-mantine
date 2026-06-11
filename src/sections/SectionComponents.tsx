@@ -4,13 +4,11 @@ import {
   Accordion,
   Avatar,
   Button,
-  Center,
   Drawer,
   Grid,
   HoverCard,
   Indicator,
   Menu,
-  Modal,
   Notification,
   Paper,
   Popover,
@@ -37,47 +35,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
-const StandardModal: FC = () => {
-  const [opened, { open, close }] = useDisclosure(false);
-
-  return (
-    <>
-      <Modal
-        opened={opened}
-        onClose={close}
-        title="Modal title"
-        withCloseButton
-      >
-        <Center p="xl">
-          <strong>Some content</strong>
-        </Center>
-        <Button.Group>
-          <Button variant="default" color="gray.0">
-            Cancel
-          </Button>
-          <Button variant="filled" color="green">
-            Do something
-          </Button>
-        </Button.Group>
-      </Modal>
-      <Button fullWidth variant="filled" color="green" onClick={open}>
-        Show modal
-      </Button>
-    </>
-  );
-};
 export const SectionComponents: FC = () => {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <Section title="Components">
       <Grid>
         <Grid.Col span={4}>
-          <Paper p="sm" mb="md">
-            <Stack>
-              <Title order={2}>Modals</Title>
-              <StandardModal />
-            </Stack>
-          </Paper>
           <Paper p="sm" mb="md">
             <Stack>
               <Title order={2}>Toast message</Title>

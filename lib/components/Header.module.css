@@ -31,6 +31,7 @@
     will-change: transform;
   }
 
+
   /* Smart-sticky: slide the header out of view when the consumer scrolls
      down past the threshold (toggled from React via the `hideOnScroll` prop). */
   .header[data-hidden="true"] {
