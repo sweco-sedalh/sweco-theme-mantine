@@ -35,7 +35,7 @@ export const SectionTable: FC = () => (
       </Table.Tbody>
       <Table.Caption>Parts of the periodic table</Table.Caption>
     </Table>
-    <Title order={2}>With more borders, striped rows and hovering</Title>
+    <Title order={4}>With more borders, striped rows and hovering</Title>
 
     <Table striped highlightOnHover withTableBorder withColumnBorders>
       <Table.Thead>

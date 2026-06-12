@@ -1,0 +1,115 @@
+@layer sweco.components {
+  /* === Shared animated underline — Anchor + anchor Breadcrumb ============
+     No line initially; on hover a 2px line grows in from the left, sitting
+     just below the text baseline. The negative margin cancels the reserved
+     padding so the box height stays equal to surrounding inline text.
+     Must explicitly null the box-shadow underline that
+     .mantine-Anchor-root paints by default.
+
+     `--sweco-anchor-offset` controls how far below the baseline the line
+     sits. Position is calculated from the top of the padding box using
+     `1lh` so the underline stays glued to the baseline regardless of the
+     surrounding line-height (footer/breadcrumbs/inline text all work). */
+  .mantine-Anchor-root,
+  a.mantine-Breadcrumbs-breadcrumb {
+    --sweco-anchor-offset: 0.15rem;
+    /* inline-block so the underline's background-image positions reliably
+       against the element's own box rather than per-line-box (matters
+       for Anchors without href that browsers may treat differently). */
+    display: inline-block;
+    color: currentColor;
+    text-decoration: none;
+    box-shadow: none;
+    white-space: nowrap;
+    padding-bottom: var(--sweco-anchor-offset);
+    margin-bottom: calc(-1 * var(--sweco-anchor-offset));
+    background-image: linear-gradient(
+      to right,
+      var(--sweco-underline-color),
+      var(--sweco-underline-color)
+    );
+    background-position-x: 0;
+    /* y = top half-leading + 1em (glyph bottom incl. descenders) + offset */
+    background-position-y: calc(
+      (1lh - 1em) / 2 + 1em + var(--sweco-anchor-offset)
+    );
+    background-repeat: no-repeat;
+    background-size: 0 2px;
+    transition:
+      var(--sweco-underline-transition),
+      color var(--sweco-transition);
+  }
+  .mantine-Anchor-root:hover,
+  a.mantine-Breadcrumbs-breadcrumb:hover {
+    text-decoration: none;
+    box-shadow: none;
+    background-size: 100% 2px;
+  }
+  /* === Breadcrumbs =======================================================
+     Plain 1rem normal-weight text. Anchor breadcrumbs share the animated
+     underline above. The current-page non-anchor span is medium weight
+     with no hover effect. */
+  .mantine-Breadcrumbs-breadcrumb {
+    color: var(--mantine-color-text);
+    font-size: var(--sweco-text-sm);
+    line-height: var(--sweco-text-sm-line-height);
+    font-weight: var(--sweco-font-weight-normal);
+    text-decoration: none;
+    transition: color var(--sweco-transition);
+  }
+  /* Anchor breadcrumbs use the inherited theme `line-height` so multi-row
+     breadcrumbs don't crowd vertically. But the inherited underline (pinned
+     to `100%` = bottom of the tall line-box) would float far below the
+     glyphs. Re-position the underline just below the baseline using `1lh`:
+       y = top half-leading + 1em (= glyph bottom incl. descenders) + offset. */
+  a.mantine-Breadcrumbs-breadcrumb {
+    --sweco-anchor-offset: 0.15rem;
+    /* Padding-bottom must be ≥ offset so the 2 px line has room to render
+       inside the padding box; negative margin keeps the visual box compact. */
+    padding-bottom: var(--sweco-anchor-offset);
+    margin-bottom: calc(-1 * var(--sweco-anchor-offset));
+    background-position-x: 0;
+    background-position-y: calc(
+      (1lh - 1em) / 2 + 1em + var(--sweco-anchor-offset)
+    );
+  }
+
+  .mantine-Breadcrumbs-breadcrumb:not(a) {
+    font-weight: var(--sweco-font-weight-medium) !important;
+    cursor: default;
+  }
+  /* === Inline links inside paragraphs ====================================
+     Green underline by default. On hover: light bg + green ring. Excludes
+     .mantine-Anchor-root which has its own animated underline above. */
+  :is(p a:not(.mantine-Anchor-root), .link) {
+    color: inherit;
+    text-decoration-line: underline !important;
+    text-decoration-color: var(--mantine-secondary-color-4) !important;
+    text-underline-offset: 4px !important;
+    text-decoration-thickness: 2px !important;
+    outline-style: none !important;
+    position: relative;
+    border-radius: var(--sweco-radius-sm);
+    transition-property: all;
+    transition-timing-function: var(--sweco-transition-timing-function-long);
+    transition-duration: 0.3s;
+  }
+  :is(p a:not(.mantine-Anchor-root), .link):focus {
+    text-decoration-line: none !important;
+  }
+  @media (hover: hover) {
+    :is(p a:not(.mantine-Anchor-root), .link):hover {
+      /* color tracks --mantine-color-text so it stays readable in both
+       * light mode (dark text on light-green tint) and dark mode (light
+       * text on dark-green tint). Hard-coding dark-5 here broke dark mode. */
+      color: var(--mantine-color-text) !important;
+      background-color: var(--mantine-secondary-color-light) !important;
+      box-shadow: var(--sweco-focus-ring) !important;
+      text-decoration-line: none !important;
+      text-decoration-color: transparent !important;
+      background-image: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+  }
+}

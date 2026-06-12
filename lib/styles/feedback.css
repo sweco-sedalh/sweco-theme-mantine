@@ -1,0 +1,308 @@
+@layer sweco.components {
+  /* ════════════════════════════════════════════════════════════════════════
+   * Stepper
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Stepper-stepIcon {
+    --stepper-icon-size: calc(var(--sweco-spacing) * 10); /* 40px */
+    width: var(--stepper-icon-size) !important;
+    height: var(--stepper-icon-size) !important;
+    min-width: var(--stepper-icon-size) !important;
+    min-height: var(--stepper-icon-size) !important;
+    border-width: 2px !important;
+    border-color: var(--mantine-secondary-color-filled) !important;
+    background-color: var(--mantine-color-body) !important;
+    font-size: var(--mantine-font-size-md) !important;
+    font-weight: var(--sweco-font-weight-medium);
+    transition:
+      background-color 0.3s var(--sweco-transition-timing-function),
+      border-color 0.3s var(--sweco-transition-timing-function);
+  }
+
+  /* Active step — secondary filled-hover fill */
+  .mantine-Stepper-stepIcon[data-progress] {
+    background-color: var(--mantine-secondary-color-filled-hover);
+  }
+
+  /* Completed step — body bg, checkmark drawn via ::after below */
+  .mantine-Stepper-stepIcon[data-completed] {
+    background-color: var(--mantine-color-body);
+    color: transparent;
+  }
+
+  .mantine-Stepper-stepIcon[data-completed] .mantine-Stepper-stepCompletedIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mantine-Stepper-stepIcon[data-completed]
+    .mantine-Stepper-stepCompletedIcon
+    svg {
+    display: none;
+  }
+
+  /* Check mark — black on light, white on dark */
+  .mantine-Stepper-stepIcon[data-completed]
+    .mantine-Stepper-stepCompletedIcon::after {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-color: var(--mantine-color-black);
+    mask-image: url("../assets/checkmark.svg");
+    mask-size: 24px;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-image: url("../assets/checkmark.svg");
+    -webkit-mask-size: 24px;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+  }
+
+  [data-mantine-color-scheme="dark"]
+    .mantine-Stepper-stepIcon[data-completed]
+    .mantine-Stepper-stepCompletedIcon::after {
+    background-color: var(--mantine-color-white);
+  }
+
+  /* Hover on clickable steps — green bg, black number/text/icon */
+  .mantine-Stepper-step:hover .mantine-Stepper-stepIcon {
+    background-color: var(--mantine-secondary-color-filled-hover) !important;
+    color: var(--mantine-color-gray-9) !important;
+  }
+
+  /* Completed icon mask on hover → dark */
+  .mantine-Stepper-step:hover
+    .mantine-Stepper-stepIcon[data-completed]
+    .mantine-Stepper-stepCompletedIcon::after {
+    background-color: var(--mantine-color-gray-9);
+  }
+
+  .mantine-Stepper-stepLabel {
+    font-weight: var(--sweco-font-weight-medium);
+  }
+
+  .mantine-Stepper-stepDescription {
+    font-size: var(--mantine-font-size-xs);
+    font-weight: var(--sweco-font-weight-normal);
+  }
+
+  /* Step-to-step separator */
+  .mantine-Stepper-verticalSeparator,
+  .mantine-Stepper-separator[data-active],
+  .mantine-Stepper-separator {
+    background-color: var(--mantine-secondary-color-filled);
+    border-color: var(--mantine-secondary-color-filled);
+  }
+
+  .mantine-Stepper-separator {
+    width: calc(var(--sweco-spacing) * 8);
+    margin-inline: calc(var(--sweco-spacing) * 3);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Accordion
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Accordion-chevron {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--mantine-radius-pill);
+    background-color: var(--mantine-color-green-0);
+    color: var(--mantine-color-text);
+    transition: box-shadow var(--sweco-transition),
+      background-color var(--sweco-transition),
+      transform var(--sweco-transition);
+  }
+
+  /* Round green halo when expanded */
+  .mantine-Accordion-chevron[data-rotate] {
+    background-color: var(--mantine-secondary-color-filled-hover);
+    border-radius: var(--mantine-radius-pill);
+  }
+
+  /* ── Separated-variant items ── */
+  .mantine-Accordion-item {
+    background: transparent;
+    border: 1px solid var(--table-border-color);
+    border-radius: 0;
+  }
+
+  .mantine-Accordion-item[data-active] {
+    border: 2px solid var(--mantine-secondary-color-filled);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Table — consistent border color across all contexts
+   * Mantine's Table sets --table-border-color locally (overriding :root).
+   * `unset` on an inherited custom property = `inherit`, so every table
+   * picks up our :root value — same token used by Accordion, so borders
+   * always match regardless of where the table is placed.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Table-table {
+    --table-border-color: unset;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Badge
+   * ──────────────────────────────────────────────────────────────────────── */
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * ChipWithClose — removable pill component (lib/components/ChipWithClose.tsx)
+   * ──────────────────────────────────────────────────────────────────────── */
+  .chip-with-close {
+    --cwc-height: calc(var(--sweco-spacing) * 10);       /* 40px (md) */
+    --cwc-fz: var(--sweco-text-base);                    /* 1rem */
+    --cwc-lh: var(--sweco-text-base-line-height);        /* 1.5rem */
+    --cwc-px: calc(var(--sweco-spacing) * 3);            /* 12px */
+    --cwc-py: calc(var(--sweco-spacing) * 2);            /* 8px */
+    --cwc-gap: var(--cwc-px);                            /* same as side padding */
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--cwc-gap);
+    box-sizing: border-box;
+    height: var(--cwc-height);
+    padding-inline-start: var(--cwc-px);
+    padding-inline-end: calc(var(--sweco-spacing) * 2);  /* 8px — tight against circle edge */
+    padding-block: var(--cwc-py);
+    border-radius: var(--mantine-radius-md);
+    background-color: var(--mantine-secondary-color-light);
+    color: var(--mantine-color-text);
+    font-weight: var(--sweco-font-weight-medium);
+    cursor: default;
+    transition:
+      background-color var(--sweco-transition),
+      color var(--sweco-transition);
+  }
+
+  .chip-with-close:hover {
+    background-color: var(--mantine-secondary-color-light-hover);
+  }
+
+  .chip-with-close-label {
+    font-size: var(--cwc-fz);
+    line-height: var(--cwc-lh);
+    white-space: nowrap;
+  }
+
+  .chip-with-close-btn {
+    flex: none;
+    border-radius: 50% !important;
+    background-color: var(--mantine-color-body) !important;
+    color: var(--mantine-color-text) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: calc(var(--sweco-spacing) * 5) !important;   /* 20px */
+    height: calc(var(--sweco-spacing) * 5) !important;  /* 20px */
+    min-width: calc(var(--sweco-spacing) * 5) !important;
+    min-height: calc(var(--sweco-spacing) * 5) !important;
+    padding: 0 !important;
+    transition:
+      background-color var(--sweco-transition),
+      color var(--sweco-transition) !important;
+  }
+
+  .chip-with-close-btn svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .chip-with-close-btn:hover {
+    background-color: var(--mantine-color-body) !important;
+    opacity: 0.8;
+  }
+
+  /* sm: 32px */
+  .chip-with-close[data-size="sm"] {
+    --cwc-height: calc(var(--sweco-spacing) * 8);        /* 32px */
+    --cwc-fz: var(--sweco-text-sm);                      /* 0.875rem */
+    --cwc-lh: var(--sweco-text-sm-line-height);          /* 1.25rem */
+    --cwc-px: calc(var(--sweco-spacing) * 3);            /* 12px */
+    --cwc-py: calc(var(--sweco-spacing) * 2);            /* 8px */
+  }
+
+  /* variant="secondary" — sand palette */
+  .chip-with-close[data-variant="secondary"] {
+    background-color: var(--mantine-color-sand-2);
+  }
+
+  .chip-with-close[data-variant="secondary"]:hover {
+    background-color: var(--mantine-color-sand-4);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Divider
+   * Mantine defaults the label to `color: var(--mantine-color-dimmed)` which
+   * fights any inline color set on a child <Text>. Inherit instead so the
+   * caller controls the color/weight via the label content.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Divider-label {
+    color: var(--mantine-color-text);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Blockquote
+   * ──────────────────────────────────────────────────────────────────────── */
+  .mantine-Blockquote-root {
+    font-size: var(--mantine-font-size-xl);
+    font-style: italic;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Table
+   * ──────────────────────────────────────────────────────────────────────── */
+  :where([data-sticky]) .mantine-Table-th {
+    background-color: transparent;
+  }
+
+  /* Keep border-bottom on the last row inside filter dropdowns */
+  .filter-dropdown
+    .mantine-Table-tbody
+    .mantine-Table-tr:last-child:where([data-with-row-border]) {
+    border-bottom: calc(0.0625rem * var(--mantine-scale)) solid
+      var(--table-border-color);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   * Card as link
+   * When the entire card is an <a> (component="a" on Mantine Card, or a
+   * plain anchor wrapping a card surface), it needs:
+   *   • outline removed (replaced by box-shadow focus ring)
+   *   • box-shadow reset as the default state (GPU-composited, no layout)
+   *   • box-shadow focus ring on :focus-visible
+   *   • subtle hover lift (translateY -2px + shadow)
+   * ──────────────────────────────────────────────────────────────────────── */
+  a.mantine-Card-root,
+  .mantine-Card-root[href],
+  .card-link {
+    display: block;
+    outline: none;
+    text-decoration: none;
+    box-shadow: var(--sweco-focus-ring-reset);
+    transform: translateY(0);
+    transition:
+      box-shadow var(--sweco-transition),
+      transform var(--sweco-transition);
+  }
+
+  a.mantine-Card-root:focus-visible,
+  .mantine-Card-root[href]:focus-visible,
+  .card-link:focus-visible {
+    box-shadow: var(--sweco-focus-ring);
+  }
+
+  @media (hover: hover) {
+    a.mantine-Card-root:hover,
+    .mantine-Card-root[href]:hover,
+    .card-link:hover {
+      box-shadow: var(--sweco-focus-ring);
+      transform: translateY(-2px);
+    }
+  }
+}

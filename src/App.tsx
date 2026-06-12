@@ -1,6 +1,10 @@
 import {
   ActionIcon,
+  Anchor,
+  AppShell,
+  Burger,
   Container,
+  Group,
   Stack,
   useComputedColorScheme,
   useMantineColorScheme,
@@ -19,8 +23,11 @@ import { SectionButtons } from "./sections/SectionButtons.tsx";
 import { SectionGrid } from "./sections/SectionGrid.tsx";
 import { SectionTable } from "./sections/SectionTable.tsx";
 import { SectionTypography } from "./sections/SectionTypography.tsx";
+import { SectionModal } from "./sections/SectionModal.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleHalfStroke } from "@fortawesome/free-solid-svg-icons";
+
+import { Header, HEADER_HEIGHT, SwecoLogo } from "../lib";
 
 const App: FC = () => {
   const { setColorScheme } = useMantineColorScheme();
@@ -30,31 +37,49 @@ const App: FC = () => {
   };
 
   return (
-    <Container>
-      <ActionIcon
-        onClick={toggleColorScheme}
-        title="Toggle color scheme"
-        variant="outline"
-        style={{ position: "fixed", right: 10, top: 10 }}
-      >
-        <FontAwesomeIcon icon={faCircleHalfStroke} />
-      </ActionIcon>
-      <Stack>
-        <SectionColors />
-        <SectionTypography />
-        <SectionTable />
-        <SectionGrid />
-        <SectionButtons />
-        <SectionNavigation />
-        <SectionNavLinks />
-        <SectionForms />
-        <SectionBadgeAndIcons />
-        <SectionSpinner />
-        <SectionWizardSteps />
-        <SectionCard />
-        <SectionComponents />
-      </Stack>
-    </Container>
+    <AppShell header={{ height: HEADER_HEIGHT }} padding="md">
+      <Header>
+        <Group>
+          <SwecoLogo />
+        </Group>
+
+        <Group gap="md">
+          <Group gap="md" visibleFrom="sm">
+            <Anchor href="#">Start</Anchor>
+            <Anchor href="#">Projects</Anchor>
+            <Anchor href="#">Reports</Anchor>
+            <ActionIcon
+              onClick={toggleColorScheme}
+              title="Toggle color scheme"
+              variant="outline"
+            >
+              <FontAwesomeIcon icon={faCircleHalfStroke} />
+            </ActionIcon>
+          </Group>
+          <Burger size="sm" hiddenFrom="sm" />
+        </Group>
+      </Header>
+      <AppShell.Main>
+        <Container>
+          <Stack>
+            <SectionColors />
+            <SectionTypography />
+            <SectionTable />
+            <SectionGrid />
+            <SectionButtons />
+            <SectionNavigation />
+            <SectionNavLinks />
+            <SectionForms />
+            <SectionBadgeAndIcons />
+            <SectionSpinner />
+            <SectionWizardSteps />
+            <SectionCard />
+            <SectionModal />
+            <SectionComponents />
+          </Stack>
+        </Container>
+      </AppShell.Main>
+    </AppShell>
   );
 };
 

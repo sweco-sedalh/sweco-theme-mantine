@@ -4,13 +4,11 @@ import {
   Accordion,
   Avatar,
   Button,
-  Center,
   Drawer,
   Grid,
   HoverCard,
   Indicator,
   Menu,
-  Modal,
   Notification,
   Paper,
   Popover,
@@ -34,38 +32,9 @@ import {
   faImages,
   faMagnifyingGlass,
   faRightLeft,
-  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
-const StandardModal: FC = () => {
-  const [opened, { open, close }] = useDisclosure(false);
-
-  return (
-    <>
-      <Modal
-        opened={opened}
-        onClose={close}
-        title="Modal title"
-        withCloseButton
-      >
-        <Center p="xl">
-          <strong>Some content</strong>
-        </Center>
-        <Button.Group>
-          <Button variant="default" color="gray.0">
-            Cancel
-          </Button>
-          <Button variant="filled" color="green">
-            Do something
-          </Button>
-        </Button.Group>
-      </Modal>
-      <Button fullWidth variant="filled" color="green" onClick={open}>
-        Show modal
-      </Button>
-    </>
-  );
-};
 export const SectionComponents: FC = () => {
   const [opened, { open, close }] = useDisclosure(false);
   return (
@@ -74,15 +43,9 @@ export const SectionComponents: FC = () => {
         <Grid.Col span={4}>
           <Paper p="sm" mb="md">
             <Stack>
-              <Title order={2}>Modals</Title>
-              <StandardModal />
-            </Stack>
-          </Paper>
-          <Paper p="sm" mb="md">
-            <Stack>
               <Title order={2}>Toast message</Title>
               <Notification title="Message">See? Just like this.</Notification>
-              <Notification title="This went well" color="success">
+              <Notification title="This went well" color="green">
                 Yay, successful execution!
               </Notification>
             </Stack>
@@ -102,7 +65,7 @@ export const SectionComponents: FC = () => {
                 >
                   <Text c="dimmed" size="sm">
                     You&apos;ve created new branch{" "}
-                    <Text variant="link" component="span" inherit>
+                    <Text className="link" component="span" inherit>
                       fix-notifications
                     </Text>{" "}
                     from master
@@ -123,7 +86,7 @@ export const SectionComponents: FC = () => {
                 >
                   <Text c="dimmed" size="sm">
                     You&apos;ve pushed 23 commits to
-                    <Text variant="link" component="span" inherit>
+                    <Text className="link" component="span" inherit>
                       fix-notifications branch
                     </Text>
                   </Text>
@@ -144,7 +107,7 @@ export const SectionComponents: FC = () => {
                 >
                   <Text c="dimmed" size="sm">
                     You&apos;ve submitted a pull request
-                    <Text variant="link" component="span" inherit>
+                    <Text className="link" component="span" inherit>
                       Fix incorrect notification message (#187)
                     </Text>
                   </Text>
@@ -163,7 +126,7 @@ export const SectionComponents: FC = () => {
                   }
                 >
                   <Text c="dimmed" size="sm">
-                    <Text variant="link" component="span" inherit>
+                    <Text className="link" component="span" inherit>
                       Robert Gluesticker
                     </Text>{" "}
                     left a code review on your pull request
@@ -292,7 +255,7 @@ export const SectionComponents: FC = () => {
                     color="red"
                     leftSection={
                       <FontAwesomeIcon
-                        icon={faTrash}
+                        icon={faTrashCan}
                         style={{ width: rem(14), height: rem(14) }}
                       />
                     }

@@ -6,7 +6,13 @@ const Section: FC<{ title: string | false; children?: ReactNode }> = ({
   children,
 }) => {
   return (
-    <Paper shadow="sm" p="md">
+    <Paper
+      withBorder
+      p="md"
+      radius="md"
+      shadow="none"
+      style={{ borderColor: "var(--table-border-color)" }}
+    >
       <Stack>
         {title && <Title>{title}</Title>}
         {children}

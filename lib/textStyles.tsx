@@ -1,34 +1,34 @@
 export const textStyles = {
   blockquote: {
-    fontSize: "1.5rem",
-    lineHeight: "2rem",
-    fontWeight: 400,
+    fontSize: "var(--sweco-text-md)",
+    lineHeight: "var(--sweco-text-md-line-height)",
+    fontWeight: "var(--sweco-font-weight-normal)",
     fontStyle: "italic",
   },
   preamble: {
-    fontSize: "1.5rem",
-    lineHeight: "2rem",
-    fontWeight: 400,
+    fontSize: "var(--sweco-text-md)",
+    lineHeight: "var(--sweco-text-md-line-height)",
+    fontWeight: "var(--sweco-font-weight-normal)",
   },
   bodyDefault: {
-    fontSize: "1rem",
-    lineHeight: "1.5rem",
-    fontWeight: 400,
+    fontSize: "var(--sweco-text-base)",
+    lineHeight: "var(--sweco-text-base-line-height)",
+    fontWeight: "var(--sweco-font-weight-normal)",
   },
   bodySmall: {
-    fontSize: "0.875rem",
-    lineHeight: "1.25rem",
-    fontWeight: 400,
+    fontSize: "var(--sweco-text-sm)",
+    lineHeight: "var(--sweco-text-sm-line-height)",
+    fontWeight: "var(--sweco-font-weight-normal)",
   },
   bodyInfoText: {
-    fontSize: "0.875 rem",
-    lineHeight: "1.5rem",
-    fontWeight: 500,
+    fontSize: "var(--sweco-text-sm)",
+    lineHeight: "var(--sweco-text-base-line-height)",
+    fontWeight: "var(--sweco-font-weight-medium)",
   },
   bodyTiny: {
-    fontSize: "0.75rem",
-    lineHeight: "1.25rem",
-    fontWeight: 400,
+    fontSize: "var(--sweco-text-xs)",
+    lineHeight: "var(--sweco-text-xs-line-height)",
+    fontWeight: "var(--sweco-font-weight-normal)",
   },
 };
 

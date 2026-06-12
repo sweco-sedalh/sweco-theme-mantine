@@ -1,191 +1,25 @@
+/*
+ * Sweco theme stylesheet entry.
+ *
+ * Layer order (lowest priority first):
+ *   tokens     – design-system custom properties (colors, spacing, blur, …)
+ *   base       – global element resets / prose typography
+ *   components – every per-Mantine-component override
+ *   overrides  – escape hatch for the few rules that must beat Mantine's
+ *                unlayered styles (kept small and explicitly named).
+ *
+ * NOTE FOR CONSUMERS:
+ *   Import THIS file AFTER `@mantine/core/styles.css`. The Mantine stylesheet
+ *   declares its own `mantine` layer; placing ours after it guarantees the
+ *   correct cascade order even when bundlers re-order @import statements.
+ */
+@layer sweco.tokens, sweco.base, sweco.components, sweco.overrides;
+
 @import "./fonts.css";
-
-@layer sweco {
-  .mantine-Anchor-root {
-    color: currentColor;
-    text-decoration: none;
-    box-shadow: inset 0 -0.125rem 0 0
-      var(--stroke-color, var(--mantine-color-anchor));
-    transition:
-      border-color 0.2s ease-in-out,
-      box-shadow 0.2s ease-in-out;
-  }
-  .mantine-Anchor-root:hover {
-    box-shadow: inset 0 -1rem 0 0
-      var(--stroke-color, var(--mantine-color-anchor));
-  }
-
-  .mantine-NavLink-root {
-    --nl-bg: var(--mantine-secondary-color-1);
-    --nl-color: var(--mantine-color-black);
-    --nl-hover: var(--mantine-secondary-color-light-hover);
-  }
-  [data-mantine-color-scheme="dark"] .mantine-NavLink-root {
-    --nl-bg: var(--mantine-secondary-color-9);
-    --nl-color: var(--mantine-color-white);
-    --nl-hover: var(--mantine-secondary-color-9);
-  }
-  .mantine-NavLink-root:hover {
-    background-color: var(--nl-hover);
-  }
-
-  .mantine-NavLink-label,
-  .mantine-Tabs-tab,
-  .mantine-Breadcrumbs-root,
-  .mantine-Pagination-control,
-  .mantine-Accordion-control,
-  .mantine-InputWrapper-label,
-  .mantine-Radio-label,
-  .mantine-Checkbox-label,
-  .mantine-Switch-label,
-  .mantine-SegmentedControl-label {
-    font-size: 16px;
-    font-weight: 400;
-  }
-
-  .mantine-Tabs-root {
-    --tab-hover-color: var(--mantine-color-default-hover);
-  }
-  button.mantine-Tabs-tab:hover:not(:disabled, [data-active="true"]) {
-    background-color: var(--tab-hover-color);
-  }
-  button.mantine-Tabs-tab:hover[data-active="true"][data-variant="pills"] {
-    background-color: var(--mantine-color-gray-0);
-  }
-
-  .mantine-Breadcrumbs-breadcrumb {
-    color: var(--mantine-color-text);
-    padding-bottom: 4px;
-  }
-  .mantine-Breadcrumbs-breadcrumb:hover {
-    text-decoration: none;
-    box-shadow: inset 0 -1rem 0 0
-      var(--stroke-color, var(--mantine-color-anchor));
-  }
-
-  .mantine-Pagination-control {
-    border: none;
-    font-weight: 500;
-    font-size: 14px;
-  }
-  [data-mantine-color-scheme="light"] .mantine-Pagination-control {
-    background-color: var(--mantine-secondary-color-0);
-  }
-  [data-mantine-color-scheme="light"] .mantine-Pagination-control:hover,
-  [data-mantine-color-scheme="light"]
-    .mantine-Pagination-control[data-active="true"] {
-    background-color: var(--mantine-secondary-color-3);
-  }
-  [data-mantine-color-scheme="dark"] .mantine-Pagination-control {
-    background-color: var(--mantine-secondary-color-9);
-    color: var(--mantine-color-white);
-  }
-  [data-mantine-color-scheme="dark"] .mantine-Pagination-control:hover,
-  [data-mantine-color-scheme="dark"]
-    .mantine-Pagination-control[data-active="true"] {
-    background-color: var(--mantine-secondary-color-4);
-    color: var(--mantine-color-black);
-  }
-
-  .mantine-Stepper-stepIcon {
-    background-color: var(--mantine-color-green-2);
-    border-color: var(--mantine-color-green-4);
-  }
-  .mantine-Stepper-stepIcon:not([data-progress="true"]) {
-    background-color: transparent;
-  }
-
-  .mantine-Stepper-verticalSeparator,
-  .mantine-Stepper-separator[data-active],
-  .mantine-Stepper-separator {
-    background-color: var(--mantine-color-default-border);
-    border-color: var(--mantine-color-default-border);
-  }
-
-  .mantine-Stepper-separator {
-    width: var(--mantine-spacing-xl);
-  }
-
-  .mantine-Input-input {
-    font-size: 1rem;
-    line-height: 1.5;
-    height: calc(1.5em + 0.88rem + 2px);
-  }
-  .mantine-InputWrapper-root[data-error="true"] .mantine-InputWrapper-label {
-    color: var(--mantine-color-error);
-  }
-
-  .mantine-Slider-track,
-  .mantine-Slider-bar {
-    height: var(--slider-size-xs);
-  }
-  .mantine-Slider-thumb {
-    border-color: var(--slider-color);
-  }
-
-  .mantine-SegmentedControl-root {
-    background-color: transparent;
-    border: 1px solid var(--mantine-color-default-border);
-  }
-
-  .mantine-Drawer-header {
-    background-color: var(--mantine-primary-color-7);
-    margin-bottom: var(--mantine-spacing-md);
-    color: var(--mantine-color-white);
-  }
-
-  .mantine-Blockquote-root {
-    font-size: var(--mantine-font-size-xl);
-    font-style: italic;
-  }
-
-  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"] {
-    background-color: var(--mantine-color-gray-1);
-    color: var(--mantine-color-text);
-    border: none;
-  }
-  [data-mantine-color-scheme="dark"]
-    .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"] {
-    background-color: var(--mantine-color-gray-8);
-    --button-color: var(
-      --mantine-color-green-8
-    ) !important; /* NOTE: does not take into account assigned color */
-  }
-  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
-    .mantine-Button-inner {
-    justify-content: space-between;
-  }
-  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]
-    .mantine-Button-section {
-    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background-color: var(--mantine-color-green-4);
-    height: 100%;
-    aspect-ratio: 1/1;
-    border-radius: var(--button-radius);
-    margin-right: calc(-1 * var(--button-padding-x) / 1.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]:hover
-    .mantine-Button-section {
-    background-color: var(--mantine-color-green-3);
-  }
-  [data-mantine-color-scheme="dark"]
-    .mantine-Button-root[data-variant="subtle"][data-with-right-section="true"]:hover
-    .mantine-Button-section {
-    background-color: var(--mantine-color-green-9);
-  }
-
-  .mantine-Chip-label {
-    padding: 6px 12px;
-  }
-
-  .mantine-Chip-label:not([data-checked="true"]) {
-    background-color: var(--mantine-color-green-0);
-  }
-
-  .mantine-Chip-label:hover {
-    background-color: var(--mantine-color-green-2);
-  }
-}
+@import "./styles/tokens.css";
+@import "./styles/global.css";
+@import "./styles/anchor.css";
+@import "./styles/navigation.css";
+@import "./styles/button.css";
+@import "./styles/form.css";
+@import "./styles/feedback.css";
