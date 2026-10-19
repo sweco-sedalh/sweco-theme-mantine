@@ -15,6 +15,34 @@
       var(--stroke-color, var(--mantine-color-anchor));
   }
 
+  .mantine-AppShell-navbar .mantine-Anchor-root {
+    font-weight: 400;
+    color: var(--mantine-color-text);
+    box-shadow: none;
+    position: relative;
+  }
+  .mantine-AppShell-navbar .mantine-Anchor-root:hover {
+    box-shadow: none;
+  }
+  .mantine-AppShell-navbar .mantine-Anchor-root:before {
+    background-color: var(--mantine-color-anchor);
+    bottom: 0;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease-in-out;
+    width: 100%;
+  }
+  .mantine-AppShell-navbar .mantine-Anchor-root:hover:before,
+  .mantine-AppShell-navbar .mantine-Anchor-root.active:before,
+  .mantine-AppShell-navbar .mantine-Anchor-root[data-active]:before,
+  .mantine-AppShell-navbar .mantine-Anchor-root[aria-current="page"]:before {
+    transform: scaleX(1);
+  }
+
   .mantine-NavLink-root {
     --nl-bg: var(--mantine-secondary-color-1);
     --nl-color: var(--mantine-color-black);
